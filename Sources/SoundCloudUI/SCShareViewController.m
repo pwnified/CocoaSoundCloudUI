@@ -96,6 +96,11 @@
     [self.recordSaveController setTags:someTags];
 }
 
+- (void)setBpm:(NSString *)aBmp;
+{
+	[self.recordSaveController setBpm:aBmp];
+}
+
 - (void)setSharingNote:(NSString *)aSharingNote;
 {
     [self.recordSaveController setSharingNote:aSharingNote];

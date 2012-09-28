@@ -68,6 +68,7 @@
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSDate *trackCreationDate;
 @property (nonatomic, retain) NSArray *customTags;
+@property (nonatomic, retain) NSString *trackBpm;
 @property (nonatomic, retain) NSString *customSharingNote;
 
 @property (nonatomic, retain) CLLocation *location;
@@ -185,6 +186,7 @@ const NSArray *allServices = nil;
 @synthesize title;
 @synthesize trackCreationDate;
 @synthesize customTags;
+@synthesize trackBpm;
 @synthesize customSharingNote;
 
 @synthesize location;
@@ -408,6 +410,11 @@ const NSArray *allServices = nil;
 - (void)setTags:(NSArray *)someTags;
 {
     self.customTags = someTags;
+}
+
+- (void)setBpm:(NSString *)aBmp
+{
+	self.trackBpm = aBmp;
 }
 
 - (void)setSharingNote:(NSString *)aSharingNote;
@@ -1290,7 +1297,7 @@ const NSArray *allServices = nil;
     if (self.foursquareID) {
         [tags addObject:[NSString stringWithFormat:@"foursquare:venue=%@", self.foursquareID]];
     }
-    
+	
     // tags (custom)
     for (NSString *tag in self.customTags) {
         // TODO: Should the tags be checked?
@@ -1298,6 +1305,11 @@ const NSArray *allServices = nil;
     }
     
     [parameters setObject:[tags componentsJoinedByString:@" "] forKey:@"track[tag_list]"];
+    
+	// bpm
+	if (self.trackBpm) {
+		[parameters setObject:self.trackBpm forKey:@"track[bpm]"];
+	}
     
     // perform request
     self.uploadRequestHandler = [SCRequest performMethod:SCRequestMethodPOST
