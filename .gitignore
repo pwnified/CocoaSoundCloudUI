@@ -1,0 +1,21 @@
+
+# xcode noise
+build/*
+*.xcclassmodel/*
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*xcodeproj/project.xcworkspace
+*xcodeproj/xcuserdata
+
+# old skool
+.svn
+
+# osx noise
+.DS_Store
+profile
+
+# Dreamweaver noise
+dwsync.xml
+_notes
