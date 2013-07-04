@@ -1,4 +1,6 @@
-"connection_error_ok" = "OK";
+"alert_ok" = "OK";
+
+"alert_cancel" = "Cancel";
 
 "connection_faild" = "Connection failed";
 
@@ -111,3 +113,35 @@
 "record_save_upload_success_message_appstore_substring" = "free";
 
 "open_soundcloud" = "Open SoundCloud";
+
+"username" = "Email";
+
+"password" = "Password";
+
+"credential_title" = "Allow \"%@\" access to your SoundCloud account?";
+
+"credentials_error" = "Check Credentials";
+
+"credentials_error_message" = "Email and Password are required for login";
+
+"auth_error" = "Ooops";
+
+"auth_error_message" = "Authorization failed. Please check your credentials and try logging in again.";
+
+"connect_to_sc" = "Connect to SoundCloud";
+
+"fb_sign_in" = "Sign in with Facebook";
+
+"forgot_password" = "Forgot password?";
+
+"open_in_safari_title" = "Open in Safari";
+
+"open_in_safari_message" = "Do you want to open the link in Safari?";
+
+"sign_in_tos_pp_body" = "By signing in you accept our Terms of Use and Privacy Policy";
+
+"terms_of_use_substring" = "Terms of Use";
+
+"privatcy_policy_substring" = "Privacy Policy";
+
+"upload_error" = "Oops, upload failed";

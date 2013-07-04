@@ -36,7 +36,7 @@
 #pragma mark Class methods
 
 + (SCShareViewController *)shareViewControllerWithFileURL:(NSURL *)aFileURL
-                                        completionHandler:(SCSharingViewControllerComletionHandler)aCompletionHandler;
+                                        completionHandler:(SCSharingViewControllerCompletionHandler)aCompletionHandler;
 {
     SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
     if (!recView) return nil;
@@ -50,7 +50,7 @@
 }
 
 + (SCShareViewController *)shareViewControllerWithFileData:(NSData *)someData
-                                         completionHandler:(SCSharingViewControllerComletionHandler)aCompletionHandler;
+                                         completionHandler:(SCSharingViewControllerCompletionHandler)aCompletionHandler;
 {
     SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
     if (!recView) return nil;
@@ -104,6 +104,11 @@
 - (void)setSharingNote:(NSString *)aSharingNote;
 {
     [self.recordSaveController setSharingNote:aSharingNote];
+}
+
+- (void)setCustomParameters:(NSDictionary*)dictionary;
+{
+    [self.recordSaveController setCustomParameters:dictionary];
 }
 
 - (SCRecordingSaveViewController *)recordSaveController;

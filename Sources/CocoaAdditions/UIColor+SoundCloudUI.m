@@ -53,4 +53,36 @@
     return [UIColor colorWithWhite:1.0 alpha:0.8];
 }
 
++ (UIColor *)soundCloudBackgroundGrey;
+{
+    return [UIColor colorWithRed:0.949
+                           green:0.949
+                            blue:0.949
+                           alpha:1.0];
+}
+
++ (UIColor *)soundCloudGrey;
+{
+    return [UIColor colorWithRed:0.4
+                           green:0.4
+                            blue:0.4
+                           alpha:1.0];
+}
+
++ (UIColor *)soundCloudLightGrey;
+{
+    return [UIColor colorWithRed:0.6
+                           green:0.6
+                            blue:0.6
+                           alpha:1.0];
+}
+
++ (UIColor *)soundCloudSuperLightGrey;
+{
+    return [UIColor colorWithRed:0.8
+                           green:0.8
+                            blue:0.8
+                           alpha:1.0];
+}
+
 @end

@@ -58,6 +58,7 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trac
 - (void)setBpm:(NSString *)aBmp;
 - (void)setSharingNote:(NSString *)aSharingNote;
 - (void)setCompletionHandler:(SCRecordingSaveViewControllerCompletionHandler)aCompletionHandler;
+- (void)setCustomParameters:(NSDictionary*)dictionary;
 
 #pragma mark Foursquare
 

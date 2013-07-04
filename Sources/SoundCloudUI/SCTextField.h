@@ -20,6 +20,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCTextField : UITextField
+typedef enum {
+    SCTextFieldCornerStyleTop     = 1,
+    SCTextFieldCornerStyleBottom  = 2
+} SCTextFieldStyle;
+
+@interface SCTextField : UITextField {
+    BOOL needsSeparatorLine;
+    SCTextFieldStyle cornerStyle;
+}
+
+@property (nonatomic) BOOL needsSeparatorLine;
+@property (nonatomic) SCTextFieldStyle cornerStyle;
+
+- (void)addInnerShadow;
 
 @end

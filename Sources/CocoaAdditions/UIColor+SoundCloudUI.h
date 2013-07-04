@@ -26,6 +26,10 @@
 + (UIColor *)almostBlackColor;
 + (UIColor *)listSubtitleColor;
 + (UIColor *)soundCloudListShineThroughWhite;
++ (UIColor *)soundCloudBackgroundGrey;
++ (UIColor *)soundCloudGrey;
++ (UIColor *)soundCloudLightGrey;
++ (UIColor *)soundCloudSuperLightGrey;
 
 + (UIColor *)soundCloudOrangeWithAlpha:(CGFloat)alpha;
 + (UIColor *)soundCloudOrange;

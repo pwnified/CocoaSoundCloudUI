@@ -22,4 +22,5 @@
 
 @interface UIDevice (SoundCloudUI)
 + (BOOL)isIPad;
++ (BOOL)isTallIphone;
 @end

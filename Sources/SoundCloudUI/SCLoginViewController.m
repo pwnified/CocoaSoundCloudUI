@@ -19,6 +19,7 @@
  */
 
 #import "UIViewController+SoundCloudUI.h"
+#import "UIView+SoundCloudUI.h"
 #import "UIDevice+SoundCloudUI.h"
 
 #import "SCLoginView.h"
@@ -37,7 +38,7 @@
 
 #pragma mark -
 
-@interface SCLoginViewController ()
+@interface SCLoginViewController () <UIScrollViewDelegate, SCLoginViewProtocol>
 - (id)initWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerCompletionHandler)aCompletionHandler;
 
 #pragma mark Accessors
@@ -91,6 +92,16 @@
                                                  selector:@selector(failToRequestAccess:)
                                                      name:SCSoundCloudDidFailToRequestAccessNotification
                                                    object:nil];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateScrollView)
+                                                     name:UIKeyboardDidShowNotification
+                                                   object:nil];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateScrollView)
+                                                     name:UIKeyboardDidHideNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -98,10 +109,8 @@
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     [preparedURL release];
     [completionHandler release];
-    
     [super dealloc];
 }
 
@@ -111,43 +120,39 @@
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
-    
     self.loginView = [[[SCLoginView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.loginView.loginDelegate = self;
     self.loginView.delegate = self;
-    [self.loginView loadURL:self.preparedURL];
+    self.loginView.contentSize = CGSizeMake(1.0, CGRectGetHeight(self.loginView.bounds));
+    [self.loginView removeAllCookies];
     [self.view addSubview:self.loginView];
     
     // Navigation Bar
     self.navigationController.navigationBarHidden = YES;
-    
-    // Toolbar
-    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
-    self.navigationController.toolbarHidden = NO;
-    
-    NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:1];
-    
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
-                                                              style:UIBarButtonItemStyleBordered
-                                                             target:self
-                                                             action:@selector(cancel)] autorelease]];
-    [self setToolbarItems:toolbarItems];
 }
 
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
-    [self.view addSubview:[[[SCConnectToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
-    self.loginView.frame = CGRectMake(0, 28.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 28.0);
+    SCConnectToSoundCloudTitleView *scTitleView = [[[SCConnectToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0,
+                                                                                                                    0,
+                                                                                                                    CGRectGetWidth(self.view.bounds),
+                                                                                                                    44.0)] autorelease];
+
+    [self.view addSubview:scTitleView];
+    self.loginView.frame = CGRectMake(0,
+                                      scTitleView.frame.size.height,
+                                      CGRectGetWidth(self.view.bounds),
+                                      CGRectGetHeight(self.view.bounds) - scTitleView.frame.size.height);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 {
     if ([UIDevice isIPad]) {
         return YES;
-        
-    } else {
-        return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
     }
+
+    return UIInterfaceOrientationIsPortrait(toInterfaceOrientation);
 }
 
 #pragma mark Notifications
@@ -168,9 +173,39 @@
         self.completionHandler(error);
     }
     
-    [[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"auth_error", @"Auth Error")
+                                                    message:SCLocalizedString(@"auth_error_message", @"Auth Message Error")
+                                                   delegate:nil
+                                          cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+
+    //[[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
 }
 
+- (void)updateScrollView
+{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ||
+        ![UIDevice isTallIphone]) {
+        UIView *firstResponderView = [self.loginView.credentialsView firstResponderFromSubviews];
+        CGRect bounds;
+        CGPoint position;
+        // Our TextField requires a y-offset (self.loginView.frame.origin.y)
+        if ([firstResponderView isKindOfClass:[UITextField class]]) {
+            bounds = [firstResponderView convertRect:firstResponderView.superview.superview.bounds
+                                              toView:self.view];
+            position = CGPointMake(self.loginView.credentialsView.bounds.origin.x,
+                                   bounds.origin.y - self.loginView.frame.origin.y);
+        } else {
+            position = self.view.bounds.origin;
+        }
+
+        [self.loginView setContentOffset:CGPointMake(position.x,
+                                                     position.y)
+                                animated:YES];
+    }
+}
 
 #pragma mark Private
 
@@ -184,5 +219,12 @@
     [[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark -
+#pragma mark UIScrollView delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.loginView setNeedsDisplay];
+}
 
 @end

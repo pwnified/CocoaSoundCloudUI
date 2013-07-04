@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20835E1A169502C4002D02A1 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA713F92CF900B20B40 /* SCLoginViewController.m */; };
+		20C862BB16833789003523CF /* SCDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 20C862B916833789003523CF /* SCDrawing.h */; };
+		20C862BC16833789003523CF /* SCDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C862BA16833789003523CF /* SCDrawing.m */; };
+		20C862E2168353CC003523CF /* SCCredentialsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20C862E0168353CC003523CF /* SCCredentialsView.h */; };
+		20C862E3168353CC003523CF /* SCCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C862E1168353CC003523CF /* SCCredentialsView.m */; };
+		20C8632C16837491003523CF /* SCAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20C8632A16837490003523CF /* SCAlertView.h */; };
+		20C8632D16837491003523CF /* SCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8632B16837490003523CF /* SCAlertView.m */; };
+		20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 20FEEDF2168087B000EB1C02 /* SCGradientButton.h */; };
+		20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FEEDF3168087B000EB1C02 /* SCGradientButton.m */; };
 		F6115A4F13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */; };
 		F6115A5013FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */; };
 		F62E0CFD148FB29D00BE8F14 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F62E0CFA148FB29D00BE8F14 /* OAuth2Client.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -54,7 +63,6 @@
 		F6EF8CDE13F92CF900B20B40 /* SCLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CA413F92CF900B20B40 /* SCLoginView.h */; };
 		F6EF8CDF13F92CF900B20B40 /* SCLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA513F92CF900B20B40 /* SCLoginView.m */; };
 		F6EF8CE013F92CF900B20B40 /* SCLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CA613F92CF900B20B40 /* SCLoginViewController.h */; };
-		F6EF8CE113F92CF900B20B40 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA713F92CF900B20B40 /* SCLoginViewController.m */; };
 		F6EF8CE213F92CF900B20B40 /* SCNameAndEmailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CA813F92CF900B20B40 /* SCNameAndEmailCell.h */; };
 		F6EF8CE313F92CF900B20B40 /* SCNameAndEmailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA913F92CF900B20B40 /* SCNameAndEmailCell.m */; };
 		F6EF8CE413F92CF900B20B40 /* SCRecordingSaveViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CAA13F92CF900B20B40 /* SCRecordingSaveViewController.h */; };
@@ -84,6 +92,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20C862B916833789003523CF /* SCDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDrawing.h; sourceTree = "<group>"; };
+		20C862BA16833789003523CF /* SCDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDrawing.m; sourceTree = "<group>"; };
+		20C862E0168353CC003523CF /* SCCredentialsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCredentialsView.h; sourceTree = "<group>"; };
+		20C862E1168353CC003523CF /* SCCredentialsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCredentialsView.m; sourceTree = "<group>"; };
+		20C8632A16837490003523CF /* SCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAlertView.h; sourceTree = "<group>"; };
+		20C8632B16837490003523CF /* SCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAlertView.m; sourceTree = "<group>"; };
+		20FEEDF2168087B000EB1C02 /* SCGradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGradientButton.h; sourceTree = "<group>"; };
+		20FEEDF3168087B000EB1C02 /* SCGradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGradientButton.m; sourceTree = "<group>"; };
 		F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConnectToSoundCloudTitleView.h; sourceTree = "<group>"; };
 		F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConnectToSoundCloudTitleView.m; sourceTree = "<group>"; };
 		F62E0CE5148FB27100BE8F14 /* SoundCloudUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,6 +301,8 @@
 		F678271C13F9307600CACABE /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				20C862B916833789003523CF /* SCDrawing.h */,
+				20C862BA16833789003523CF /* SCDrawing.m */,
 				F6EF8C9B13F92CF900B20B40 /* SCBundle.h */,
 				F6EF8C9C13F92CF900B20B40 /* SCBundle.m */,
 				F6F5E4F313F965CF00492B2B /* Contollers */,
@@ -393,6 +411,8 @@
 				F6EF8CB213F92CF900B20B40 /* SCShareToSoundCloudTitleView.m */,
 				F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */,
 				F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */,
+				20C862E0168353CC003523CF /* SCCredentialsView.h */,
+				20C862E1168353CC003523CF /* SCCredentialsView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -419,6 +439,10 @@
 				F6EF8CBE13F92CF900B20B40 /* SCTextField.m */,
 				F6EF8CC013F92CF900B20B40 /* SCUnderlinedButton.h */,
 				F6EF8CC113F92CF900B20B40 /* SCUnderlinedButton.m */,
+				20FEEDF2168087B000EB1C02 /* SCGradientButton.h */,
+				20FEEDF3168087B000EB1C02 /* SCGradientButton.m */,
+				20C8632A16837490003523CF /* SCAlertView.h */,
+				20C8632B16837490003523CF /* SCAlertView.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -485,6 +509,10 @@
 				F62E0D5D148FBD5700BE8F14 /* UIImage+SoundCloudUI.h in Headers */,
 				F62E0D5F148FBD5700BE8F14 /* UIView+SoundCloudUI.h in Headers */,
 				F62E0D61148FBD5700BE8F14 /* UIViewController+SoundCloudUI.h in Headers */,
+				20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */,
+				20C862BB16833789003523CF /* SCDrawing.h in Headers */,
+				20C862E2168353CC003523CF /* SCCredentialsView.h in Headers */,
+				20C8632C16837491003523CF /* SCAlertView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +612,6 @@
 				F6EF8CDA13F92CF900B20B40 /* SCFoursquarePlacePickerController.m in Sources */,
 				F6EF8CDD13F92CF900B20B40 /* SCHorizontalLineView.m in Sources */,
 				F6EF8CDF13F92CF900B20B40 /* SCLoginView.m in Sources */,
-				F6EF8CE113F92CF900B20B40 /* SCLoginViewController.m in Sources */,
 				F6EF8CE313F92CF900B20B40 /* SCNameAndEmailCell.m in Sources */,
 				F6EF8CE513F92CF900B20B40 /* SCRecordingSaveViewController.m in Sources */,
 				F6EF8CE713F92CF900B20B40 /* SCRecordingSaveViewControllerHeaderView.m in Sources */,
@@ -607,6 +634,11 @@
 				F62E0D5E148FBD5700BE8F14 /* UIImage+SoundCloudUI.m in Sources */,
 				F62E0D60148FBD5700BE8F14 /* UIView+SoundCloudUI.m in Sources */,
 				F62E0D62148FBD5700BE8F14 /* UIViewController+SoundCloudUI.m in Sources */,
+				20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */,
+				20C862BC16833789003523CF /* SCDrawing.m in Sources */,
+				20C862E3168353CC003523CF /* SCCredentialsView.m in Sources */,
+				20C8632D16837491003523CF /* SCAlertView.m in Sources */,
+				20835E1A169502C4002D02A1 /* SCLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +648,6 @@
 		F62E0CF7148FB27100BE8F14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -643,7 +674,6 @@
 		F62E0CF8148FB27100BE8F14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -671,7 +701,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -686,6 +715,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -694,7 +724,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -702,6 +731,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -32,4 +32,12 @@
 	return NO;
 }
 
++ (BOOL)isTallIphone;
+{
+    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) &&
+        ([UIScreen mainScreen].bounds.size.height >= 568.0f)) {
+        return YES;
+    }
+    return NO;
+}
 @end

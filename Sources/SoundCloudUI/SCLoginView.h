@@ -19,14 +19,19 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "SCCredentialsView.h"
 
-#pragma mark -
+@protocol SCLoginViewProtocol;
 
-@interface SCLoginView : UIView
-@property (nonatomic, assign) id delegate;
-- (void)loadURL:(NSURL *)aURL;
+@interface SCLoginView : UIScrollView
+
+@property (nonatomic, assign) id<SCLoginViewProtocol> loginDelegate;
+@property (nonatomic, assign) SCCredentialsView *credentialsView;
+- (void)removeAllCookies;
+- (void)login:(id)sender;
 @end
 
 @protocol SCLoginViewProtocol <NSObject>
+@optional
 - (void)loginView:(SCLoginView *)aLoginView didFailWithError:(NSError *)anError;
 @end
