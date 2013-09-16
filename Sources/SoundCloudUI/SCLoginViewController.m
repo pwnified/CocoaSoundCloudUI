@@ -134,6 +134,9 @@
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
+    
+    [self ios7HereWeGo];
+    
     SCConnectToSoundCloudTitleView *scTitleView = [[[SCConnectToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0,
                                                                                                                     0,
                                                                                                                     CGRectGetWidth(self.view.bounds),
@@ -144,6 +147,21 @@
                                       scTitleView.frame.size.height,
                                       CGRectGetWidth(self.view.bounds),
                                       CGRectGetHeight(self.view.bounds) - scTitleView.frame.size.height);
+}
+
+#pragma mark iOS 7 compatibility
+
+- (void)ios7HereWeGo
+{
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+        
+    }
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
