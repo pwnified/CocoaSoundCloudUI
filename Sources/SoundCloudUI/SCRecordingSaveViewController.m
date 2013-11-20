@@ -21,7 +21,6 @@
 #import "UIViewController+SoundCloudUI.h"
 #import "SCAlertView.h"
 
-#import "JSONKit.h"
 #import "SCAPI.h"
 #import "SCAccount+Private.h"
 
@@ -330,7 +329,7 @@ const NSArray *allServices = nil;
                      responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                          if (data) {
                              NSError *jsonError = nil;
-                             NSArray *result = [data objectFromJSONData];
+                             NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                              if (result) {
                                  loadingConnections = NO;
                                  [self setAvailableConnections:result];
@@ -350,7 +349,7 @@ const NSArray *allServices = nil;
                      responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                          if (data) {
                              NSError *jsonError = nil;
-                             id result = [data objectFromJSONData];
+                             id result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                              if (result) {
                                  
                                  anAccount.userInfo = result;
@@ -1038,7 +1037,7 @@ const NSArray *allServices = nil;
                  responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                      if (data) {
                          NSError *jsonError = nil;
-                         NSArray *result = [data objectFromJSONData];
+                         NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                          if (result) {
                              [self setAvailableConnections:result];
                          } else {
@@ -1327,7 +1326,7 @@ const NSArray *allServices = nil;
                                              self.uploadRequestHandler = nil;
                                              
                                              NSError *jsonError = nil;
-                                             id result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                                             id result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                                              
                                              if (error || jsonError || result == nil) {
                                                  

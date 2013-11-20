@@ -20,16 +20,8 @@
 
 #include <CommonCrypto/CommonDigest.h>
 
-#if TARGET_OS_IPHONE
-#import "JSONKit.h"
-#else
-#import <JSONKit/JSONKit.h>
-#endif
-
-
-
 #import "NSString+SoundCloudUI.h"
-
+#import "NSData+SoundCloudUI.h"
 
 @implementation NSString (SoundCloudUI)
 
@@ -124,7 +116,8 @@
 
 - (id)JSONObject;
 {
-	return [self objectFromJSONString];
+    NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
+    return [jsonData JSONObject];
 }
 
 
