@@ -27,10 +27,7 @@
 
 - (id)JSONObject;
 {
-	NSString *jsonString = [[NSString alloc] initWithData:self encoding:NSUTF8StringEncoding];
-	id jsonObject = [[jsonString JSONObject] retain];
-	[jsonString release];
-	return [jsonObject autorelease];
+    return [NSJSONSerialization JSONObjectWithData:self options:0 error:nil];
 }
 
 - (NSString *)errorMessageFrom422Error;

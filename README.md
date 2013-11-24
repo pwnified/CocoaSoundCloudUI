@@ -7,7 +7,7 @@ You can include this SDK by adding following lines to your `Podfile`:
 
 ```
 pod 'CocoaSoundCloudAPI', '1.0.2'
-pod 'CocoaSoundCloudUI', '1.0.7'
+pod 'CocoaSoundCloudUI', '1.0.9'
 ```
 
 and run the following command `pod install`.
