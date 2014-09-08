@@ -241,7 +241,7 @@
 - (UIImageView *)resultImage;
 {
     if (!resultImage) {
-        resultImage = [[UIImageView alloc] init];
+        resultImage = [[[UIImageView alloc] init] autorelease];
         [self.contentView addSubview:resultImage];
     }
     return resultImage;

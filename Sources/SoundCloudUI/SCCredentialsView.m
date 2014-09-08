@@ -73,7 +73,7 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 - (void)layoutUsernameField
 {
-    self.usernameField = [[SCTextField alloc] init];
+    self.usernameField = [[[SCTextField alloc] init] autorelease];
     self.usernameField.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.usernameField.needsSeparatorLine = YES;
     self.usernameField.delegate = self;
@@ -95,7 +95,7 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 - (void)layoutPasswordField
 {
-    self.passwordField = [[SCTextField alloc] init];
+    self.passwordField = [[[SCTextField alloc] init] autorelease];
     self.passwordField.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.passwordField.delegate = self;
     self.passwordField.backgroundColor = [UIColor clearColor];

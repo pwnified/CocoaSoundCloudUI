@@ -224,16 +224,8 @@ const NSArray *allServices = nil;
         
         isPrivate = [[NSUserDefaults standardUserDefaults] boolForKey:SCDefaultsKeyRecordingIsPrivate];
         isDownloadable = YES;
-        location = nil;
-        locationTitle = nil;
-        foursquareID = nil;
-        
-        coverImage = nil;
-        title = nil;
         
         trackCreationDate = [[NSDate date] retain];
-        
-        completionHandler = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(accountDidChange:)
@@ -272,6 +264,13 @@ const NSArray *allServices = nil;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    self.fileURL = nil;
+	self.fileData = nil;
+	self.customTags = nil;
+	self.trackBpm = nil;
+	self.customSharingNote = nil;
+	self.customParameters = nil;
+	
     [availableConnections release];
     [unconnectedServices release];
     [sharingConnections release];
@@ -286,7 +285,7 @@ const NSArray *allServices = nil;
     [foursquareController release];
     [completionHandler release];
     [imagePickerPopoverController release];
-    
+	
     [super dealloc];
 }
 
@@ -1338,7 +1337,9 @@ const NSArray *allServices = nil;
                                              self.uploadRequestHandler = nil;
                                              
                                              NSError *jsonError = nil;
-                                             id result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                                             id result = nil;
+											 if (data)
+												 result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                                              
                                              if (error || jsonError || result == nil) {
                                                  

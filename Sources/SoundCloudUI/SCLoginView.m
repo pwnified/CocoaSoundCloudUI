@@ -124,7 +124,7 @@
 
 - (void)layoutTitleLabel
 {
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
     self.titleLabel.numberOfLines = 2;
     self.titleLabel.textAlignment = UITextAlignmentLeft;
     self.titleLabel.text = [NSString stringWithFormat:SCLocalizedString(@"credential_title", @"Title"),
@@ -150,8 +150,8 @@
                                                 alpha:1.0],
                                 nil];
 
-    self.fbButton = [[SCGradientButton alloc] initWithFrame:CGRectZero
-                                                     colors:fbButtonColors];
+    self.fbButton = [[[SCGradientButton alloc] initWithFrame:CGRectZero
+                                                     colors:fbButtonColors] autorelease];
     self.fbButton.backgroundColor = [UIColor whiteColor];
     [self.fbButton setTitle:SCLocalizedString(@"fb_sign_in",@"Facebook")
                    forState:UIControlStateNormal];
@@ -173,7 +173,7 @@
     [self addSubview:self.fbButton];
 
     // Facebook logo
-    UIImageView *fbLogo = [[UIImageView alloc] init];
+    UIImageView *fbLogo = [[[UIImageView alloc] init] autorelease];
     fbLogo.image = [SCBundle imageWithName:@"facebook"];
     [fbLogo sizeToFit];
     fbLogo.frame = CGRectMake(7.0,
@@ -185,15 +185,15 @@
 
 - (void)layoutCredentialsView
 {
-    self.credentialsView = [[SCCredentialsView alloc] init];
+    self.credentialsView = [[[SCCredentialsView alloc] init] autorelease];
     self.credentialsView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
     [self addSubview:self.credentialsView];
 }
 
 - (void)layoutLoginButton
 {
-    self.loginButton = [[SCGradientButton alloc] initWithFrame:CGRectZero
-                                                        colors:nil];
+    self.loginButton = [[[SCGradientButton alloc] initWithFrame:CGRectZero
+                                                        colors:nil] autorelease];
     self.loginButton.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageWithName:@"continue"]];
 
     [self.loginButton setTitle:SCLocalizedString(@"connect_to_sc",@"Connect")
@@ -218,7 +218,7 @@
     NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
     [text setFont:[UIFont systemFontOfSize:13.0]];
 
-    self.tosLabel = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
+    self.tosLabel = [[[OHAttributedLabel alloc] initWithFrame:CGRectZero] autorelease];
     self.tosLabel.attributedText = text;
     self.tosLabel.centerVertically = NO;
     self.tosLabel.lineBreakMode = UILineBreakModeWordWrap;

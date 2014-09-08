@@ -619,6 +619,7 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 }
 
 
+/* I don't know what the fuck this is
 #pragma mark main
 
 - (void)main;
@@ -690,5 +691,7 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 							   waitUntilDone:YES];
 	}
 }
+*/
+
 
 @end

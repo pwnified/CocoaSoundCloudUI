@@ -155,7 +155,7 @@
 {
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
 
