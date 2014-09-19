@@ -756,11 +756,16 @@
 		F6EF8C6F13F929D700B20B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				DSTROOT = /tmp/SoundCloudUI.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/SoundCloudUI-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = "../**";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SoundCloudUI;
 				SKIP_INSTALL = YES;
@@ -770,11 +775,16 @@
 		F6EF8C7013F929D700B20B40 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+				);
 				DSTROOT = /tmp/SoundCloudUI.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/SoundCloudUI-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = "../**";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SoundCloudUI;
 				SKIP_INSTALL = YES;
