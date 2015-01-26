@@ -806,7 +806,7 @@ const NSArray *allServices = nil;
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
                        constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
-                           lineBreakMode:UILineBreakModeWordWrap];
+                           lineBreakMode:NSLineBreakByWordWrapping];
     
     UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
@@ -832,7 +832,7 @@ const NSArray *allServices = nil;
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
                        constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
-                           lineBreakMode:UILineBreakModeWordWrap];
+                           lineBreakMode:NSLineBreakByWordWrapping];
     
     return textSize.height + 2 * 10.0;
 }
