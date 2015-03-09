@@ -640,6 +640,10 @@ const NSArray *allServices = nil;
     }
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 
 #pragma mark TableView
 
