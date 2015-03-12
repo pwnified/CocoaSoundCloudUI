@@ -434,23 +434,26 @@
             }
             
             CGFloat imagePadding = [UIDevice isIPad] ? 28: 10;
-            if ([self appURL]) {
+			if ([self appURL]) {
                 self.openAppButton.hidden = NO;
                 self.openAppStoreButton.hidden = YES;
                 
 
-                NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:SCLocalizedString(@"record_save_upload_success_message_app", @"See who's commenting on your sounds by opening it in the SoundCloud app.")];
-                [text setFont:self.resultText.font];
-                self.resultText.attributedText = text;
+                NSAttributedString *text = [[[NSAttributedString alloc] initWithString:SCLocalizedString(@"record_save_upload_success_message_app", @"See who's commenting on your sounds by opening it in the SoundCloud app.")] autorelease];
 
-                CGSize resultTextSize = [self.resultText sizeThatFits:CGSizeMake(innerWitdh - 3 - CGRectGetWidth(self.resultImage.frame) - imagePadding,
-                                                                                 CGFLOAT_MAX)];
-                
+				self.resultText.attributedText = text;
+				
+				// After removal of OHAttributedString, the number of lines needs to be set to 0.
+				// the default value of 1 causes sizeThatFits to put everything on one line.
+				self.resultText.numberOfLines = 0;
+				
+                CGSize resultTextSize = [self.resultText sizeThatFits:CGSizeMake(innerWitdh - 3 - CGRectGetWidth(self.resultImage.frame) - imagePadding, CGFLOAT_MAX)];
+
                 self.resultText.frame = CGRectMake(CGRectGetMaxX(self.resultImage.frame) + imagePadding,
                                                    CGRectGetMinY(self.resultImage.frame) + 6,
                                                    resultTextSize.width,
                                                    resultTextSize.height);
-                
+
                 self.openAppButton.frame = CGRectMake(CGRectGetMaxX(self.resultImage.frame) + imagePadding,
                                                       CGRectGetMaxY(self.resultText.frame) + 20,
                                                       CGRectGetWidth(self.openAppButton.frame),
@@ -469,17 +472,21 @@
                 NSString *appStoreMessage = SCLocalizedString(@"record_save_upload_success_message_appstore", @"See who's commenting on your sounds by downloading the %@ SoundCloud app.");
                 NSString *appStoreMessageSubstring = SCLocalizedString(@"record_save_upload_success_message_appstore_substring", @"free");
                 
-                NSRange orangeRange = [appStoreMessage rangeOfString:@"%@"];
-                orangeRange.length = [appStoreMessageSubstring length];
-                
-                NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:[NSString stringWithFormat:appStoreMessage, appStoreMessageSubstring]];
-                
-                [text setTextColor:[UIColor orangeColor] range:orangeRange];
-                [text setFont:self.resultText.font];
+                //NSRange orangeRange = [appStoreMessage rangeOfString:@"%@"];
+                //orangeRange.length = [appStoreMessageSubstring length];
+				//NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:[NSString stringWithFormat:appStoreMessage, appStoreMessageSubstring]];
+				//[text setTextColor:[UIColor orangeColor] range:orangeRange];
+				//[text setFont:self.resultText.font];
+				
+				NSAttributedString *text = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:appStoreMessage, appStoreMessageSubstring]] autorelease];
                 
                 self.resultText.attributedText = text;
-                
-                CGSize resultTextSize = [self.resultText sizeThatFits:CGSizeMake(innerWitdh - 3 - CGRectGetWidth(self.resultImage.frame) - imagePadding,
+				
+				// After removal of OHAttributedString, the number of lines needs to be set to 0.
+				// the default value of 1 causes sizeThatFits to put everything on one line.
+				self.resultText.numberOfLines = 0;
+
+				CGSize resultTextSize = [self.resultText sizeThatFits:CGSizeMake(innerWitdh - 3 - CGRectGetWidth(self.resultImage.frame) - imagePadding,
                                                                                  CGFLOAT_MAX)];
                 
                 self.resultText.frame = CGRectMake(CGRectGetMaxX(self.resultImage.frame) + imagePadding,

@@ -213,8 +213,8 @@
 
 - (void)layoutTermsAndPrivacy
 {
-    NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
-    [text setFont:[UIFont systemFontOfSize:13.0]];
+    NSMutableAttributedString *text =
+        [[NSMutableAttributedString alloc] initWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
 
     self.tosLabel = [[UITextView alloc] initWithFrame:CGRectZero];
     self.tosLabel.textAlignment = UITextAlignmentCenter;
