@@ -771,7 +771,6 @@
 				HEADER_SEARCH_PATHS = (
 					../CocoaSoundCloudAPI/Sources/SoundCloudAPI/,
 					"../OAuth2Client/Sources/**",
-					../OHAttributedLabel/OHAttributedLabel,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SoundCloudUI;
@@ -789,7 +788,6 @@
 				HEADER_SEARCH_PATHS = (
 					../CocoaSoundCloudAPI/Sources/SoundCloudAPI/,
 					"../OAuth2Client/Sources/**",
-					../OHAttributedLabel/OHAttributedLabel,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SoundCloudUI;

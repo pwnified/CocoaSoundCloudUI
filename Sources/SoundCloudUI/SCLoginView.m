@@ -36,16 +36,14 @@
 #import "SCGradientButton.h"
 #import "SCAlertView.h"
 #import "SCDrawing.h"
-#import "OHAttributedLabel.h"
-#import "NSAttributedString+Attributes.h"
 
-@interface SCLoginView () <OHAttributedLabelDelegate, UIWebViewDelegate>
+@interface SCLoginView () <UITextViewDelegate, UIWebViewDelegate>
 @property (nonatomic, readwrite, assign) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign) UILabel *titleLabel;
 @property (nonatomic, assign) SCGradientButton *fbButton;
 @property (nonatomic, assign) SCGradientButton *loginButton;
 @property (nonatomic, readwrite, assign) UIWebView *webView;
-@property (nonatomic, assign) OHAttributedLabel *tosLabel;
+@property (nonatomic, assign) UITextView *tosLabel;
 - (void)commonAwake;
 @end
 
@@ -218,25 +216,26 @@
     NSMutableAttributedString *text = [NSMutableAttributedString attributedStringWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
     [text setFont:[UIFont systemFontOfSize:13.0]];
 
-    self.tosLabel = [[[OHAttributedLabel alloc] initWithFrame:CGRectZero] autorelease];
-    self.tosLabel.attributedText = text;
-    self.tosLabel.centerVertically = NO;
-    self.tosLabel.lineBreakMode = UILineBreakModeWordWrap;
+    self.tosLabel = [[[UITextView alloc] initWithFrame:CGRectZero] autorelease];
     self.tosLabel.textAlignment = UITextAlignmentCenter;
     self.tosLabel.textColor = [UIColor soundCloudLightGrey];
     self.tosLabel.backgroundColor = [UIColor clearColor];
-    self.tosLabel.delegate = self;
-    [self.tosLabel setLinkColor:[UIColor soundCloudGrey]];
+    self.tosLabel.editable = NO;
 
     NSRange touLinkRange = [text.string rangeOfString:SCLocalizedString(@"terms_of_use_substring", nil)];
     NSAssert((touLinkRange.location != NSNotFound), @"Localisation of sign_in_tos_pp_body needs to contain substring");
-    [self.tosLabel addCustomLink:[NSURL URLWithString:kTermsOfServiceURL]
-                         inRange:touLinkRange];
+    [text addAttribute: NSLinkAttributeName
+                 value: [NSURL URLWithString:kTermsOfServiceURL]
+                 range: touLinkRange];
 
     NSRange ppLinkRange = [text.string rangeOfString:SCLocalizedString(@"privatcy_policy_substring", nil)];
     NSAssert((ppLinkRange.location != NSNotFound), @"Localisation of sign_in_tos_pp_body needs to contain substring");
-    [self.tosLabel addCustomLink:[NSURL URLWithString:kPrivacyPolicyURL]
-                         inRange:ppLinkRange];
+    [text addAttribute: NSLinkAttributeName
+                 value: [NSURL URLWithString:kPrivacyPolicyURL]
+                 range: ppLinkRange];
+
+    self.tosLabel.attributedText = text;
+    self.tosLabel.delegate = self;
 
     [self addSubview:self.tosLabel];
 }
@@ -268,7 +267,7 @@
 
     self.titleLabel.frame = CGRectMake(titleLabelX,
                                        titleLabelY,
-                                       CGRectGetMaxX(self.bounds) - titleLabelX,
+                                       self.bounds.size.width - self.frame.origin.x,
                                        titleLabelHeight);
 
     self.credentialsView.frame = CGRectMake(13.0,
@@ -366,23 +365,13 @@
     [(UIViewController *)self.loginDelegate dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark -
-#pragma mark OHAttributedLabel delegate
 
-- (BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo;
+#pragma mark UITextView Delegate
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
-    if ([linkInfo.URL.absoluteString isEqualToString:kTermsOfServiceURL]) {
-        [self askForOpeningURL:[NSURL URLWithString:kTermsOfServiceURL]];
-    } else if ([linkInfo.URL.absoluteString isEqualToString:kPrivacyPolicyURL]) {
-        [self askForOpeningURL:[NSURL URLWithString:kPrivacyPolicyURL]];
-    }
+    [self askForOpeningURL: URL];
+
     return NO;
-}
-
-- (UIColor*)colorForLink:(NSTextCheckingResult*)linkInfo underlineStyle:(int32_t*)underlineStyle;
-{
-    *underlineStyle = kCTUnderlineStyleSingle;
-    return [UIColor soundCloudGrey];
 }
 
 #pragma mark WebView Delegate

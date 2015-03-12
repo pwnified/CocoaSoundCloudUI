@@ -20,9 +20,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "OHAttributedLabel.h"
-
-#import "NSAttributedString+Attributes.h"
 #import "QuartzCore+SoundCloudUI.h"
 #import "UIImage+SoundCloudUI.h"
 #import "UIDevice+SoundCloudUI.h"
@@ -52,7 +49,7 @@
 
 @property (nonatomic, readwrite, assign) UILabel *progressLabel;
 
-@property (nonatomic, readwrite, assign) OHAttributedLabel *resultText;
+@property (nonatomic, readwrite, assign) UILabel *resultText;
 @property (nonatomic, readwrite, assign) UIImageView *resultImage;
 
 @property (nonatomic, readwrite, assign) UIButton *openAppStoreButton;
@@ -247,10 +244,10 @@
     return resultImage;
 }
 
-- (OHAttributedLabel *)resultText;
+- (UILabel *)resultText;
 {
     if (!resultText) {
-        resultText = [[[OHAttributedLabel alloc] initWithFrame:CGRectZero] autorelease];
+        resultText = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
         resultText.backgroundColor = [UIColor clearColor];
         resultText.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:resultText];
