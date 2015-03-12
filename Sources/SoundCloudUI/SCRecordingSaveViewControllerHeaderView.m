@@ -60,7 +60,8 @@
 @property (nonatomic, readwrite, assign) UITextField *whatTextField;
 @property (nonatomic, readwrite, assign) UITextField *whereTextField;
 @property (nonatomic, readwrite, assign) UIButton *disclosureButton;
-@property (nonatomic, readwrite, assign) SCSwitch *privateSwitch;
+@property (nonatomic, readwrite, assign) UILabel *privateLabel;
+@property (nonatomic, readwrite, assign) UISwitch *privateSwitch;
 
 @property (nonatomic, readonly) CGRect textRect;
 
@@ -108,7 +109,6 @@
     self.userNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.userNameLabel.opaque = NO;
     self.userNameLabel.backgroundColor = [UIColor clearColor];
-    self.userNameLabel.textColor = [UIColor whiteColor];
     self.userNameLabel.font = [UIFont systemFontOfSize:15.0];
     [self addSubview:self.userNameLabel];
 
@@ -118,9 +118,8 @@
     [self addSubview:self.logoutSeparator];
     
     // Logout Button
-    self.logoutButton = [[[SCUnderlinedButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    self.logoutButton.backgroundColor = [UIColor clearColor];
-    self.logoutButton.titleLabel.textColor = [UIColor whiteColor];
+    self.logoutButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    [self.logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     self.logoutButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [self.logoutButton setTitle:SCLocalizedString(@"record_save_logout", @"Log out") forState:UIControlStateNormal];
     [self.logoutButton setShowsTouchWhenHighlighted:YES];
@@ -137,11 +136,10 @@
     [self addSubview:self.coverImageButton];
     
     // What
-    self.whatTextField = [[[SCTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    self.whatTextField = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.whatTextField.opaque = NO;
     self.whatTextField.textAlignment = UITextAlignmentLeft;
     self.whatTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.whatTextField.textColor = [UIColor whiteColor];
     self.whatTextField.font = [UIFont systemFontOfSize:15.0];
     self.whatTextField.placeholder = SCLocalizedString(@"record_save_what", @"What");
     self.whatTextField.returnKeyType = UIReturnKeyDone;
@@ -149,11 +147,10 @@
     [self addSubview:self.whatTextField];
     
     // Where
-    self.whereTextField = [[[SCTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    self.whereTextField = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.whereTextField.opaque = NO;
     self.whereTextField.textAlignment = UITextAlignmentLeft;
     self.whereTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.whereTextField.textColor = [UIColor whiteColor];
     self.whereTextField.font = [UIFont systemFontOfSize:15.0];
     self.whereTextField.placeholder = SCLocalizedString(@"record_save_where", @"Where");
     self.whereTextField.returnKeyType = UIReturnKeyDone;
@@ -166,11 +163,15 @@
     [self.disclosureButton sizeToFit];
     [self.disclosureButton setShowsTouchWhenHighlighted:NO];
     [self addSubview:self.disclosureButton];
-    
+
+    self.privateLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    self.privateLabel.text = SCLocalizedString(@"sc_upload_private", @"Private");
+    [self addSubview:self.privateLabel];
+
     // Privacy Switch
-    self.privateSwitch = [[[SCSwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    self.privateSwitch.onText = SCLocalizedString(@"sc_upload_public", @"Public");
-    self.privateSwitch.offText = SCLocalizedString(@"sc_upload_private", @"Private");
+    self.privateSwitch = [[[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    //self.privateSwitch.onText = SCLocalizedString(@"sc_upload_public", @"Public");
+    //self.privateSwitch.offText = SCLocalizedString(@"sc_upload_private", @"Private");
     [self addSubview:self.privateSwitch];
     
     [self setUserName:nil];
@@ -294,38 +295,20 @@
     self.whereTextField.frame = whereTextFieldFrame;
     
     self.disclosureButton.center = CGPointMake(CGRectGetMaxX(self.whereTextField.frame) + SPACING, CGRectGetMidY(self.whereTextField.frame));
-    
-    self.privateSwitch.frame = CGRectMake([self margin], CGRectGetMaxY(self.coverImageButton.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * [self margin], 30);
-    
-    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + 15.0, CGRectGetWidth(self.bounds), 2.0);
-    
-    self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.secondHR.frame));
+
+    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.coverImageButton.frame) + 15.0, CGRectGetWidth(self.bounds), 2.0);
+
+    CGFloat labelOffset = whereTextFieldFrame.origin.x;
+
+    self.privateLabel.frame = CGRectMake([self margin], CGRectGetMaxY(self.secondHR.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * [self margin], 30);
+
+    self.privateSwitch.frame = CGRectMake(labelOffset, CGRectGetMaxY(self.secondHR.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * [self margin] - labelOffset, 30);
+
+
+    self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.privateLabel.frame));
     
     [self setNeedsDisplay];
 }
-
-
-- (void)drawRect:(CGRect)rect;
-{
-    [super drawRect:rect];
-
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetLineWidth(context, 1.0);
-    [[UIColor blackColor] setStroke];
-    [[UIColor transparentBlack] setFill];
-    
-    CGRect textRect = self.textRect;
-    
-    SC_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
-    CGContextFillPath(context);
-    
-    SC_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
-    CGContextMoveToPoint(context, CGRectGetMinX(textRect), CGRectGetMidY(textRect)+0.5);
-    CGContextAddLineToPoint(context, CGRectGetMaxX(textRect), CGRectGetMidY(textRect)+0.5);
-    CGContextStrokePath(context);
-}
-
 
 #pragma mark Helper
 

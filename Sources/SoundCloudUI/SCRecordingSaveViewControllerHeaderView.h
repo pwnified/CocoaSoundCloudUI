@@ -28,7 +28,8 @@
 @property (nonatomic, readonly, assign) UIButton *coverImageButton;
 @property (nonatomic, readonly, assign) UIButton *disclosureButton;
 
-@property (nonatomic, readonly, assign) SCSwitch *privateSwitch;
+@property (nonatomic, readonly, assign) UILabel *privateLabel;
+@property (nonatomic, readonly, assign) UISwitch *privateSwitch;
 
 @property (nonatomic, readonly, assign) UITextField *whatTextField;
 @property (nonatomic, readonly, assign) UITextField *whereTextField;

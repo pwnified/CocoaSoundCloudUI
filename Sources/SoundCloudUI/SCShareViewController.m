@@ -71,7 +71,7 @@
     [self.recordSaveController setPrivate:isPrivate];
 }
 
-- (void)setDownloadable:(BOOL)downloadable;
+- (void)setDownloadable:(BOOL)downloadable
 {
     [self.recordSaveController setDownloadable:downloadable];
 }
@@ -84,6 +84,11 @@
 - (void)setTitle:(NSString *)aTitle;
 {
     [self.recordSaveController setTitle:aTitle];
+}
+
+- (void)setLocationTitle: (NSString*)aLocationTitle
+{
+    [self.recordSaveController setLocationTitle: aLocationTitle];
 }
 
 - (void)setCreationDate:(NSDate *)aDate;
