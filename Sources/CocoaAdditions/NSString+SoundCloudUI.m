@@ -59,19 +59,19 @@
 	NSMutableString *string = [NSMutableString string];
 	
 	if (hours > 0) {
-		[string appendFormat:@"%u.", hours];
+		[string appendFormat:@"%u.", (int)hours];
 	}
 	
 	if (minutes >= 10 || hours == 0) {
-		[string appendFormat:@"%u.", minutes];
+		[string appendFormat:@"%u.", (int)minutes];
 	} else {
-		[string appendFormat:@"0%u.", minutes];
+		[string appendFormat:@"0%u.", (int)minutes];
 	}
 	
 	if (seconds >= 10) {
-		[string appendFormat:@"%u", seconds];
+		[string appendFormat:@"%u", (int)seconds];
 	} else {
-		[string appendFormat:@"0%u", seconds];
+		[string appendFormat:@"0%u", (int)seconds];
 	}
 	
 	return string;
@@ -80,9 +80,9 @@
 + (NSString *)stringWithInteger:(NSInteger)integer upperRange:(NSInteger)upperRange;
 {
 	if (integer <= upperRange) {
-		return [[self class] stringWithFormat:@"%d", integer];
+		return [[self class] stringWithFormat:@"%d", (int)integer];
 	} else {
-		return [[self class] stringWithFormat:@"%d+", upperRange];
+		return [[self class] stringWithFormat:@"%d+", (int)upperRange];
 	}
 }
 
@@ -197,7 +197,7 @@
 	//from http://www.tomdalling.com/cocoa/md5-hashes-in-cocoa
 	NSData* inputData = [self dataUsingEncoding:NSUTF8StringEncoding];
 	unsigned char outputData[CC_MD5_DIGEST_LENGTH];
-	CC_MD5([inputData bytes], [inputData length], outputData);
+	CC_MD5([inputData bytes], (CC_LONG)[inputData length], outputData);
 	
 	NSMutableString* hashStr = [NSMutableString string];
 	int i = 0;

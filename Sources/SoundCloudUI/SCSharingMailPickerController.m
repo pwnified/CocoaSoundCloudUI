@@ -562,7 +562,7 @@
 
 #pragma mark main
 
-static int compareAutocompleteData(id dict1, id dict2, void *context)
+static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 {
 	NSString *name1 = [dict1 objectForKey:context];
 	NSString *name2 = [dict2 objectForKey:context];
