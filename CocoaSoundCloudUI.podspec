@@ -27,6 +27,5 @@ Pod::Spec.new do |s|
   s.framework = 'CoreText'
   s.framework = 'CoreLocation'
 
-  s.dependency 'SoundCloud-Cocoa-API', :git => 'https://github.com/brightec/SoundCloud-Cocoa-API.git'
   s.dependency 'OHAttributedLabel'
 end
