@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name     = 'CocoaSoundCloudUI'
+  s.name     = 'CocoaSoundCloudUI-Hydric'
   s.version  = '1.0.9'
   s.summary  = 'A simple way to share audio on soundcloud.com.'
   s.homepage = 'https://github.com/brightec/CocoaSoundCloudUI'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
                  'Ray Yamamoto Hilton' => 'ray@wirestorm.net' }
   s.license  = 'Apache License, Version 2.0'
 
-  s.source   = { :git => 'https://github.com/brightec/CocoaSoundCloudUI.git'}
+  s.source   = { :git => 'https://github.com/hydricmedia/CocoaSoundCloudUI.git'}
 
   s.platform = :ios, '5.0'
 
