@@ -57,3 +57,25 @@
 }
 
 @end
+
+
+@implementation NSString (SoundCloudUI)
+
+- (CGSize)sc_sizeWithFont:(UIFont *)font {
+    return [self sizeWithAttributes:@{NSFontAttributeName: font}];
+}
+
+- (CGSize)sc_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
+
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = NSLineBreakByWordWrapping;
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                                 NSParagraphStyleAttributeName: style
+                                 };
+    
+    CGRect textRect = [self boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+    return CGSizeMake(ceil(textRect.size.width), ceil(textRect.size.height));
+}
+
+@end

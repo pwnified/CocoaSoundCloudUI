@@ -26,6 +26,7 @@
 #import "QuartzCore+SoundCloudUI.h"
 #import "UIImage+SoundCloudUI.h"
 #import "UIDevice+SoundCloudUI.h"
+#import "UIView+SoundCloudUI.h"
 
 #import "SCBundle.h"
 
@@ -156,7 +157,7 @@
         title = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
         title.backgroundColor = [UIColor clearColor];
         title.numberOfLines = 2;
-        title.lineBreakMode = UILineBreakModeWordWrap;
+        title.lineBreakMode = NSLineBreakByWordWrapping;
         title.text = nil;
         title.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
         [self.contentView addSubview:title];
@@ -331,7 +332,7 @@
     
     if (self.title.text) {
         CGSize maxTitleSize = CGSizeMake(innerWitdh - offset.x, CGFLOAT_MAX);
-        CGSize titleSize = [self.title.text sizeWithFont:self.title.font constrainedToSize:maxTitleSize];
+        CGSize titleSize = [self.title.text sc_sizeWithFont:self.title.font constrainedToSize:maxTitleSize];
         self.title.frame = CGRectMake(offset.x,
                                       offset.y,
                                       titleSize.width,

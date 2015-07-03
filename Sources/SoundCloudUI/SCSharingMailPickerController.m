@@ -352,7 +352,7 @@
 	[controller setPeoplePickerDelegate:self];
 	[controller setDisplayedProperties:[NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]]];
 	controller.modalPresentationStyle = UIModalPresentationFormSheet;
-	[self.navigationController presentModalViewController:controller animated:YES];	
+	[self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark ViewController
@@ -390,7 +390,7 @@
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
 {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person;
@@ -629,8 +629,8 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 	[NSThread setThreadPriority:0.2];
 	
 	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-	
-	ABAddressBookRef addressBook = ABAddressBookCreate();
+    CFErrorRef error;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
 	CFArrayRef allPersons = ABAddressBookCopyArrayOfAllPeople(addressBook);
 	CFIndex personCount = ABAddressBookGetPersonCount(addressBook);
 	

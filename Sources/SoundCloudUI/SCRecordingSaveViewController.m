@@ -46,7 +46,7 @@
 #import "SCAddConnectionViewController.h"
 
 #import "SCRecordingSaveViewController.h"
-
+#import "UIView+SoundCloudUI.h"
 
 #define COVER_WIDTH 600.0
 
@@ -492,14 +492,14 @@ const NSArray *allServices = nil;
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
-                                                              style:UIBarButtonItemStyleBordered
+                                                              style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(cancel)] autorelease]];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
-                                                            style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(upload)] autorelease]];
     
@@ -798,9 +798,7 @@ const NSArray *allServices = nil;
     if (!text)
         return nil;
     
-    CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
-                           lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize textSize = [text sc_sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)];
     
     UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
@@ -808,7 +806,7 @@ const NSArray *allServices = nil;
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor listSubtitleColor];
-    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
     label.numberOfLines = 0;
     label.font = [UIFont systemFontOfSize:15.0];
     label.text = text;
@@ -824,9 +822,9 @@ const NSArray *allServices = nil;
     if (!text)
         return 0;
     
-    CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
-                           lineBreakMode:NSLineBreakByWordWrapping];
+    CGRect textRect = [text boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX) options:kNilOptions attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15.0]} context:nil];
+    CGSize textSize = textRect.size;
+    
     
     return textSize.height + 2 * 10.0;
 }
@@ -883,7 +881,7 @@ const NSArray *allServices = nil;
 			controller.title = SCLocalizedString(@"sc_upload_with_access", @"With Access");
 			controller.result = self.sharingMailAddresses;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
-            [self presentModalViewController:navController animated:YES];
+            [self presentViewController:navController animated:YES completion:nil];
 			[controller release];
 			[navController release];
             
@@ -912,12 +910,12 @@ const NSArray *allServices = nil;
 {
     self.sharingMailAddresses = emailAdresses;
     [self.tableView reloadData];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)sharingMailPickerControllerDidCancel:(SCSharingMailPickerController *)controller;
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -1131,7 +1129,7 @@ const NSArray *allServices = nil;
         
         if (self.coverImage) {
             UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"artwork_reset", @"Reset")
-                                                                            style:UIBarButtonItemStyleBordered
+                                                                            style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(resetImage)];
             picker.navigationBar.topItem.leftBarButtonItem = resetButton;
@@ -1182,7 +1180,7 @@ const NSArray *allServices = nil;
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.allowsEditing = YES;
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
     [picker release];
 }
 
@@ -1192,7 +1190,7 @@ const NSArray *allServices = nil;
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
     [picker release];
 }
 
@@ -1352,7 +1350,7 @@ const NSArray *allServices = nil;
                                                  // update tool bar
                                                  NSMutableArray *toolbarItems = [self.toolBar.items mutableCopy];
                                                  [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"retry_upload", @"Retry")
-                                                                                                           style:UIBarButtonItemStyleBordered
+                                                                                                           style:UIBarButtonItemStylePlain
                                                                                                           target:self
                                                                                                           action:@selector(upload)] autorelease]];
                                                  self.toolBar.items = toolbarItems;
@@ -1373,7 +1371,7 @@ const NSArray *allServices = nil;
                                                  // update tool bar
                                                  NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:2];
                                                  [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
-                                                 [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"done", @"Done") style:UIBarButtonItemStyleBordered target:self action:@selector(close)] autorelease]];
+                                                 [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"done", @"Done") style:UIBarButtonItemStylePlain target:self action:@selector(close)] autorelease]];
                                                  [self.toolBar setItems:toolbarItems animated:YES];
                                             }
                                          }];
@@ -1392,7 +1390,7 @@ const NSArray *allServices = nil;
     }
     
     // Dismiss modal view
-    [[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
+    [[self modalPresentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)relogin;
@@ -1406,7 +1404,7 @@ const NSArray *allServices = nil;
 
 - (IBAction)close;
 {
-    [[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
+    [[self modalPresentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark Notification Handling
@@ -1501,7 +1499,7 @@ const NSArray *allServices = nil;
     
     NSMutableArray *toolBarItems = [NSMutableArray arrayWithArray:self.toolBar.items];
     [toolBarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
-                                                              style:UIBarButtonItemStyleBordered
+                                                              style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(upload)] autorelease]];
     [self.toolBar setItems:toolBarItems animated:animated];
@@ -1526,7 +1524,7 @@ const NSArray *allServices = nil;
     if (self.completionHandler) {
         self.completionHandler(nil, anError);
     }
-    [[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
+    [[self modalPresentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark Helpers
@@ -1554,8 +1552,8 @@ const NSArray *allServices = nil;
     NSString *weekday = nil;
     NSString *time = nil;
     
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSWeekdayCalendarUnit | NSHourCalendarUnit) fromDate:self.trackCreationDate];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components:(NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate:self.trackCreationDate];
     [gregorian release];
     
     switch ([components weekday]) {

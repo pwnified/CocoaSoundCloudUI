@@ -30,3 +30,11 @@
 - (UIScrollView *)enclosingScrollView;
 
 @end
+
+
+@interface NSString (SoundCloudUI)
+
+- (CGSize)sc_sizeWithFont:(UIFont *)font;
+- (CGSize)sc_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
+
+@end
