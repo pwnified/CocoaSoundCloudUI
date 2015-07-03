@@ -80,11 +80,11 @@
 @property (nonatomic, strong) SCFoursquarePlacePickerController *foursquareController;
 @property (nonatomic, strong) UIPopoverController *imagePickerPopoverController;
 
-@property (nonatomic, weak) SCRecordingSaveViewControllerHeaderView *headerView;
-@property (nonatomic, weak) SCRecordingUploadProgressView *uploadProgressView;
-@property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) UIToolbar *toolBar;
-@property (nonatomic, weak) SCLoginView *loginView;
+@property (nonatomic, strong) SCRecordingSaveViewControllerHeaderView *headerView;
+@property (nonatomic, strong) SCRecordingUploadProgressView *uploadProgressView;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIToolbar *toolBar;
+@property (nonatomic, strong) SCLoginView *loginView;
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
@@ -964,7 +964,7 @@ const NSArray *allServices = nil;
         [self.imagePickerPopoverController dismissPopoverAnimated:YES];
         self.imagePickerPopoverController = nil;
     } else {
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
