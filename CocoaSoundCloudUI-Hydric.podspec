@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
                  'Ray Yamamoto Hilton' => 'ray@wirestorm.net' }
   s.license  = 'Apache License, Version 2.0'
 
-  s.source   = { :git => 'https://github.com/hydricmedia/CocoaSoundCloudUI.git'}
+  s.source   = { :git => 'https://github.com/hydricmedia/CocoaSoundCloudUI.git', :branch => 'master'}
 
-  s.platform = :ios, '5.0'
+  s.platform = :ios, '8.0'
 
   s.source_files = 'Sources', 'Sources/**/*.{h,m}'
 
