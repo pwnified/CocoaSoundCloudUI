@@ -24,17 +24,17 @@
 
 @class SCAccount;
 
-@interface SCAddConnectionViewController : UIViewController <UIWebViewDelegate> {
-    
-    id<SCAddConnectionViewControllerDelegate> delegate;
-    
-    SCAccount *account;
-    NSString *service;
-    NSURL *authorizeURL;
-    UIWebView *webView;
-    
-    BOOL loading;
-}
+@interface SCAddConnectionViewController : UIViewController <UIWebViewDelegate>
+
+@property (nonatomic, weak) id <SCAddConnectionViewControllerDelegate> delegate;
+@property (nonatomic, strong) SCAccount *account;
+@property (nonatomic, copy) NSString *service;
+@property (nonatomic, strong) NSURL *authorizeURL;
+@property (nonatomic, strong) UIWebView *webView;
+
+@property (nonatomic, assign) BOOL loading;
+
+
 
 - (id)initWithService:(NSString *)service account:(SCAccount *)anAccount delegate:(id<SCAddConnectionViewControllerDelegate>)delegate;
 - (id)initWithService:(NSString *)service delegate:(id<SCAddConnectionViewControllerDelegate>)delegate;

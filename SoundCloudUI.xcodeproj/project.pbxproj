@@ -289,7 +289,7 @@
 				20C862BA16833789003523CF /* SCDrawing.m */,
 				F6EF8C9B13F92CF900B20B40 /* SCBundle.h */,
 				F6EF8C9C13F92CF900B20B40 /* SCBundle.m */,
-				F6F5E4F313F965CF00492B2B /* Contollers */,
+				F6F5E4F313F965CF00492B2B /* Controllers */,
 				F6F5E4F213F965A500492B2B /* Controls */,
 				F6F5E4F113F9654E00492B2B /* Table Cells */,
 				F6F5E4F013F9651B00492B2B /* Views */,
@@ -436,7 +436,7 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
-		F6F5E4F313F965CF00492B2B /* Contollers */ = {
+		F6F5E4F313F965CF00492B2B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				F6EF8CAA13F92CF900B20B40 /* SCRecordingSaveViewController.h */,
@@ -445,7 +445,7 @@
 				F678272113F9310300CACABE /* Mail Picker */,
 				F678272013F930EA00CACABE /* Foursquare */,
 			);
-			name = Contollers;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -31,14 +31,21 @@
 #import "SCAddConnectionViewController.h"
 
 @interface SCAddConnectionViewController ()
-@property (nonatomic, strong) NSURL *authorizeURL;
-@property (nonatomic, assign) BOOL loading;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 
 
 @implementation SCAddConnectionViewController
+
+@synthesize delegate;
+@synthesize account;
+@synthesize service;
+@synthesize authorizeURL;
+@synthesize webView;
+
+@synthesize loading;
+
 
 #pragma mark Lifecycle
 
@@ -178,6 +185,7 @@
 
 - (void)viewDidAppear:(BOOL)animated;
 {
+    [super viewDidAppear:animated];
     self.activityIndicator.center = self.view.center;
 }
 

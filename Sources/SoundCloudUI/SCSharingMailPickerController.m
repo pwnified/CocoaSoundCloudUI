@@ -634,7 +634,9 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 			if (email) {
 				
 				if (label) {
-					mailType = (NSString *)CFBridgingRelease(ABAddressBookCopyLocalizedLabel((CFStringRef)CFBridgingRetain(label)));
+                    CFStringRef cfLabel = CFBridgingRetain(label);
+					mailType = (NSString *)CFBridgingRelease(ABAddressBookCopyLocalizedLabel(cfLabel));
+                    CFRelease(cfLabel);
 				} else {
 					mailType = @"email";
 				}
