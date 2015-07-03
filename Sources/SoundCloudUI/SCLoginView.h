@@ -25,8 +25,8 @@
 
 @interface SCLoginView : UIScrollView
 
-@property (nonatomic, assign) id<SCLoginViewProtocol> loginDelegate;
-@property (nonatomic, assign) SCCredentialsView *credentialsView;
+@property (nonatomic, weak) id<SCLoginViewProtocol> loginDelegate;
+@property (nonatomic, strong) SCCredentialsView *credentialsView;
 - (void)removeAllCookies;
 - (void)login:(id)sender;
 @end

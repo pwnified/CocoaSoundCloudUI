@@ -41,12 +41,6 @@
 	return self;
 }
 
-- (void)dealloc;
-{
-	[background release];
-	[label release];
-	[super dealloc];
-}
 
 
 #pragma mark Accessors
@@ -66,7 +60,7 @@
 
 - (void)setBackground:(UIImage *)value;
 {
-	[value retain]; [background release]; background = value;
+	  background = value;
 	[self setNeedsDisplay];
 }
 

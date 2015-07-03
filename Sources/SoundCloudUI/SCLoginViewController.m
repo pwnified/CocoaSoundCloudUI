@@ -42,8 +42,8 @@
 - (id)initWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerCompletionHandler)aCompletionHandler;
 
 #pragma mark Accessors
-@property (nonatomic, retain) NSURL *preparedURL;
-@property (nonatomic, assign) SCLoginView *loginView;
+@property (nonatomic, strong) NSURL *preparedURL;
+@property (nonatomic, strong) SCLoginView *loginView;
 @property (nonatomic, copy) SCLoginViewControllerCompletionHandler completionHandler;
 
 #pragma mark Notifications
@@ -63,11 +63,11 @@
 + (id)loginViewControllerWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerCompletionHandler)aCompletionHandler;
 {
     
-    SCLoginViewController *loginViewController = [[[self alloc] initWithPreparedURL:anURL completionHandler:aCompletionHandler] autorelease];
+    SCLoginViewController *loginViewController = [[self alloc] initWithPreparedURL:anURL completionHandler:aCompletionHandler];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     [navigationController setModalPresentationStyle:UIModalPresentationFormSheet];
     
-    return [navigationController autorelease];
+    return navigationController;
 }
 
 #pragma mark Lifecycle
@@ -80,7 +80,7 @@
 {
     self = [super init];
     if (self) {
-        preparedURL = [anURL retain];
+        preparedURL = anURL;
         completionHandler = [aCompletionHandler copy];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -109,9 +109,6 @@
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [preparedURL release];
-    [completionHandler release];
-    [super dealloc];
 }
 
 
@@ -120,7 +117,7 @@
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
-    self.loginView = [[[SCLoginView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.loginView = [[SCLoginView alloc] initWithFrame:self.view.bounds];
     self.loginView.loginDelegate = self;
     self.loginView.delegate = self;
     self.loginView.contentSize = CGSizeMake(1.0, CGRectGetHeight(self.loginView.bounds));
@@ -134,10 +131,10 @@
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
-    SCConnectToSoundCloudTitleView *scTitleView = [[[SCConnectToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0,
+    SCConnectToSoundCloudTitleView *scTitleView = [[SCConnectToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0,
                                                                                                                     0,
                                                                                                                     CGRectGetWidth(self.view.bounds),
-                                                                                                                    44.0)] autorelease];
+                                                                                                                    44.0)];
 
     [self.view addSubview:scTitleView];
     self.loginView.frame = CGRectMake(0,
@@ -179,7 +176,6 @@
                                           cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
 
     //[[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
 }

@@ -42,22 +42,22 @@
 @interface SCRecordingUploadProgressView ()
 - (void)commonAwake;
 
-@property (nonatomic, readwrite, assign) UIImageView *artworkView;
-@property (nonatomic, readwrite, assign) UILabel *title;
-@property (nonatomic, readwrite, assign) UIProgressView *progress;
+@property (nonatomic, readwrite, strong) UIImageView *artworkView;
+@property (nonatomic, readwrite, strong) UILabel *title;
+@property (nonatomic, readwrite, strong) UIProgressView *progress;
 
-@property (nonatomic, readwrite, assign) UIView *contentView;
+@property (nonatomic, readwrite, strong) UIView *contentView;
 
-@property (nonatomic, readwrite, assign) UIView *firstSeparator;
-@property (nonatomic, readwrite, assign) UIView *secondSeparator;
+@property (nonatomic, readwrite, strong) UIView *firstSeparator;
+@property (nonatomic, readwrite, strong) UIView *secondSeparator;
 
-@property (nonatomic, readwrite, assign) UILabel *progressLabel;
+@property (nonatomic, readwrite, strong) UILabel *progressLabel;
 
-@property (nonatomic, readwrite, assign) OHAttributedLabel *resultText;
-@property (nonatomic, readwrite, assign) UIImageView *resultImage;
+@property (nonatomic, readwrite, strong) OHAttributedLabel *resultText;
+@property (nonatomic, readwrite, strong) UIImageView *resultImage;
 
-@property (nonatomic, readwrite, assign) UIButton *openAppStoreButton;
-@property (nonatomic, readwrite, assign) UIButton *openAppButton;
+@property (nonatomic, readwrite, strong) UIButton *openAppStoreButton;
+@property (nonatomic, readwrite, strong) UIButton *openAppButton;
 
 
 #pragma mark Actions
@@ -109,7 +109,6 @@
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 #pragma mark Accessors
@@ -145,7 +144,7 @@
         } else {
             artworkFrame = CGRectMake(0, 0, 40, 40);
         }
-        artworkView = [[[UIImageView alloc] initWithFrame:artworkFrame] autorelease];
+        artworkView = [[UIImageView alloc] initWithFrame:artworkFrame];
         [self.contentView addSubview:artworkView];
     }
     return artworkView;
@@ -154,7 +153,7 @@
 - (UILabel *)title;
 {
     if (!title) {
-        title = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+        title = [[UILabel alloc] initWithFrame:CGRectZero];
         title.backgroundColor = [UIColor clearColor];
         title.numberOfLines = 2;
         title.lineBreakMode = NSLineBreakByWordWrapping;
@@ -168,7 +167,7 @@
 - (UIProgressView *)progress;
 {
     if (!progress) {
-        progress = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
+        progress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
         progress.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:progress];
     }
@@ -183,7 +182,7 @@
 - (UIView *)contentView;
 {
     if (!contentView) {
-        contentView = [[[SCGradientView alloc] initWithFrame:CGRectZero] autorelease];
+        contentView = [[SCGradientView alloc] initWithFrame:CGRectZero];
         
         // Background Color
         contentView.backgroundColor = [UIColor whiteColor];
@@ -210,7 +209,7 @@
 - (UIView *)firstSeparator;
 {
     if (!firstSeparator) {
-        firstSeparator = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        firstSeparator = [[UIView alloc] initWithFrame:CGRectZero];
         firstSeparator.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         [self.contentView addSubview:firstSeparator];
     }
@@ -220,7 +219,7 @@
 - (UIView *)secondSeparator;
 {
     if (!secondSeparator) {
-        secondSeparator = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        secondSeparator = [[UIView alloc] initWithFrame:CGRectZero];
         secondSeparator.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         [self.contentView addSubview:secondSeparator];
     }
@@ -230,7 +229,7 @@
 - (UILabel *)progressLabel;
 {
     if (!progressLabel) {
-        progressLabel = [[[UILabel alloc] init] autorelease];
+        progressLabel = [[UILabel alloc] init];
         progressLabel.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
         progressLabel.text = SCLocalizedString(@"record_save_uploading", @"Uploading ...");
         progressLabel.backgroundColor = [UIColor clearColor];
@@ -251,7 +250,7 @@
 - (OHAttributedLabel *)resultText;
 {
     if (!resultText) {
-        resultText = [[[OHAttributedLabel alloc] initWithFrame:CGRectZero] autorelease];
+        resultText = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
         resultText.backgroundColor = [UIColor clearColor];
         resultText.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:resultText];

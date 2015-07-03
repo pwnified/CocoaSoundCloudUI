@@ -40,12 +40,12 @@
 #import "NSAttributedString+Attributes.h"
 
 @interface SCLoginView () <OHAttributedLabelDelegate, UIWebViewDelegate>
-@property (nonatomic, readwrite, assign) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, assign) UILabel *titleLabel;
-@property (nonatomic, assign) SCGradientButton *fbButton;
-@property (nonatomic, assign) SCGradientButton *loginButton;
-@property (nonatomic, readwrite, assign) UIWebView *webView;
-@property (nonatomic, assign) OHAttributedLabel *tosLabel;
+@property (nonatomic, readwrite, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) SCGradientButton *fbButton;
+@property (nonatomic, strong) SCGradientButton *loginButton;
+@property (nonatomic, readwrite, strong) UIWebView *webView;
+@property (nonatomic, strong) OHAttributedLabel *tosLabel;
 - (void)commonAwake;
 @end
 
@@ -92,12 +92,12 @@
 {
     self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
-    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	self.activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
 	self.activityIndicator.hidesWhenStopped = YES;
 	[self addSubview:self.activityIndicator];
     
-    self.webView = [[[UIWebView alloc] initWithFrame:self.bounds] autorelease];
+    self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
     self.webView.delegate = self;
     self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.webView.backgroundColor = [UIColor whiteColor];
@@ -114,10 +114,6 @@
     [self layoutTermsAndPrivacy];
 }
 
-- (void)dealloc;
-{
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Layout all of the things
@@ -311,7 +307,6 @@
 
 #pragma mark Accessors
 
-@synthesize loginDelegate;
 @synthesize activityIndicator;
 @synthesize credentialsView;
 @synthesize fbButton;
@@ -344,7 +339,6 @@
                                               cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
                                               otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
 

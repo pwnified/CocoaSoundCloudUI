@@ -217,7 +217,6 @@
 			children = (
 				F62E0D6C148FBE3C00BE8F14 /* Shared */,
 				F62E0D6D148FBE4200BE8F14 /* iOS */,
-				F62E0D6E148FBE4700BE8F14 /* Mac OS X */,
 			);
 			name = SoundCloudUI;
 			sourceTree = "<group>";
@@ -227,7 +226,6 @@
 			children = (
 				F62E0D63148FBE0900BE8F14 /* Shared */,
 				F62E0D64148FBE1000BE8F14 /* iOS */,
-				F62E0D65148FBE1600BE8F14 /* Mac OS X */,
 			);
 			path = CocoaAdditions;
 			sourceTree = "<group>";
@@ -262,13 +260,6 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		F62E0D65148FBE1600BE8F14 /* Mac OS X */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Mac OS X";
-			sourceTree = "<group>";
-		};
 		F62E0D6C148FBE3C00BE8F14 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,13 +280,6 @@
 				F678271C13F9307600CACABE /* Private */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		F62E0D6E148FBE4700BE8F14 /* Mac OS X */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Mac OS X";
 			sourceTree = "<group>";
 		};
 		F678271C13F9307600CACABE /* Private */ = {
@@ -700,6 +684,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7C7068FA21E34B0F1443FC0 /* Pods-libSoundCloudUI.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/SoundCloudUI-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -718,6 +703,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB8E33E3E9471DFDA80765AE /* Pods-libSoundCloudUI.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/SoundCloudUI-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;

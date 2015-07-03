@@ -26,7 +26,10 @@
 {
     SEL presenting = NSSelectorFromString(@"presentingViewController");
     if ([self respondsToSelector:presenting]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         return [self performSelector:presenting];
+#pragma clang diagnostic pop
     }
     else {
         return self.parentViewController;

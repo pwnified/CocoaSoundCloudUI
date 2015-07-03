@@ -38,7 +38,7 @@
 + (SCShareViewController *)shareViewControllerWithFileURL:(NSURL *)aFileURL
                                         completionHandler:(SCSharingViewControllerCompletionHandler)aCompletionHandler;
 {
-    SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
+    SCRecordingSaveViewController *recView = [[SCRecordingSaveViewController alloc] init];
     if (!recView) return nil;
     
     [recView setFileURL:aFileURL];
@@ -46,13 +46,13 @@
     
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
     [shareViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-    return [shareViewController autorelease];
+    return shareViewController;
 }
 
 + (SCShareViewController *)shareViewControllerWithFileData:(NSData *)someData
                                          completionHandler:(SCSharingViewControllerCompletionHandler)aCompletionHandler;
 {
-    SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
+    SCRecordingSaveViewController *recView = [[SCRecordingSaveViewController alloc] init];
     if (!recView) return nil;
     
     [recView setFileData:someData];
@@ -60,7 +60,7 @@
     
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
     [shareViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-    return [shareViewController autorelease];
+    return shareViewController;
 }
 
 

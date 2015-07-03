@@ -34,7 +34,7 @@
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
 	CFRelease(theUUID);
 	
-    return [(NSString *)string autorelease];
+    return CFBridgingRelease(string);
 }
 
 #pragma mark NSTimeInterval
@@ -125,50 +125,42 @@
 
 - (NSString *)stringByUnescapingXMLEntities;
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	NSString *returnValue = [self stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"auml;" withString:@"ä"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&Auml;" withString:@"Ä"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&ouml;" withString:@"ö"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&Ouml;" withString:@"Ö"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&uuml;" withString:@"ü"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&Üuml;" withString:@"Ü"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&szlig;" withString:@"ß"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];	
-	
-	[returnValue retain];
-	[pool release];
-	[returnValue autorelease];
-	return returnValue;
+    NSMutableString *mutableSelf = [self mutableCopy];
+    [mutableSelf replaceOccurrencesOfString:@"&amp;" withString:@"&" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&#39;" withString:@"'" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&gt;" withString:@">" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&lt;" withString:@"<" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"auml;" withString:@"ä" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&Auml;" withString:@"Ä" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&ouml;" withString:@"ö" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&Ouml;" withString:@"Ö" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&uuml;" withString:@"ü" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&Üuml;" withString:@"Ü" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&szlig;" withString:@"ß" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"&nbsp;" withString:@" " options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+	return [mutableSelf copy];
 }
 
 - (NSString *)stringByEscapingXMLEntities;
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	NSString *returnValue = [self stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"'" withString:@"&#39;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@">" withString:@"&gt;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"ä" withString:@"auml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"Ä" withString:@"&Auml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"ö" withString:@"&ouml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"Ö" withString:@"&Ouml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"ü" withString:@"&uuml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"Ü" withString:@"&Üuml;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@"ß" withString:@"&szlig;"];
-	returnValue = [returnValue stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];	
-	
-	[returnValue retain];
-	[pool release];
-	[returnValue autorelease];
-	return returnValue;
+    NSMutableString *mutableSelf = [self mutableCopy];
+
+    [mutableSelf replaceOccurrencesOfString:@"&" withString:@"&amp;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"\"" withString:@"&quot;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"'" withString:@"&#39;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@">" withString:@"&gt;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"<" withString:@"&lt;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"ä" withString:@"auml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"Ä" withString:@"&Auml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"ö" withString:@"&ouml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"Ö" withString:@"&Ouml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"ü" withString:@"&uuml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"Ü" withString:@"&Üuml;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@"ß" withString:@"&szlig;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    [mutableSelf replaceOccurrencesOfString:@" " withString:@"&nbsp;" options:kNilOptions range:NSMakeRange(0, mutableSelf.length)];
+    
+    return [mutableSelf copy];
 }
 
 - (NSString *)stringByAddingURLEncoding;
@@ -178,7 +170,7 @@
 																	   NULL, //Characters to leave unescaped
 																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]", //Legal Characters to be escaped
 																	   kCFStringEncodingUTF8); //Encoding
-	return [(NSString *)returnValue autorelease];
+    return CFBridgingRelease(returnValue);
 }
 
 - (NSString *)stringByRemovingURLEncoding;
@@ -186,7 +178,7 @@
 	CFStringRef returnValue = CFURLCreateStringByReplacingPercentEscapes(kCFAllocatorDefault, //Allocator
 																		 (CFStringRef)self,
 																		 nil);
-	return [(NSString *)returnValue autorelease];
+	return CFBridgingRelease(returnValue);
 }
 
 

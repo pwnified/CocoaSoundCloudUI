@@ -41,7 +41,6 @@
         [cloudImageView sizeToFit];
         cloudImageView.frame = CGRectMake(9, 7, CGRectGetWidth(cloudImageView.frame), CGRectGetHeight(cloudImageView.frame));
         [self addSubview:cloudImageView];
-        [cloudImageView release];
         
         UIImageView *titleImageView = [[UIImageView alloc] init];
 //        titleImageView.backgroundColor = [UIColor yellowColor];
@@ -50,7 +49,6 @@
         [titleImageView sizeToFit];
         titleImageView.frame = CGRectMake(43, 7, CGRectGetWidth(titleImageView.frame), CGRectGetHeight(titleImageView.frame));
         [self addSubview:titleImageView];
-        [titleImageView release];
     }
     return self;
 }

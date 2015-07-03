@@ -31,9 +31,9 @@
 #import "SCAddConnectionViewController.h"
 
 @interface SCAddConnectionViewController ()
-@property (nonatomic, retain) NSURL *authorizeURL;
+@property (nonatomic, strong) NSURL *authorizeURL;
 @property (nonatomic, assign) BOOL loading;
-@property (nonatomic, assign) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 
@@ -50,8 +50,8 @@
     if (self) {
         loading = NO;        
         delegate = aDelegate;
-        service = [aService retain];
-        account = [anAccount retain];
+        service = aService;
+        account = anAccount;
         
         NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                     service, @"service",
@@ -84,7 +84,6 @@
                                                                cancelButtonTitle:SCLocalizedString(@"connection_error_ok", @"OK")
                                                                otherButtonTitles:nil];
                          [alert show];
-                         [alert release];
 
                      }
                  }];
@@ -101,7 +100,7 @@
         loading = NO;        
 
         delegate = aDelegate;
-        service = [aService retain];
+        service = aService;
     }
     return self;
 }
@@ -110,10 +109,7 @@
 {
     delegate = nil;
     webView.delegate = nil;
-    [authorizeURL release];
-    [service release];
     self.loading = NO;
-    [super dealloc];
 }
 
 #pragma mark Accessors
@@ -124,7 +120,7 @@
 
 - (void)setAuthorizeURL:(NSURL *)value;
 {
-    [value retain]; [authorizeURL release]; authorizeURL = value;
+      authorizeURL = value;
     
     if (webView) {
         [webView loadRequest:[NSURLRequest requestWithURL:authorizeURL]];
@@ -146,7 +142,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageWithName:@"darkTexturedBackgroundPattern"]];
     
-    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin |
                                                UIViewAutoresizingFlexibleTopMargin |
                                                UIViewAutoresizingFlexibleLeftMargin | 

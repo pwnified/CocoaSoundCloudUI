@@ -54,41 +54,41 @@
 @interface SCRecordingSaveViewController () <UIScrollViewDelegate, UIPopoverControllerDelegate>
 
 #pragma mark Accessors
-@property (nonatomic, retain) NSArray *availableConnections;
-@property (nonatomic, retain) NSArray *unconnectedServices;
-@property (nonatomic, retain) NSArray *sharingConnections;
-@property (nonatomic, retain) NSArray *sharingMailAddresses;
+@property (nonatomic, strong) NSArray *availableConnections;
+@property (nonatomic, strong) NSArray *unconnectedServices;
+@property (nonatomic, strong) NSArray *sharingConnections;
+@property (nonatomic, strong) NSArray *sharingMailAddresses;
 @property (nonatomic, assign) BOOL loadingConnections;
 
-@property (nonatomic, retain) NSURL *fileURL;
-@property (nonatomic, retain) NSData *fileData;
+@property (nonatomic, strong) NSURL *fileURL;
+@property (nonatomic, strong) NSData *fileData;
 @property (nonatomic, assign) BOOL isPrivate;
 @property (nonatomic, assign) BOOL isDownloadable;
-@property (nonatomic, retain) UIImage *coverImage;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSDate *trackCreationDate;
-@property (nonatomic, retain) NSArray *customTags;
-@property (nonatomic, retain) NSString *customSharingNote;
-@property (nonatomic, retain) NSDictionary *customParameters;
+@property (nonatomic, strong) UIImage *coverImage;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDate *trackCreationDate;
+@property (nonatomic, strong) NSArray *customTags;
+@property (nonatomic, strong) NSString *customSharingNote;
+@property (nonatomic, strong) NSDictionary *customParameters;
 
-@property (nonatomic, retain) CLLocation *location;
+@property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, copy) NSString *locationTitle;
 @property (nonatomic, copy) NSString *foursquareID;
 
-@property (nonatomic, readwrite, retain) SCAccount *account;
+@property (nonatomic, readwrite, strong) SCAccount *account;
 
-@property (nonatomic, retain) SCFoursquarePlacePickerController *foursquareController;
-@property (nonatomic, retain) UIPopoverController *imagePickerPopoverController;
+@property (nonatomic, strong) SCFoursquarePlacePickerController *foursquareController;
+@property (nonatomic, strong) UIPopoverController *imagePickerPopoverController;
 
-@property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
-@property (nonatomic, assign) SCRecordingUploadProgressView *uploadProgressView;
-@property (nonatomic, assign) UITableView *tableView;
-@property (nonatomic, assign) UIToolbar *toolBar;
-@property (nonatomic, assign) SCLoginView *loginView;
+@property (nonatomic, weak) SCRecordingSaveViewControllerHeaderView *headerView;
+@property (nonatomic, weak) SCRecordingUploadProgressView *uploadProgressView;
+@property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) UIToolbar *toolBar;
+@property (nonatomic, weak) SCLoginView *loginView;
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
-@property (nonatomic, retain) id uploadRequestHandler;
+@property (nonatomic, strong) id uploadRequestHandler;
 
 
 #pragma mark UI
@@ -229,7 +229,7 @@ const NSArray *allServices = nil;
         coverImage = nil;
         title = nil;
         
-        trackCreationDate = [[NSDate date] retain];
+        trackCreationDate = [NSDate date];
         
         completionHandler = nil;
         
@@ -270,22 +270,7 @@ const NSArray *allServices = nil;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [availableConnections release];
-    [unconnectedServices release];
-    [sharingConnections release];
-    [sharingMailAddresses release];
-    [account release];
-    [coverImage release];
-    [title release];
-    [trackCreationDate release];
-    [location release];
-    [locationTitle release];
-    [foursquareID release];
-    [foursquareController release];
-    [completionHandler release];
-    [imagePickerPopoverController release];
     
-    [super dealloc];
 }
 
 
@@ -294,8 +279,6 @@ const NSArray *allServices = nil;
 - (void)setFileURL:(NSURL *)aFileURL;
 {
     if (fileURL != aFileURL) {
-        [fileURL release];
-        [aFileURL retain];
         fileURL = aFileURL;
     }
 }
@@ -303,8 +286,6 @@ const NSArray *allServices = nil;
 - (void)setFileData:(NSData *)someFileData;
 {
     if (fileData != someFileData) {
-        [fileData release];
-        [someFileData retain];
         fileData = someFileData;
     }
 }
@@ -312,8 +293,6 @@ const NSArray *allServices = nil;
 - (void)setAccount:(SCAccount *)anAccount;
 {   
     if (account != anAccount) {
-        [account release];
-        [anAccount retain];
         account = anAccount;
  
         if (self.account) {
@@ -386,8 +365,6 @@ const NSArray *allServices = nil;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 {
     if (coverImage != aCoverImage) {
-        [coverImage release];
-        [aCoverImage retain];
         coverImage = aCoverImage;
         [self.headerView setCoverImage:aCoverImage];
     }
@@ -396,8 +373,6 @@ const NSArray *allServices = nil;
 - (void)setTitle:(NSString *)aTitle;
 {
     if (title != aTitle) {
-        [title release];
-        [aTitle retain];
         title = aTitle;
     }
 }
@@ -419,7 +394,7 @@ const NSArray *allServices = nil;
 
 - (void)setAvailableConnections:(NSArray *)value;
 {
-    [value retain]; [availableConnections release]; availableConnections = value;
+      availableConnections = value;
     
     NSMutableArray *newUnconnectedServices = [allServices mutableCopy];
     
@@ -435,7 +410,6 @@ const NSArray *allServices = nil;
     }
     
     self.unconnectedServices = newUnconnectedServices;
-    [newUnconnectedServices release];
     [self.tableView reloadData];
 }
 
@@ -444,9 +418,9 @@ const NSArray *allServices = nil;
 
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 {
-    self.foursquareController = [[[SCFoursquarePlacePickerController alloc] initWithDelegate:self
+    self.foursquareController = [[SCFoursquarePlacePickerController alloc] initWithDelegate:self
                                                                                     clientID:aClientID
-                                                                                clientSecret:aClientSecret] autorelease];
+                                                                                clientSecret:aClientSecret];
     
     if (self.foursquareController) {
         self.headerView.disclosureButton.hidden = NO;
@@ -482,7 +456,7 @@ const NSArray *allServices = nil;
     
     
     // Toolbar
-    self.toolBar = [[[UIToolbar alloc] init] autorelease];
+    self.toolBar = [[UIToolbar alloc] init];
     self.toolBar.barStyle = UIBarStyleBlack;
     self.toolBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                      UIViewAutoresizingFlexibleTopMargin);
@@ -491,24 +465,24 @@ const NSArray *allServices = nil;
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
+    [toolbarItems addObject:[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
-                                                             action:@selector(cancel)] autorelease]];
+                                                             action:@selector(cancel)]];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
+    [toolbarItems addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
+    [toolbarItems addObject:[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
                                                             style:UIBarButtonItemStylePlain
                                                              target:self
-                                                             action:@selector(upload)] autorelease]];
+                                                             action:@selector(upload)]];
     
     [self.toolBar setItems:toolbarItems];
     
     
     // Table View
-    self.tableView = [[[UITableView alloc] initWithFrame:CGRectZero
-                                                   style:UITableViewStyleGrouped] autorelease];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero
+                                                   style:UITableViewStyleGrouped];
     
     self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
                                        UIViewAutoresizingFlexibleWidth);
@@ -523,7 +497,7 @@ const NSArray *allServices = nil;
     
     
     // Header
-    self.headerView = [[[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)] autorelease];
+    self.headerView = [[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)];
     
     self.headerView.whatTextField.delegate = self;
     self.headerView.whereTextField.delegate = self;
@@ -562,7 +536,7 @@ const NSArray *allServices = nil;
 {
     [super viewWillAppear:animated];
     
-    [self.view addSubview:[[[SCShareToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
+    [self.view addSubview:[[SCShareToSoundCloudTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)]];
     
     [self.toolBar setFrame:CGRectMake(0.0,
                                       CGRectGetHeight(self.view.bounds) - 44.0, 
@@ -653,8 +627,8 @@ const NSArray *allServices = nil;
     if (isPrivate) {
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"mailShare"];
         if (!cell) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
-            SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"];
+            SCTableCellBackgroundView *backgroundView = [[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)];
             backgroundView.opaque = NO;
             backgroundView.backgroundColor = [UIColor transparentBlack];
             backgroundView.borderColor = [UIColor blackColor];
@@ -683,8 +657,8 @@ const NSArray *allServices = nil;
     } else if (self.loadingConnections) {
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"loading"];
         if (!cell) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"loading"] autorelease];
-            SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"loading"];
+            SCTableCellBackgroundView *backgroundView = [[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)];
             backgroundView.opaque = NO;
             backgroundView.backgroundColor = [UIColor clearColor];
             backgroundView.borderColor = [UIColor clearColor];
@@ -694,7 +668,6 @@ const NSArray *allServices = nil;
             activityIndicatorView.center = CGPointMake(backgroundView.bounds.size.width / 2.0, backgroundView.bounds.size.height / 2.0);
             [activityIndicatorView startAnimating];
             [backgroundView addSubview:activityIndicatorView];
-            [activityIndicatorView release];
 
             cell.backgroundView = backgroundView;
             cell.backgroundColor = [UIColor clearColor];
@@ -709,10 +682,10 @@ const NSArray *allServices = nil;
             UITableViewCell *cell = nil;  // WORKAROUND: Reusing cells causes a problem with the boarder
                                           //[aTableView dequeueReusableCellWithIdentifier:@"connection"];
             if (!cell) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.opaque = NO;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+                SCTableCellBackgroundView *backgroundView = [[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -727,7 +700,7 @@ const NSArray *allServices = nil;
             
             cell.textLabel.text = [connection objectForKey:@"display_name"];
             
-            SCSwitch *accessorySwitch = [[[SCSwitch alloc] init] autorelease];
+            SCSwitch *accessorySwitch = [[SCSwitch alloc] init];
             accessorySwitch.offBackgroundImage = [[SCBundle imageWithName:@"switch_gray"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
             
             accessorySwitch.on = NO;
@@ -753,9 +726,9 @@ const NSArray *allServices = nil;
             UITableViewCell *cell = nil; // WORKAROUND: Reusing cells causes a problem with the boarder
                                          // [aTableView dequeueReusableCellWithIdentifier:@"newConnection"];
             if (!cell) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+                SCTableCellBackgroundView *backgroundView = [[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -763,7 +736,7 @@ const NSArray *allServices = nil;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
                 cell.textLabel.font = [UIFont systemFontOfSize:15.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
-                cell.accessoryView = [[[UIImageView alloc] initWithImage:[SCBundle imageWithName:@"DisclosureIndicator"]] autorelease];
+                cell.accessoryView = [[UIImageView alloc] initWithImage:[SCBundle imageWithName:@"DisclosureIndicator"]];
                 cell.detailTextLabel.text = SCLocalizedString(@"configure", @"Configure");
                 cell.detailTextLabel.textColor = [UIColor whiteColor];
                 cell.detailTextLabel.backgroundColor = [UIColor clearColor];
@@ -800,7 +773,7 @@ const NSArray *allServices = nil;
     
     CGSize textSize = [text sc_sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)];
     
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)] autorelease];
+    UIView *sectionHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, [self cellMargin], 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -811,7 +784,6 @@ const NSArray *allServices = nil;
     label.font = [UIFont systemFontOfSize:15.0];
     label.text = text;
     [sectionHeaderView addSubview:label];
-    [label release];
     return sectionHeaderView;
 }
 
@@ -851,7 +823,7 @@ const NSArray *allServices = nil;
     } else if (self.loadingConnections) {
         return nil;
     } else {
-        UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 20.0)] autorelease];
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 20.0)];
         footerView.backgroundColor = [UIColor clearColor];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, [self cellMargin], 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -861,7 +833,6 @@ const NSArray *allServices = nil;
         label.text = [self tableView:aTableView titleForFooterInSection:section];
         label.numberOfLines = 2;
         [footerView addSubview:label];
-        [label release];
         return footerView;
     }
 }
@@ -882,8 +853,6 @@ const NSArray *allServices = nil;
 			controller.result = self.sharingMailAddresses;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentViewController:navController animated:YES completion:nil];
-			[controller release];
-			[navController release];
             
             [aTableView deselectRowAtIndexPath:indexPath animated:YES];
         }
@@ -897,7 +866,6 @@ const NSArray *allServices = nil;
             
             controller.modalPresentationStyle = UIModalPresentationFormSheet;
             [self.navigationController pushViewController:controller animated:YES];
-            [controller release];
             [aTableView deselectRowAtIndexPath:indexPath animated:YES];
         }
     }
@@ -1062,7 +1030,6 @@ const NSArray *allServices = nil;
                          [self.navigationController popViewControllerAnimated:YES];
                      }
                      
-                     [newSharingConnections release];
                  }];
     }
 }
@@ -1098,7 +1065,6 @@ const NSArray *allServices = nil;
     }
     
     self.sharingConnections = newSharingConnections;
-    [newSharingConnections release];
 }
 
 - (IBAction)privacyChanged:(id)sender;
@@ -1119,7 +1085,7 @@ const NSArray *allServices = nil;
         picker.allowsEditing = YES;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-        self.imagePickerPopoverController = [[[UIPopoverController alloc] initWithContentViewController:picker] autorelease];
+        self.imagePickerPopoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
         self.imagePickerPopoverController.delegate = self;
         
         [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
@@ -1133,16 +1099,13 @@ const NSArray *allServices = nil;
                                                                            target:self
                                                                            action:@selector(resetImage)];
             picker.navigationBar.topItem.leftBarButtonItem = resetButton;
-            [resetButton release];
         }
         
         if ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) {
             UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(openCameraPicker)];
             picker.navigationBar.topItem.rightBarButtonItem = cameraButton;
-            [cameraButton release];
         }
         
-        [picker release];
         
     } else {
         UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:SCLocalizedString(@"recording_image", @"Cover Image")
@@ -1154,7 +1117,6 @@ const NSArray *allServices = nil;
                                 ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? SCLocalizedString(@"take_new_picture", @"Camera") : nil,
                                 nil];
         [sheet showInView:self.view];
-        [sheet release];
     }
 }
 
@@ -1181,7 +1143,6 @@ const NSArray *allServices = nil;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];
-    [picker release];
 }
 
 - (IBAction)openImageLibraryPicker;
@@ -1191,7 +1152,6 @@ const NSArray *allServices = nil;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:nil];
-    [picker release];
 }
 
 - (IBAction)openPlacePicker;
@@ -1221,7 +1181,6 @@ const NSArray *allServices = nil;
     NSMutableArray *toolbarItems = [self.toolBar.items mutableCopy];
     [toolbarItems removeLastObject];
     self.toolBar.items = toolbarItems;
-    [toolbarItems release];
     
     // setup progress view
     self.tableView.hidden = YES;
@@ -1237,7 +1196,7 @@ const NSArray *allServices = nil;
     progressViewRect.size.height -= CGRectGetHeight(self.toolBar.frame) + 28;
     progressViewRect.origin.y += 28;
     
-    self.uploadProgressView = [[[SCRecordingUploadProgressView alloc] initWithFrame:progressViewRect] autorelease];
+    self.uploadProgressView = [[SCRecordingUploadProgressView alloc] initWithFrame:progressViewRect];
     
     self.uploadProgressView.artwork = self.coverImage;
     self.uploadProgressView.title.text = [self generatedTitle];
@@ -1349,12 +1308,11 @@ const NSArray *allServices = nil;
                                                  
                                                  // update tool bar
                                                  NSMutableArray *toolbarItems = [self.toolBar.items mutableCopy];
-                                                 [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"retry_upload", @"Retry")
+                                                 [toolbarItems addObject:[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"retry_upload", @"Retry")
                                                                                                            style:UIBarButtonItemStylePlain
                                                                                                           target:self
-                                                                                                          action:@selector(upload)] autorelease]];
+                                                                                                          action:@selector(upload)]];
                                                  self.toolBar.items = toolbarItems;
-                                                 [toolbarItems release];
 
                                              } else {
                                                  
@@ -1370,8 +1328,8 @@ const NSArray *allServices = nil;
 
                                                  // update tool bar
                                                  NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:2];
-                                                 [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
-                                                 [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"done", @"Done") style:UIBarButtonItemStylePlain target:self action:@selector(close)] autorelease]];
+                                                 [toolbarItems addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+                                                 [toolbarItems addObject:[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"done", @"Done") style:UIBarButtonItemStylePlain target:self action:@selector(close)]];
                                                  [self.toolBar setItems:toolbarItems animated:YES];
                                             }
                                          }];
@@ -1473,7 +1431,7 @@ const NSArray *allServices = nil;
                                        CGRectGetWidth(self.view.bounds),
                                        CGRectGetHeight(self.view.bounds) - 28.0 - CGRectGetHeight(self.toolBar.frame));
     
-    self.loginView = [[[SCLoginView alloc] initWithFrame:loginViewFrame] autorelease];
+    self.loginView = [[SCLoginView alloc] initWithFrame:loginViewFrame];
     self.loginView.contentSize = CGSizeMake(1.0, CGRectGetHeight(self.view.bounds));
     self.loginView.delegate = self;
     [self.view insertSubview:self.loginView belowSubview:self.toolBar];
@@ -1498,10 +1456,10 @@ const NSArray *allServices = nil;
         return;
     
     NSMutableArray *toolBarItems = [NSMutableArray arrayWithArray:self.toolBar.items];
-    [toolBarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
+    [toolBarItems addObject:[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
-                                                             action:@selector(upload)] autorelease]];
+                                                             action:@selector(upload)]];
     [self.toolBar setItems:toolBarItems animated:animated];
     
     if (!animated) {
@@ -1554,7 +1512,6 @@ const NSArray *allServices = nil;
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [gregorian components:(NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate:self.trackCreationDate];
-    [gregorian release];
     
     switch ([components weekday]) {
         case 1:

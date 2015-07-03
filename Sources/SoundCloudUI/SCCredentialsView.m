@@ -20,8 +20,8 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 @interface SCCredentialsView () <UITextFieldDelegate>
 
-@property (nonatomic, assign) SCTextField *usernameField;
-@property (nonatomic, assign) SCTextField *passwordField;
+@property (nonatomic, strong) SCTextField *usernameField;
+@property (nonatomic, strong) SCTextField *passwordField;
 @end
 
 @implementation SCCredentialsView
@@ -63,9 +63,6 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [username release];
-    [password release];
-    [super dealloc];
 }
 
 #pragma mark -
