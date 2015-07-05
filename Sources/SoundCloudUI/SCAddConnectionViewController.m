@@ -42,6 +42,7 @@
 @synthesize account;
 @synthesize service;
 @synthesize authorizeURL;
+@synthesize activityIndicator;
 @synthesize webView;
 
 @synthesize loading;
@@ -120,10 +121,6 @@
 }
 
 #pragma mark Accessors
-
-@synthesize authorizeURL;
-@synthesize loading;
-@synthesize activityIndicator;
 
 - (void)setAuthorizeURL:(NSURL *)value;
 {
