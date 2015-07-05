@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
   s.framework = 'CoreText'
   s.framework = 'CoreLocation'
 
-  s.dependency 'soundclound-hydric'
+  s.dependency 'soundcloud-hydric'
   s.dependency 'OHAttributedLabel'
 end
