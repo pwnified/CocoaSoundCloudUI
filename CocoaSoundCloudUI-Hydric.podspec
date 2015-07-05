@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'CocoaSoundCloudUI-Hydric'
-  s.version  = '1.0.9'
+  s.version  = '1.0.9.1'
   s.summary  = 'A simple way to share audio on soundcloud.com.'
   s.homepage = 'https://github.com/brightec/CocoaSoundCloudUI'
   s.author   = { 'Ullrich Schäfer' => 'ullrich@soundcloud.com',
@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
   s.framework = 'CoreText'
   s.framework = 'CoreLocation'
 
-  s.dependency 'SoundCloud-Cocoa-API'
+  s.dependency 'soundclound-hydric'
   s.dependency 'OHAttributedLabel'
 end
