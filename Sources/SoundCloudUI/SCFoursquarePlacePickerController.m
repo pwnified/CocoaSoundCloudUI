@@ -144,7 +144,7 @@
 {
 	[super viewDidAppear:animated];
     if (self.locationManager && self.locationManager.location) {
-        [self locationManager:self.locationManager didUpdateToLocation:self.locationManager.location fromLocation:nil];
+        [self locationManager:self.locationManager didUpdateLocations:@[self.locationManager.location]];
     }
 }
 
@@ -202,9 +202,14 @@
 
 #pragma mark Location delegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     [self.request cancel];
+	
+	if (locations.count < 1) {
+		return;
+	}
+	CLLocation *newLocation = locations[0];
 
     NSDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSString stringWithFormat:@"%f,%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude], @"ll",
