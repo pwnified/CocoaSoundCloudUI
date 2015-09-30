@@ -34,9 +34,11 @@
 
 + (BOOL)isTallIphone;
 {
-    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) &&
-        ([UIScreen mainScreen].bounds.size.height >= 568.0f)) {
-        return YES;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+		CGSize size = UIScreen.mainScreen.bounds.size;
+        if (MAX(size.width, size.height) >= 568.0f) { // this is going to break as well. Stupid shit.
+			return YES;
+		}
     }
     return NO;
 }
