@@ -11,7 +11,7 @@
 
 @interface SCCredentialsView : UIView
 
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *password;
+@property (nonatomic, readonly) NSString *username;
+@property (nonatomic, readonly) NSString *password;
 
 @end
