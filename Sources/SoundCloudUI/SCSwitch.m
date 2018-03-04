@@ -110,14 +110,6 @@
 	return self;
 }
 
-- (void)dealloc;
-{
-	[onLabel release];
-	[offLabel release];
-	[handleView release];
-	[overlayView release];
-	[super dealloc];
-}
 
 
 #pragma mark Accessors
@@ -222,7 +214,7 @@
 
 - (void)setMaskImage:(UIImage *)value;
 {
-	[value retain]; [maskImage release]; maskImage = value;
+	  maskImage = value;
 	[self.layer.mask setNeedsDisplay];
 }
 

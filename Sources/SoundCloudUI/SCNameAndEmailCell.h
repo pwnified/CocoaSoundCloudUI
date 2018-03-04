@@ -23,8 +23,8 @@
 
 @interface SCNameAndEmailCell : UITableViewCell 
 
-@property (retain) NSString *name;
-@property (retain) NSString *email;
-@property (retain) NSString *mailType;
+@property (strong) NSString *name;
+@property (strong) NSString *email;
+@property (strong) NSString *mailType;
 
 @end

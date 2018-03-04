@@ -30,12 +30,12 @@
 #import "SCFoursquarePlacePickerController.h"
 
 @interface SCFoursquarePlacePickerController () <CLLocationManagerDelegate>
-@property (nonatomic, retain) NSArray *venues;
-@property (nonatomic, retain) SCRequest *request;
-@property (nonatomic, retain) NSString *clientID;
-@property (nonatomic, retain) NSString *clientSecret;
-@property (nonatomic, retain) CLLocationManager *locationManager;
-@property (nonatomic, assign) id<SCFoursquarePlacePickerControllerDelegate> delegate;
+@property (nonatomic, strong) NSArray *venues;
+@property (nonatomic, strong) SCRequest *request;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *clientSecret;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, weak) id<SCFoursquarePlacePickerControllerDelegate> delegate;
 
 - (IBAction)finishWithReset;
 @end
@@ -62,8 +62,8 @@
         
         delegate = aDelegate;
         
-        clientID = [aClientID retain];
-        clientSecret = [aClientSecret retain];
+        clientID = aClientID;
+        clientSecret = aClientSecret;
         
         locationManager = [[CLLocationManager alloc] init];
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -71,10 +71,10 @@
         locationManager.delegate = self;
         [locationManager startUpdatingLocation];
         
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"place_picker_reset", @"Reset")
-                                                                                   style:UIBarButtonItemStyleBordered
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"place_picker_reset", @"Reset")
+                                                                                   style:UIBarButtonItemStylePlain
                                                                                   target:self
-                                                                                  action:@selector(finishWithReset)] autorelease];
+                                                                                  action:@selector(finishWithReset)];
     }
     return self;
 }
@@ -82,12 +82,6 @@
 - (void)dealloc;
 {
     [locationManager stopUpdatingLocation];
-    [locationManager release];
-    [venues release];
-    [clientSecret release];
-    [clientID release];
-    [request release];
-    [super dealloc];
 }
 
 
@@ -95,7 +89,7 @@
 
 - (void)setVenues:(NSArray *)value;
 {
-    [value retain]; [venues release]; venues = value;
+      venues = value;
     self.tableView.separatorStyle = (venues.count > 0) ? UITableViewCellSeparatorStyleSingleLine : UITableViewCellSeparatorStyleNone;
     [self.tableView reloadData];
 }
@@ -121,16 +115,14 @@
     textField.delegate = self;
     
     [customTitleBar setItems:[NSArray arrayWithObjects:
-                              [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease],
-                              [[[UIBarButtonItem alloc] initWithCustomView:textField] autorelease],
-                              [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease],
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                              [[UIBarButtonItem alloc] initWithCustomView:textField],
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                               nil]];
     
-    [textField release];
     
     self.tableView.tableHeaderView = customTitleBar;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [customTitleBar release];
 }
 
 - (void)viewWillAppear:(BOOL)animated;
@@ -176,7 +168,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"venueCell"];
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"venueCell"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"venueCell"];
     }
     NSDictionary *venue = [self.venues objectAtIndex:indexPath.row];
     cell.textLabel.text = [venue objectForKey:@"name"];
@@ -221,7 +213,7 @@
                                @"20110622", @"v",
                                nil];
     
-    self.request = [[[SCRequest alloc] initWithMethod:SCRequestMethodGET resource:[NSURL URLWithString:@"https://api.foursquare.com/v2/venues/search"]] autorelease];
+    self.request = [[SCRequest alloc] initWithMethod:SCRequestMethodGET resource:[NSURL URLWithString:@"https://api.foursquare.com/v2/venues/search"]];
     self.request.parameters = arguments;
     
     [self.request performRequestWithSendingProgressHandler:nil

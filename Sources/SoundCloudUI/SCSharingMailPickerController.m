@@ -61,22 +61,22 @@
 @interface SCSharingMailPickerController ()
 
 #pragma mark Accessors
-@property (nonatomic, assign) UITextField *emailsField;
-@property (nonatomic, assign) UIBarButtonItem *doneBarButton;
-@property (nonatomic, assign) UIButton *addFromAddresbookButton;
-@property (nonatomic, assign) UILabel *inputLabel;
-@property (nonatomic, assign) UIView *inputView;
+@property (nonatomic, strong) UITextField *emailsField;
+@property (nonatomic, strong) UIBarButtonItem *doneBarButton;
+@property (nonatomic, strong) UIButton *addFromAddresbookButton;
+@property (nonatomic, strong) UILabel *inputLabel;
+@property (nonatomic, strong) UIView *inputView;
 
-@property (nonatomic, retain) UITableViewController	*autocompleteTableViewController;
+@property (nonatomic, strong) UITableViewController	*autocompleteTableViewController;
 
-@property (nonatomic, retain) NSDictionary *addressBookData;
-@property (nonatomic, retain) NSMutableArray *currentResult;
-@property (nonatomic, retain) NSMutableArray *autocompleteData;
+@property (nonatomic, strong) NSDictionary *addressBookData;
+@property (nonatomic, strong) NSMutableArray *currentResult;
+@property (nonatomic, strong) NSMutableArray *autocompleteData;
 
-@property (nonatomic, retain) NSOperationQueue *autocompleteOperationQueue;
-@property (nonatomic, retain) NSOperationQueue *fetchAddressbookDataOperationQueue;
+@property (nonatomic, strong) NSOperationQueue *autocompleteOperationQueue;
+@property (nonatomic, strong) NSOperationQueue *fetchAddressbookDataOperationQueue;
 
-@property (nonatomic, assign) id<SCSharingMailPickerControllerDelegate> delegate;
+@property (nonatomic, weak) id<SCSharingMailPickerControllerDelegate> delegate;
 
 #pragma mark Helper
 - (NSArray *)arrayOfEmailsInString:(NSString *)string unparsebleStrings:(NSArray **)unparsableRet;
@@ -129,7 +129,6 @@
 		fetchAddressbookDataOperationQueue = [[NSOperationQueue alloc] init];
 		NSOperation *fetchAddressbookDataOperation = [[SCFetchAddressbookOperation alloc] initWithTarget:self selector:@selector(setAddressBookData:)];
 		[fetchAddressbookDataOperationQueue addOperation:fetchAddressbookDataOperation];
-		[fetchAddressbookDataOperation release];
 	}
 	return self;
 }
@@ -140,14 +139,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	
     // Releasing Owenership
-    [addressBookData release];
 	[autocompleteOperationQueue cancelAllOperations];
-	[autocompleteOperationQueue release];
-	[autocompleteData release];
-	[currentResult release];
-	[autocompleteTableViewController release];
 	
-    [super dealloc];
 }
 
 
@@ -155,13 +148,13 @@
 
 - (void)setAddressBookData:(NSDictionary *)value;
 {
-	[value retain]; [addressBookData release]; addressBookData = value;
+	  addressBookData = value;
 	[self updateAutocompletionWithInputFieldValue:emailsField.text];
 }
 
 - (void)setAutocompleteData:(NSMutableArray *)_autocompleteData;
 {
-	[_autocompleteData retain]; [autocompleteData release]; autocompleteData = _autocompleteData;
+	  autocompleteData = _autocompleteData;
 	[self.autocompleteTableViewController.tableView reloadData];
 }
 
@@ -194,17 +187,17 @@
 	self.view.backgroundColor = [UIColor colorWithWhite:0.93 alpha:1.0];
     
     // Navigation Bar
-    self.doneBarButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																        target:self
-																        action:@selector(done:)] autorelease];
+																        action:@selector(done:)];
 	self.doneBarButton.enabled = YES;
 	self.navigationItem.rightBarButtonItem = self.doneBarButton;
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
 																						   target:self
-																						   action:@selector(cancel:)] autorelease];
+																						   action:@selector(cancel:)];
     
     // Input View
-	self.inputView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	self.inputView = [[UIView alloc] initWithFrame:CGRectZero];
     self.inputView.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth);
 	self.inputView.opaque = NO;
     self.inputView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageWithName:@"mailInputBackground"]];
@@ -217,13 +210,13 @@
     
     
     // Input Label
-	self.inputLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+	self.inputLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.inputLabel.text = SCLocalizedString(@"shared_to_to", @"To:");
 	self.inputLabel.textColor = [UIColor darkGrayColor];
     self.inputLabel.backgroundColor = [UIColor clearColor];
 
 	// Email Field
-	self.emailsField = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
+	self.emailsField = [[UITextField alloc] initWithFrame:CGRectZero];
 	self.emailsField.delegate = self;
 	self.emailsField.autocorrectionType = UITextAutocorrectionTypeNo;
 	self.emailsField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -347,12 +340,12 @@
 
 - (IBAction)addFromAB:(id)sender;
 {
-	ABPeoplePickerNavigationController *controller = [[[ABPeoplePickerNavigationController alloc] init] autorelease];
+	ABPeoplePickerNavigationController *controller = [[ABPeoplePickerNavigationController alloc] init];
 	controller.navigationBar.barStyle = UIBarStyleBlack;
 	[controller setPeoplePickerDelegate:self];
 	[controller setDisplayedProperties:[NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]]];
 	controller.modalPresentationStyle = UIModalPresentationFormSheet;
-	[self.navigationController presentModalViewController:controller animated:YES];	
+	[self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark ViewController
@@ -371,7 +364,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString;
 {
-	NSMutableString *resultingString = [[textField.text mutableCopy] autorelease];
+	NSMutableString *resultingString = [textField.text mutableCopy];
 	[resultingString replaceCharactersInRange:range withString:replacementString];
 	
 	[self updateAutocompletionWithInputFieldValue:resultingString];
@@ -390,7 +383,7 @@
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
 {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person;
@@ -406,15 +399,15 @@
 	if (property == kABPersonEmailProperty) {
 		ABMultiValueRef emailValue = ABRecordCopyValue(person, property);
 		CFIndex addressIndex = ABMultiValueGetIndexForIdentifier(emailValue, identifier);
-		NSString *emailToShareTo = [(NSString *)ABMultiValueCopyValueAtIndex(emailValue, addressIndex) autorelease];
+		NSString *emailToShareTo = (NSString *)CFBridgingRelease(ABMultiValueCopyValueAtIndex(emailValue, addressIndex));
 		CFRelease(emailValue);
 		
 		NSArray *unparsable = nil;
-		NSMutableArray *emails = [[[self arrayOfEmailsInString:emailsField.text unparsebleStrings:&unparsable] mutableCopy] autorelease];
+		NSMutableArray *emails = [[self arrayOfEmailsInString:emailsField.text unparsebleStrings:&unparsable] mutableCopy];
 		[emails addObject:emailToShareTo];
 		self.emailsField.text = [emails componentsJoinedByString:@", "];
 		
-		[self dismissModalViewControllerAnimated:YES];
+		[self dismissViewControllerAnimated:YES completion:nil];
 		return NO;
 	}
 	
@@ -486,7 +479,6 @@
 																			  addressbookData:addressBookData
 																		   autocompleteString:[unparsable componentsJoinedByString:@" "]];
 	[autocompleteOperationQueue addOperation:autocompleteOperation];
-	[autocompleteOperation release];
 }
 
 
@@ -506,7 +498,7 @@
 	NSString *reuseIdentifier = @"NameAndEmailCell";
 	SCNameAndEmailCell *cell = (SCNameAndEmailCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 	if (!cell) {
-        cell = [[[SCNameAndEmailCell alloc] init] autorelease];
+        cell = [[SCNameAndEmailCell alloc] init];
 	}
 	NSDictionary *personData = [autocompleteData objectAtIndex:indexPath.row];
 	cell.name = [personData objectForKey:@"name"];
@@ -521,7 +513,7 @@
 	NSDictionary *personData = [autocompleteData objectAtIndex:indexPath.row];
 	
 	NSArray *unparsable = nil;
-	NSMutableArray *emails = [[[self arrayOfEmailsInString:self.emailsField.text unparsebleStrings:&unparsable] mutableCopy] autorelease];
+	NSMutableArray *emails = [[self arrayOfEmailsInString:self.emailsField.text unparsebleStrings:&unparsable] mutableCopy];
 	[emails addObject:[personData objectForKey:@"email"]];
 	
 	self.emailsField.text = [NSString stringWithFormat:@"%@, ", [emails componentsJoinedByString:@", "]];
@@ -544,28 +536,21 @@
 - (id)initWithTarget:(id)target selector:(SEL)selector addressbookData:(NSDictionary *)addressbookData autocompleteString:(NSString *)autocompleteString;
 {
 	if ((self = [super init])) {
-		_target = [target retain];
+		_target = target;
 		_selector = selector;
-		_addressbookData = [addressbookData retain];
-		_autocompleteString = [autocompleteString retain];
+		_addressbookData = addressbookData;
+		_autocompleteString = autocompleteString;
 	}
 	return self;
 }
 
-- (void)dealloc;
-{
-	[_target release];
-	[_addressbookData release];
-	[_autocompleteString release];
-	[super dealloc];
-}
 
 #pragma mark main
 
 static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 {
-	NSString *name1 = [dict1 objectForKey:context];
-	NSString *name2 = [dict2 objectForKey:context];
+	NSString *name1 = [dict1 objectForKey:CFBridgingRelease(context)];
+	NSString *name2 = [dict2 objectForKey:CFBridgingRelease(context)];
 	return [name1 caseInsensitiveCompare:name2];
 }
 
@@ -606,17 +591,12 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 - (id)initWithTarget:(id)target selector:(SEL)selector;
 {
 	if ((self = [super init])) {
-		_target = [target retain];
+		_target = target;
 		_selector = selector;
 	}
 	return self;
 }
 
-- (void)dealloc;
-{
-	[_target release];
-	[super dealloc];
-}
 
 
 /* I don't know what the fuck this is
@@ -630,8 +610,8 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 	[NSThread setThreadPriority:0.2];
 	
 	NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-	
-	ABAddressBookRef addressBook = ABAddressBookCreate();
+    CFErrorRef error;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
 	CFArrayRef allPersons = ABAddressBookCopyArrayOfAllPeople(addressBook);
 	CFIndex personCount = ABAddressBookGetPersonCount(addressBook);
 	
@@ -643,19 +623,21 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 		ABRecordRef record = CFArrayGetValueAtIndex(allPersons, personIx);
 		if (ABRecordGetRecordType(record) != kABPersonType)
 			continue;
-		NSString *compositeName = (NSString *)ABRecordCopyCompositeName(record);
+		NSString *compositeName = (NSString *)CFBridgingRelease(ABRecordCopyCompositeName(record));
 		
 		ABMultiValueRef emailValue = ABRecordCopyValue(record, kABPersonEmailProperty);
 		CFIndex valueCount = ABMultiValueGetCount(emailValue);
 		for (CFIndex valueIx = 0; valueIx < valueCount; valueIx++) {
 			NSString *name = compositeName;
-			NSString *email = (NSString *)ABMultiValueCopyValueAtIndex(emailValue, valueIx);
-			NSString *label = (NSString *)ABMultiValueCopyLabelAtIndex(emailValue, valueIx);
+			NSString *email = (NSString *)CFBridgingRelease(ABMultiValueCopyValueAtIndex(emailValue, valueIx));
+			NSString *label = (NSString *)CFBridgingRelease(ABMultiValueCopyLabelAtIndex(emailValue, valueIx));
 			NSString *mailType = nil;
 			if (email) {
 				
 				if (label) {
-					mailType = (NSString *)ABAddressBookCopyLocalizedLabel((CFStringRef)label);
+                    CFStringRef cfLabel = CFBridgingRetain(label);
+					mailType = (NSString *)CFBridgingRelease(ABAddressBookCopyLocalizedLabel(cfLabel));
+                    CFRelease(cfLabel);
 				} else {
 					mailType = @"email";
 				}
@@ -671,15 +653,10 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 											nil];
 				
 				[ret setObject:personDict forKey:[[NSString stringWithFormat:@"%@ %@", compositeName, email] lowercaseString]];
-				[personDict release];
 			}
 			
-			[label release];
-			[email release];
-			[mailType release];
 		}
 		CFRelease(emailValue);
-		[compositeName release];
 	}
 	
 	CFRelease(addressBook);

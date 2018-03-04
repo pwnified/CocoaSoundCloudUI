@@ -23,9 +23,9 @@
 #import "SCNameAndEmailCell.h"
 
 @interface SCNameAndEmailCell ()
-@property (nonatomic, assign) UILabel *nameLabel;
-@property (nonatomic, assign) UILabel *emailLabel;
-@property (nonatomic, assign) UILabel *mailTypeLabel;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *emailLabel;
+@property (nonatomic, strong) UILabel *mailTypeLabel;
 @end
 
 @implementation SCNameAndEmailCell
@@ -39,19 +39,19 @@
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
         
-        self.nameLabel = [[[UILabel alloc] init] autorelease];
+        self.nameLabel = [[UILabel alloc] init];
         self.nameLabel.opaque = NO;
         self.nameLabel.font = [UIFont boldSystemFontOfSize:15.0];
         self.nameLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.nameLabel];
         
-        self.emailLabel = [[[UILabel alloc] init] autorelease];
+        self.emailLabel = [[UILabel alloc] init];
         self.emailLabel.opaque = NO;
         self.emailLabel.textColor = [UIColor listSubtitleColor];
         self.emailLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.emailLabel];
         
-        self.mailTypeLabel = [[[UILabel alloc] init] autorelease];
+        self.mailTypeLabel = [[UILabel alloc] init];
         self.mailTypeLabel.opaque = NO;
         self.mailTypeLabel.font = [UIFont boldSystemFontOfSize:15.0];
         self.mailTypeLabel.textColor = [UIColor listSubtitleColor];

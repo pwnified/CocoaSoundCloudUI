@@ -30,12 +30,12 @@ typedef enum {
 
 @interface SCRecordingUploadProgressView : UIScrollView
 
-@property (nonatomic, readonly, assign) UIImageView *artworkView;
-@property (nonatomic, readonly, assign) UILabel *title;
-@property (nonatomic, readonly, assign) UIProgressView *progress;
+@property (nonatomic, readonly, strong) UIImageView *artworkView;
+@property (nonatomic, readonly, strong) UILabel *title;
+@property (nonatomic, readonly, strong) UIProgressView *progress;
 @property (nonatomic, readwrite, assign) SCRecordingUploadProgressViewState state;
-@property (nonatomic, readwrite, retain) NSDictionary *trackInfo;
+@property (nonatomic, readwrite, strong) NSDictionary *trackInfo;
 
-@property (nonatomic, retain) UIImage *artwork;
+@property (nonatomic, strong) UIImage *artwork;
 
 @end

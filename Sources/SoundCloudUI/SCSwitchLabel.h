@@ -28,7 +28,7 @@
 	UIImage	*background;
 }
 @property (nonatomic,copy) NSString *text;
-@property (nonatomic,retain) UIImage *background;
+@property (nonatomic,strong) UIImage *background;
 
 @end
 

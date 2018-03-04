@@ -38,12 +38,12 @@
 #import "SCDrawing.h"
 
 @interface SCLoginView () <UITextViewDelegate, UIWebViewDelegate>
-@property (nonatomic, readwrite, assign) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, assign) UILabel *titleLabel;
-@property (nonatomic, assign) SCGradientButton *fbButton;
-@property (nonatomic, assign) SCGradientButton *loginButton;
-@property (nonatomic, readwrite, assign) UIWebView *webView;
-@property (nonatomic, assign) UITextView *tosLabel;
+@property (nonatomic, readwrite, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) SCGradientButton *fbButton;
+@property (nonatomic, strong) SCGradientButton *loginButton;
+@property (nonatomic, readwrite, strong) UIWebView *webView;
+@property (nonatomic, strong) UITextView *tosLabel;
 - (void)commonAwake;
 @end
 
@@ -90,12 +90,12 @@
 {
     self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
-    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	self.activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
 	self.activityIndicator.hidesWhenStopped = YES;
 	[self addSubview:self.activityIndicator];
     
-    self.webView = [[[UIWebView alloc] initWithFrame:self.bounds] autorelease];
+    self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
     self.webView.delegate = self;
     self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.webView.backgroundColor = [UIColor whiteColor];
@@ -112,10 +112,6 @@
     [self layoutTermsAndPrivacy];
 }
 
-- (void)dealloc;
-{
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Layout all of the things
@@ -124,7 +120,7 @@
 {
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.titleLabel.numberOfLines = 2;
-    self.titleLabel.textAlignment = UITextAlignmentLeft;
+    self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.text = [NSString stringWithFormat:SCLocalizedString(@"credential_title", @"Title"),
                             [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
     self.titleLabel.textColor = [UIColor soundCloudGrey];
@@ -213,30 +209,29 @@
 
 - (void)layoutTermsAndPrivacy
 {
-    NSMutableAttributedString *text =
-        [[NSMutableAttributedString alloc] initWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
-
+	NSMutableAttributedString *text =
+	[[NSMutableAttributedString alloc] initWithString:SCLocalizedString(@"sign_in_tos_pp_body", nil)];
+	
     self.tosLabel = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.tosLabel.textAlignment = UITextAlignmentCenter;
+    self.tosLabel.textAlignment = NSTextAlignmentCenter;
     self.tosLabel.textColor = [UIColor soundCloudLightGrey];
     self.tosLabel.backgroundColor = [UIColor clearColor];
     self.tosLabel.editable = NO;
 
     NSRange touLinkRange = [text.string rangeOfString:SCLocalizedString(@"terms_of_use_substring", nil)];
     NSAssert((touLinkRange.location != NSNotFound), @"Localisation of sign_in_tos_pp_body needs to contain substring");
-    [text addAttribute: NSLinkAttributeName
-                 value: [NSURL URLWithString:kTermsOfServiceURL]
-                 range: touLinkRange];
+	[text addAttribute: NSLinkAttributeName
+				 value: [NSURL URLWithString:kTermsOfServiceURL]
+				 range: touLinkRange];
 
     NSRange ppLinkRange = [text.string rangeOfString:SCLocalizedString(@"privatcy_policy_substring", nil)];
     NSAssert((ppLinkRange.location != NSNotFound), @"Localisation of sign_in_tos_pp_body needs to contain substring");
-    [text addAttribute: NSLinkAttributeName
-                 value: [NSURL URLWithString:kPrivacyPolicyURL]
-                 range: ppLinkRange];
+	[text addAttribute: NSLinkAttributeName
+				 value: [NSURL URLWithString:kPrivacyPolicyURL]
+				 range: ppLinkRange];
 
     self.tosLabel.attributedText = text;
-    self.tosLabel.delegate = self;
-
+    
     [self addSubview:self.tosLabel];
 }
 
@@ -311,7 +306,6 @@
 
 #pragma mark Accessors
 
-@synthesize loginDelegate;
 @synthesize activityIndicator;
 @synthesize credentialsView;
 @synthesize fbButton;
@@ -344,7 +338,6 @@
                                               cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
                                               otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -362,7 +355,7 @@
 
 - (void)cancel:(id)sender
 {
-    [(UIViewController *)self.loginDelegate dismissModalViewControllerAnimated:YES];
+    [(UIViewController *)self.loginDelegate dismissViewControllerAnimated:YES completion:nil];
 }
 
 

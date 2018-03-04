@@ -36,12 +36,6 @@
     return self;
 }
 
-- (void)dealloc;
-{
-	[borderColor release];
-    [backgroundColor release];
-	[super dealloc];
-}
 
 
 #pragma mark Accessors
@@ -51,8 +45,6 @@
 - (void)setBackgroundColor:(UIColor *)aBackgroundColor;
 {
     if (backgroundColor != aBackgroundColor) {
-        [backgroundColor release];
-        [aBackgroundColor retain];
         backgroundColor = aBackgroundColor;
         [super setBackgroundColor:[UIColor clearColor]];
     }

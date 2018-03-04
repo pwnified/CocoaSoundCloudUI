@@ -35,7 +35,7 @@ typedef enum  {
 	GPTableCellBackgroundViewPosition position;
 }
 
-@property(nonatomic, retain) UIColor *borderColor;
+@property(nonatomic, strong) UIColor *borderColor;
 @property(nonatomic) GPTableCellBackgroundViewPosition position;
 
 @end

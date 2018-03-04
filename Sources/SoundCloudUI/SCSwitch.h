@@ -44,12 +44,12 @@
 
 @property (nonatomic,copy) NSString		*onText;
 @property (nonatomic,copy) NSString		*offText;
-@property (nonatomic,retain) UIImage	*handleImage;
-@property (nonatomic,retain) UIImage	*handleHighlightImage;
-@property (nonatomic,retain) UIImage	*onBackgroundImage;
-@property (nonatomic,retain) UIImage	*offBackgroundImage;
-@property (nonatomic,retain) UIImage	*overlayImage;
-@property (nonatomic,retain) UIImage	*maskImage;
+@property (nonatomic,strong) UIImage	*handleImage;
+@property (nonatomic,strong) UIImage	*handleHighlightImage;
+@property (nonatomic,strong) UIImage	*onBackgroundImage;
+@property (nonatomic,strong) UIImage	*offBackgroundImage;
+@property (nonatomic,strong) UIImage	*overlayImage;
+@property (nonatomic,strong) UIImage	*maskImage;
 
 @property (nonatomic, assign) CGFloat	handleRatio;	// 0.0 .. 1.0 - as a percentage of the total width of thw switch
 

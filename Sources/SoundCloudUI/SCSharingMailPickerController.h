@@ -32,8 +32,8 @@
 
 #pragma mark Accessors
 
-@property (nonatomic, retain) id userInfo;
-@property (nonatomic, retain) NSArray *result;
+@property (nonatomic, strong) id userInfo;
+@property (nonatomic, strong) NSArray *result;
 
 @end
 

@@ -59,7 +59,6 @@
                          action:@selector(cancel)
                forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:cancelButton];
-        [cancelButton release];
         
         // The Cloud
         UIImageView *cloudImageView = [[UIImageView alloc] init];
@@ -71,7 +70,6 @@
                                           CGRectGetWidth(cloudImageView.frame),
                                           CGRectGetHeight(cloudImageView.frame));
         [self addSubview:cloudImageView];
-        [cloudImageView release];
 
     }
     return self;

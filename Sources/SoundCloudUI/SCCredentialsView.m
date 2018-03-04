@@ -20,11 +20,8 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 @interface SCCredentialsView () <UITextFieldDelegate>
 
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *password;
-
-@property (nonatomic, retain) SCTextField *usernameField;
-@property (nonatomic, retain) SCTextField *passwordField;
+@property (nonatomic, strong) SCTextField *usernameField;
+@property (nonatomic, strong) SCTextField *passwordField;
 @end
 
 @implementation SCCredentialsView
@@ -66,11 +63,6 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-	self.username = nil;
-	self.password = nil;
-	self.usernameField = nil;
-	self.passwordField = nil;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -78,7 +70,7 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 - (void)layoutUsernameField
 {
-    self.usernameField = [[[SCTextField alloc] init] autorelease];
+    self.usernameField = [[SCTextField alloc] init];
     self.usernameField.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.usernameField.needsSeparatorLine = YES;
     self.usernameField.delegate = self;
@@ -100,7 +92,7 @@ NSUInteger const kSCPasswordTextFieldTag = 1002;
 
 - (void)layoutPasswordField
 {
-    self.passwordField = [[[SCTextField alloc] init] autorelease];
+    self.passwordField = [[SCTextField alloc] init];
     self.passwordField.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.passwordField.delegate = self;
     self.passwordField.backgroundColor = [UIColor clearColor];
