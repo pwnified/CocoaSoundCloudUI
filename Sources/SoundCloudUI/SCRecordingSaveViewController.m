@@ -805,7 +805,7 @@ const NSArray *allServices = nil;
     if (!text)
         return 0;
     
-    CGRect textRect = [text boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX) options:kNilOptions attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15.0]} context:nil];
+    CGRect textRect = [text boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15.0]} context:nil];
     CGSize textSize = textRect.size;
     
     
