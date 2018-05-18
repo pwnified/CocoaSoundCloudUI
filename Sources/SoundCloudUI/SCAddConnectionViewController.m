@@ -117,7 +117,8 @@
 {
     delegate = nil;
     webView.delegate = nil;
-    self.loading = NO;
+	webView = nil;
+    self.loading = NO; // this is useless, man this code is crap
 }
 
 #pragma mark Accessors
@@ -167,12 +168,6 @@
     }
 }
 
-- (void)viewDidUnload;
-{
-    webView.delegate = nil;
-    webView = nil;
-    [super viewDidUnload];
-}
 
 - (void)viewWillAppear:(BOOL)animated;
 {

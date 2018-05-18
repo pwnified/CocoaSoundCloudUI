@@ -141,6 +141,8 @@
     // Releasing Owenership
 	[autocompleteOperationQueue cancelAllOperations];
 	
+	self.doneBarButton = nil;
+	self.emailsField = nil;
 }
 
 
@@ -238,12 +240,6 @@
 	[self.view addSubview:autocompleteTableViewController.view];
 }
 
-- (void)viewDidUnload;
-{
-	[super viewDidUnload];
-	self.doneBarButton = nil;
-	self.emailsField = nil;
-}
 
 - (void)viewWillAppear:(BOOL)animated;
 {
@@ -350,15 +346,14 @@
 
 #pragma mark ViewController
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    if ([UIDevice isIPad]) {
-        return YES;
-        
-    } else {
-        return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-    }
+	if ([UIDevice isIPad]) {
+		return UIInterfaceOrientationMaskAll;
+	}
+	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+
 
 #pragma mark UITextFieldDelegate
 

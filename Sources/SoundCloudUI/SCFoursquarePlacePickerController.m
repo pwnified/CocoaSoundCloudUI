@@ -146,14 +146,12 @@
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    if ([UIDevice isIPad]) {
-        return YES;
-        
-    } else {
-        return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-    }
+	if ([UIDevice isIPad]) {
+		return UIInterfaceOrientationMaskAll;
+	}
+	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 

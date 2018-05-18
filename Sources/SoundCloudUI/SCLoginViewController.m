@@ -143,14 +143,15 @@
                                       CGRectGetHeight(self.view.bounds) - scTitleView.frame.size.height);
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    if ([UIDevice isIPad]) {
-        return YES;
-    }
-
-    return UIInterfaceOrientationIsPortrait(toInterfaceOrientation);
+	if ([UIDevice isIPad]) {
+		return UIInterfaceOrientationMaskAll;
+	}
+	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+
+
 
 //- (void)viewWillLayoutSubviews
 //{
