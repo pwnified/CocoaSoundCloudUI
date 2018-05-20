@@ -312,7 +312,7 @@ const NSArray *allServices = nil;
                              NSError *jsonError = nil;
                              NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                              if (result) {
-                                 loadingConnections = NO;
+								 self->loadingConnections = NO;
                                  [self setAvailableConnections:result];
                              } else {
                                  NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
@@ -596,23 +596,18 @@ const NSArray *allServices = nil;
     [self.headerView setCoverImage:self.coverImage];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController dismissPopoverAnimated:NO];
-    }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
-                                                           inView:self.headerView.coverImageButton
-                                         permittedArrowDirections:UIPopoverArrowDirectionAny
-                                                         animated:YES];
-    }
+	[coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+		[self.imagePickerPopoverController dismissPopoverAnimated:NO];
+		
+	} completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+		[self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
+														   inView:self.headerView.coverImageButton
+										 permittedArrowDirections:UIPopoverArrowDirectionAny
+														 animated:YES];
+	}];
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1024,7 +1019,7 @@ const NSArray *allServices = nil;
                          NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
                      }
                      
-                     NSIndexSet *idxs = [availableConnections indexesOfObjectsPassingTest:^(id obj, NSUInteger i, BOOL *stop){
+					 NSIndexSet *idxs = [self->availableConnections indexesOfObjectsPassingTest:^(id obj, NSUInteger i, BOOL *stop){
                          if ([[obj objectForKey:@"service"] isEqual:service]) {
                              *stop = YES;
                              return YES;
@@ -1034,7 +1029,7 @@ const NSArray *allServices = nil;
                      }];
                      
                      NSMutableArray *newSharingConnections = [self.sharingConnections mutableCopy];
-                     [newSharingConnections addObject:[availableConnections objectAtIndex:[idxs firstIndex]]];
+					 [newSharingConnections addObject:[self->availableConnections objectAtIndex:[idxs firstIndex]]];
                      self.sharingConnections = newSharingConnections;
                      
                      if (self.navigationController.topViewController == controller) {
