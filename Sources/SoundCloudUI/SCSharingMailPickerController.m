@@ -381,6 +381,10 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-implementations"
+
+
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person;
 {
 	return YES;
@@ -408,6 +412,7 @@
 	
 	return YES;
 }
+#pragma GCC diagnostic pop
 
 
 #pragma mark Private
