@@ -16,6 +16,7 @@
 		20C8632D16837491003523CF /* SCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8632B16837490003523CF /* SCAlertView.m */; };
 		20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 20FEEDF2168087B000EB1C02 /* SCGradientButton.h */; };
 		20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FEEDF3168087B000EB1C02 /* SCGradientButton.m */; };
+		A4631F8E225742C1001B08C2 /* SCFoursquarePlacePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA013F92CF900B20B40 /* SCFoursquarePlacePickerController.m */; };
 		F6115A4F13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */; };
 		F6115A5013FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */; };
 		F62E0D53148FBD5700BE8F14 /* NSData+SoundCloudUI.h in Headers */ = {isa = PBXBuildFile; fileRef = F62E0D43148FBD5700BE8F14 /* NSData+SoundCloudUI.h */; };
@@ -46,7 +47,6 @@
 		F6EF8CD713F92CF900B20B40 /* SCCoverImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8C9D13F92CF900B20B40 /* SCCoverImageButton.h */; };
 		F6EF8CD813F92CF900B20B40 /* SCCoverImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8C9E13F92CF900B20B40 /* SCCoverImageButton.m */; };
 		F6EF8CD913F92CF900B20B40 /* SCFoursquarePlacePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8C9F13F92CF900B20B40 /* SCFoursquarePlacePickerController.h */; };
-		F6EF8CDA13F92CF900B20B40 /* SCFoursquarePlacePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA013F92CF900B20B40 /* SCFoursquarePlacePickerController.m */; };
 		F6EF8CDB13F92CF900B20B40 /* SCFoursquarePlacePickerControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CA113F92CF900B20B40 /* SCFoursquarePlacePickerControllerDelegate.h */; };
 		F6EF8CDC13F92CF900B20B40 /* SCHorizontalLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CA213F92CF900B20B40 /* SCHorizontalLineView.h */; };
 		F6EF8CDD13F92CF900B20B40 /* SCHorizontalLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA313F92CF900B20B40 /* SCHorizontalLineView.m */; };
@@ -508,7 +508,6 @@
 				F6EF8CD113F92CF900B20B40 /* SCAddConnectionViewController.m in Sources */,
 				F6EF8CD613F92CF900B20B40 /* SCBundle.m in Sources */,
 				F6EF8CD813F92CF900B20B40 /* SCCoverImageButton.m in Sources */,
-				F6EF8CDA13F92CF900B20B40 /* SCFoursquarePlacePickerController.m in Sources */,
 				F6EF8CDD13F92CF900B20B40 /* SCHorizontalLineView.m in Sources */,
 				F6EF8CDF13F92CF900B20B40 /* SCLoginView.m in Sources */,
 				F6EF8CE313F92CF900B20B40 /* SCNameAndEmailCell.m in Sources */,
@@ -521,6 +520,7 @@
 				F6EF8CF113F92CF900B20B40 /* SCSwitch.m in Sources */,
 				F6EF8CF313F92CF900B20B40 /* SCSwitchLabel.m in Sources */,
 				F6EF8CF513F92CF900B20B40 /* SCTableCellBackgroundView.m in Sources */,
+				A4631F8E225742C1001B08C2 /* SCFoursquarePlacePickerController.m in Sources */,
 				F6EF8CF713F92CF900B20B40 /* SCTextField.m in Sources */,
 				F6EF8CFA13F92CF900B20B40 /* SCUnderlinedButton.m in Sources */,
 				F697FF1813FBB68200B9369F /* SCUIErrors.m in Sources */,

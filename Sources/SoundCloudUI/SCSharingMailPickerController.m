@@ -348,10 +348,11 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-	if ([UIDevice isIPad]) {
-		return UIInterfaceOrientationMaskAll;
-	}
-	return UIInterfaceOrientationMaskAllButUpsideDown;
+	return UIInterfaceOrientationMaskAll;
+//	if ([UIDevice isIPad]) {
+//		return UIInterfaceOrientationMaskAll;
+//	}
+//	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 
