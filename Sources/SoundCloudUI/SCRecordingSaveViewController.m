@@ -761,7 +761,7 @@ const NSArray *allServices = nil;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 {
     if (self.isPrivate) {
-        // TODO: Insert correct text describing the private options
+        // MIGHTDO: Insert correct text describing the private options
         return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload. You want to share it with others?");
     } else if (loadingConnections) {
         return nil;
@@ -1272,7 +1272,7 @@ const NSArray *allServices = nil;
     
     // tags (custom)
     for (NSString *tag in self.customTags) {
-        // TODO: Should the tags be checked?
+        // MIGHTDO: Should the tags be checked?
         [tags addObject:tag];
     }
     

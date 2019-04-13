@@ -202,7 +202,7 @@
         if ([delegate respondsToSelector:@selector(addConnectionController:didFinishWithService:success:)]) {
             [delegate addConnectionController:self
                          didFinishWithService:service
-                                      success:success]; //TODO: We have to find out if we were successful
+                                      success:success]; //MIGHTDO: We have to find out if we were successful
         }
         return NO;
     }
