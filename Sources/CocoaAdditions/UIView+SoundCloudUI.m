@@ -70,7 +70,7 @@
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByWordWrapping;
     NSDictionary *attributes = @{
-                                 NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                                 NSFontAttributeName: font,
                                  NSParagraphStyleAttributeName: style
                                  };
     
