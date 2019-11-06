@@ -34,7 +34,9 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trac
                                                              UINavigationControllerDelegate,
                                                              UIImagePickerControllerDelegate,
                                                              UIActionSheetDelegate,
+#if !TARGET_OS_MACCATALYST
                                                              SCSharingMailPickerControllerDelegate,
+#endif
                                                              SCFoursquarePlacePickerControllerDelegate,
                                                              SCAddConnectionViewControllerDelegate> {
     

@@ -24,17 +24,15 @@
 
 + (BOOL)isIPad;
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+	if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 		return YES; 
 	}
-#endif
 	return NO;
 }
 
 + (BOOL)isTallIphone;
 {
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+	if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
 		CGSize size = UIScreen.mainScreen.bounds.size;
         if (MAX(size.width, size.height) >= 568.0f) { // this is going to break as well. Stupid shit.
 			return YES;

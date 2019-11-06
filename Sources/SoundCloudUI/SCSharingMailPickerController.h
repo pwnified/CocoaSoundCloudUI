@@ -17,6 +17,7 @@
  * http://soundcloud.com/api
  * 
  */
+#if !TARGET_OS_MACCATALYST
 
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
@@ -43,3 +44,5 @@
 - (void)sharingMailPickerController:(SCSharingMailPickerController *)controller didFinishWithResult:(NSArray *)emailAdresses;
 - (void)sharingMailPickerControllerDidCancel:(SCSharingMailPickerController *)controller;
 @end
+
+#endif // #if !TARGET_OS_MACCATALYST

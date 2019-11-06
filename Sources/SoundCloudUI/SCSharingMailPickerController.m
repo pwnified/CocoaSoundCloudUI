@@ -18,6 +18,7 @@
  * 
  */
 
+#if !TARGET_OS_MACCATALYST
 
 #import "SCNameAndEmailCell.h"
 #import "SCBundle.h"
@@ -672,3 +673,5 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 
 
 @end
+
+#endif // #if !TARGET_OS_MACCATALYST

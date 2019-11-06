@@ -630,7 +630,7 @@ const NSArray *allServices = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (isPrivate) {
+	if (/* DISABLES CODE */ (0) && isPrivate) {
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"mailShare"];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"];
@@ -852,6 +852,8 @@ const NSArray *allServices = nil;
 {
     if (isPrivate) {
         if (indexPath.section == 0 && indexPath.row == 0) {
+			assert(0);
+#if !TARGET_OS_MACCATALYST
             SCSharingMailPickerController  *controller = [[SCSharingMailPickerController alloc] initWithDelegate:self];
 			UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
 			navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
@@ -861,6 +863,7 @@ const NSArray *allServices = nil;
             [self presentViewController:navController animated:YES completion:nil];
             
             [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+#endif
         }
     } else if (self.loadingConnections) {
         // ...
@@ -879,7 +882,7 @@ const NSArray *allServices = nil;
 
 
 #pragma mark SCSharingMailPickerControllerDelegate
-
+#if !TARGET_OS_MACCATALYST
 - (void)sharingMailPickerController:(SCSharingMailPickerController *)controller didFinishWithResult:(NSArray *)emailAdresses;
 {
     self.sharingMailAddresses = emailAdresses;
@@ -891,6 +894,7 @@ const NSArray *allServices = nil;
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+#endif
 
 
 #pragma mark UITextFieldDelegate
