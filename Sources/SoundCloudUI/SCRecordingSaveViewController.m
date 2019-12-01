@@ -152,24 +152,25 @@ const NSArray *allServices = nil;
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:NO], SCDefaultsKeyRecordingIsPrivate,
 															 nil]];
-    allServices = [[NSArray alloc] initWithObjects:
-                   [NSDictionary dictionaryWithObjectsAndKeys:
-                    SCLocalizedString(@"service_twitter", @"Twitter"), @"displayName",
-                    @"twitter", @"service",
-                    nil],
-                   [NSDictionary dictionaryWithObjectsAndKeys:
-                    SCLocalizedString(@"service_facebook", @"Facebook"), @"displayName",
-                    @"facebook_profile", @"service",
-                    nil],
-                   [NSDictionary dictionaryWithObjectsAndKeys:
-                    SCLocalizedString(@"service_tumblr", @"Tumblr"), @"displayName",
-                    @"tumblr", @"service",
-                    nil],
-                   [NSDictionary dictionaryWithObjectsAndKeys:
-                    SCLocalizedString(@"service_foursquare", @"Foursquare"), @"displayName",
-                    @"foursquare", @"service",
-                    nil],
-                   nil];
+	allServices = @[];
+//    allServices = [[NSArray alloc] initWithObjects:
+//                   [NSDictionary dictionaryWithObjectsAndKeys:
+//                    SCLocalizedString(@"service_twitter", @"Twitter"), @"displayName",
+//                    @"twitter", @"service",
+//                    nil],
+//                   [NSDictionary dictionaryWithObjectsAndKeys:
+//                    SCLocalizedString(@"service_facebook", @"Facebook"), @"displayName",
+//                    @"facebook_profile", @"service",
+//                    nil],
+//                   [NSDictionary dictionaryWithObjectsAndKeys:
+//                    SCLocalizedString(@"service_tumblr", @"Tumblr"), @"displayName",
+//                    @"tumblr", @"service",
+//                    nil],
+//                   [NSDictionary dictionaryWithObjectsAndKeys:
+//                    SCLocalizedString(@"service_foursquare", @"Foursquare"), @"displayName",
+//                    @"foursquare", @"service",
+//                    nil],
+//                   nil];
 }
 
 
@@ -618,14 +619,15 @@ const NSArray *allServices = nil;
 #pragma mark TableView
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section;
-{    
-    if (isPrivate){
-        return 1;
-    } else if (self.loadingConnections) {
-        return 1;
-    } else {
-        return self.availableConnections.count + self.unconnectedServices.count;
-    }
+{
+	return 0;
+//    if (isPrivate){
+//        return 1;
+//    } else if (self.loadingConnections) {
+//        return 1;
+//    } else {
+//        return self.availableConnections.count + self.unconnectedServices.count;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -762,11 +764,11 @@ const NSArray *allServices = nil;
 {
     if (self.isPrivate) {
         // MIGHTDO: Insert correct text describing the private options
-        return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload. You want to share it with others?");
+        return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload.");
     } else if (loadingConnections) {
         return nil;
     } else {
-        return SCLocalizedString(@"sc_upload_sharing_options_public", @"Your sound will be shared to SoundCloud. Where else would you like to share it?");
+        return SCLocalizedString(@"sc_upload_sharing_options_public", @"Your sound will be shared to SoundCloud.");
     }
 }
 
@@ -852,7 +854,6 @@ const NSArray *allServices = nil;
 {
     if (isPrivate) {
         if (indexPath.section == 0 && indexPath.row == 0) {
-			assert(0);
 #if !TARGET_OS_MACCATALYST
             SCSharingMailPickerController  *controller = [[SCSharingMailPickerController alloc] initWithDelegate:self];
 			UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];

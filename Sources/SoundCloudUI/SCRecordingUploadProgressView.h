@@ -19,6 +19,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 
 typedef enum {
     SCRecordingUploadProgressViewStateUploading = 0,
@@ -26,9 +27,7 @@ typedef enum {
     SCRecordingUploadProgressViewStateFailed
 } SCRecordingUploadProgressViewState;
 
-@class SCRecordingUploadProgressView;
-
-@interface SCRecordingUploadProgressView : UIScrollView
+@interface SCRecordingUploadProgressView : UIScrollView<SKStoreProductViewControllerDelegate>
 
 @property (nonatomic, readonly, strong) UIImageView *artworkView;
 @property (nonatomic, readonly, strong) UILabel *title;

@@ -56,6 +56,7 @@
 @property (nonatomic, readwrite, strong) UIButton *openAppStoreButton;
 @property (nonatomic, readwrite, strong) UIButton *openAppButton;
 
+@property (nonatomic, readwrite, strong) UIActivityIndicatorView *openingAppstoreIndicator;
 
 #pragma mark Actions
 - (IBAction)openAppStore:(id)sender;
@@ -152,6 +153,7 @@
     if (!title) {
         title = [[UILabel alloc] initWithFrame:CGRectZero];
         title.backgroundColor = [UIColor clearColor];
+		title.textColor = UIColor.darkTextColor;
         title.numberOfLines = 2;
         title.lineBreakMode = NSLineBreakByWordWrapping;
         title.text = nil;
@@ -229,6 +231,7 @@
         progressLabel = [[UILabel alloc] init];
         progressLabel.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
         progressLabel.text = SCLocalizedString(@"record_save_uploading", @"Uploading ...");
+		progressLabel.textColor = UIColor.darkTextColor;
         progressLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:progressLabel];
     }
@@ -556,7 +559,13 @@
 
 - (IBAction)openAppStore:(id)sender;
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.com/apps/SoundCloud"]];
+	// hxxps://apps.apple.com/us/app/soundcloud-music-audio/id336353151
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://apps.apple.com/app/id336353151"]];
+
+#if TARGET_IPHONE_SIMULATOR
+#else
+	[self openSKStoreProductViewController:336353151];
+#endif
 }
 
 - (IBAction)openApp:(id)sender;
@@ -578,7 +587,7 @@
 
 #pragma mark Helpers
 
-- (NSURL *)appURL;
+- (NSURL *)appURL
 {
     NSURL *trackURL = [NSURL URLWithString:[NSString stringWithFormat:@"soundcloud:tracks:%@", [trackInfo objectForKey:@"id"]]];
     NSURL *legacyTrackURL = [NSURL URLWithString:@"x-soundcloud:"];
@@ -592,6 +601,42 @@
     }
 }
 
++ (UIViewController *)findParentViewController:(UIView *)view {
+    UIResponder *responder = view;
+    while ([responder isKindOfClass:UIViewController.class] == NO) {
+        responder = [responder nextResponder];
+        if (responder == nil) {
+            return nil;
+        }
+    }
+    return (UIViewController *)responder;
+}
+
+#pragma mark SKStoreProductViewController
+- (void)openSKStoreProductViewController:(NSInteger)identifier {
+	if (!_openingAppstoreIndicator) {
+		_openingAppstoreIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+		[openAppStoreButton addSubview:_openingAppstoreIndicator];
+	}
+	_openingAppstoreIndicator.center = (CGPoint){openAppStoreButton.frame.size.width/2, openAppStoreButton.frame.size.height/2};
+	[_openingAppstoreIndicator startAnimating];
+
+	NSDictionary *parameters = @{ SKStoreProductParameterITunesItemIdentifier:@(identifier) };
+	SKStoreProductViewController *spvc = [SKStoreProductViewController.alloc init];
+    spvc.delegate = self;
+	__weak UIViewController *weakParent = [SCRecordingUploadProgressView findParentViewController:self];
+    [spvc loadProductWithParameters:parameters completionBlock:^(BOOL result, NSError *error) {
+		if (result) {
+			[weakParent presentViewController:spvc animated:YES completion:nil];
+		}
+		[self.openingAppstoreIndicator stopAnimating];
+	}];
+}
+
+#pragma mark SKStoreProductViewControllerDelegate
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+	[self setNeedsLayout]; // refresh the layout, they may have installed the app with SKStore
+	[viewController dismissViewControllerAnimated:NO completion:nil];
+}
+
 @end
-
-

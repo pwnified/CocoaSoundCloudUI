@@ -26,9 +26,9 @@
 
 "configure" = "Configure";
 
-"sc_upload_sharing_options_public" = "Your sound will be shared to SoundCloud. Where else would you like to share it?";
+"sc_upload_sharing_options_public" = "Your sound will be shared to SoundCloud";
 
-"sc_upload_sharing_options_private" = "Your track will be private after the upload. You want to share it with others?";
+"sc_upload_sharing_options_private" = "Your track will be private after the upload";
 
 "connection_list_footer" = "To change your default sharing options, go to your settings on SoundCloud and select 'Connections'";
 
