@@ -56,8 +56,6 @@
 @property (nonatomic, readwrite, strong) UIButton *openAppStoreButton;
 @property (nonatomic, readwrite, strong) UIButton *openAppButton;
 
-@property (nonatomic, readwrite, strong) UIActivityIndicatorView *openingAppstoreIndicator;
-
 #pragma mark Actions
 - (IBAction)openAppStore:(id)sender;
 - (IBAction)openApp:(id)sender;
@@ -614,23 +612,15 @@
 
 #pragma mark SKStoreProductViewController
 - (void)openSKStoreProductViewController:(NSInteger)identifier {
-	if (!_openingAppstoreIndicator) {
-		_openingAppstoreIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-		[openAppStoreButton addSubview:_openingAppstoreIndicator];
-	}
-	_openingAppstoreIndicator.center = (CGPoint){openAppStoreButton.frame.size.width/2, openAppStoreButton.frame.size.height/2};
-	[_openingAppstoreIndicator startAnimating];
-
 	NSDictionary *parameters = @{ SKStoreProductParameterITunesItemIdentifier:@(identifier) };
 	SKStoreProductViewController *spvc = [SKStoreProductViewController.alloc init];
     spvc.delegate = self;
-	__weak UIViewController *weakParent = [SCRecordingUploadProgressView findParentViewController:self];
     [spvc loadProductWithParameters:parameters completionBlock:^(BOOL result, NSError *error) {
 		if (result) {
-			[weakParent presentViewController:spvc animated:YES completion:nil];
 		}
-		[self.openingAppstoreIndicator stopAnimating];
 	}];
+	UIViewController *parent = [SCRecordingUploadProgressView findParentViewController:self];
+	[parent presentViewController:spvc animated:YES completion:nil];
 }
 
 #pragma mark SKStoreProductViewControllerDelegate
