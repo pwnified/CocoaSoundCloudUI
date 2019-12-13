@@ -22,7 +22,7 @@
 #import "SCAlertView.h"
 
 #import "SCAPI.h"
-#import "SCAccount+Private.h"
+#import "SCAccount.h"
 
 #import "UIDevice+SoundCloudUI.h"
 #import "UIColor+SoundCloudUI.h"
