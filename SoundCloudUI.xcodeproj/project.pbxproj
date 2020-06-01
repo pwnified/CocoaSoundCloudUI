@@ -16,6 +16,7 @@
 		20C8632D16837491003523CF /* SCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8632B16837490003523CF /* SCAlertView.m */; };
 		20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 20FEEDF2168087B000EB1C02 /* SCGradientButton.h */; };
 		20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FEEDF3168087B000EB1C02 /* SCGradientButton.m */; };
+		331E726224C28AC4006A79E3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331E726124C28AC4006A79E3 /* WebKit.framework */; };
 		F6115A4F13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */; };
 		F6115A5013FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */; };
 		F62E0D53148FBD5700BE8F14 /* NSData+SoundCloudUI.h in Headers */ = {isa = PBXBuildFile; fileRef = F62E0D43148FBD5700BE8F14 /* NSData+SoundCloudUI.h */; };
@@ -88,6 +89,7 @@
 		20C8632B16837490003523CF /* SCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAlertView.m; sourceTree = "<group>"; };
 		20FEEDF2168087B000EB1C02 /* SCGradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGradientButton.h; sourceTree = "<group>"; };
 		20FEEDF3168087B000EB1C02 /* SCGradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGradientButton.m; sourceTree = "<group>"; };
+		331E726124C28AC4006A79E3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
 		F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConnectToSoundCloudTitleView.h; sourceTree = "<group>"; };
 		F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConnectToSoundCloudTitleView.m; sourceTree = "<group>"; };
 		F62E0D40148FBAA200BE8F14 /* SoundCloudUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundCloudUI-Info.plist"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				331E726224C28AC4006A79E3 /* WebKit.framework in Frameworks */,
 				F69FA35A1416311A007AB53A /* CoreText.framework in Frameworks */,
 				F6EF8C6513F929D700B20B40 /* Foundation.framework in Frameworks */,
 			);
@@ -324,6 +327,7 @@
 		F6EF8C6313F929D700B20B40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				331E726124C28AC4006A79E3 /* WebKit.framework */,
 				F62E0CE8148FB27100BE8F14 /* Other Frameworks */,
 			);
 			name = Frameworks;

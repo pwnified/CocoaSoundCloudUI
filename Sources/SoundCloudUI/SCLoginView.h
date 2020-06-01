@@ -19,7 +19,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "SCCredentialsView.h"
+
 
 @protocol SCLoginViewProtocol;
 

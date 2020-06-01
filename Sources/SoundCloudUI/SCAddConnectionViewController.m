@@ -116,9 +116,8 @@
 - (void)dealloc;
 {
     delegate = nil;
-    webView.delegate = nil;
-	webView = nil;
-    self.loading = NO; // this is useless, man this code is crap
+    webView.navigationDelegate = nil;
+    self.loading = NO;
 }
 
 #pragma mark Accessors
@@ -155,12 +154,18 @@
     self.activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicator];
     
-    webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    NSString *jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+    WKUserContentController *wkUController = [[WKUserContentController alloc] init];
+    [wkUController addUserScript:wkUScript];
+    WKWebViewConfiguration *wkWebConfig = [[WKWebViewConfiguration alloc] init];
+    wkWebConfig.userContentController = wkUController;
+
+    webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:wkWebConfig];
     webView.opaque = NO;
     webView.backgroundColor = [UIColor clearColor];
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    webView.scalesPageToFit = YES;
-    webView.delegate = self;
+    webView.navigationDelegate = self;
     [self.view addSubview:webView];
     
     if (self.authorizeURL) {
@@ -168,6 +173,12 @@
     }
 }
 
+- (void)viewDidUnload;
+{
+    webView.navigationDelegate = nil;
+    webView = nil;
+    [super viewDidUnload];
+}
 
 - (void)viewWillAppear:(BOOL)animated;
 {
@@ -189,13 +200,22 @@
 
 
 #pragma mark WebView Delegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
 {
-    if ([request.URL.scheme isEqualToString:@"x-soundcloud"]) {
+    [self.activityIndicator startAnimating];
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+{
+    [self.activityIndicator stopAnimating];
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    if ([navigationAction.request.URL.scheme isEqualToString:@"x-soundcloud"]) {
         
         //NSLog(@"We got an answer! %@", request.URL);
-        NSDictionary *parameters = [request.URL.query dictionaryFromQuery];
+        NSDictionary *parameters = [navigationAction.request.URL.query dictionaryFromQuery];
         
         BOOL success = [[parameters objectForKey:@"success"] isEqualToString:@"1"];
         
@@ -204,21 +224,11 @@
                          didFinishWithService:service
                                       success:success]; //MIGHTDO: We have to find out if we were successful
         }
-        return NO;
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
     }
     
-    return YES;
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
-
-- (void)webViewDidStartLoad:(UIWebView *)webView;
-{
-    [self.activityIndicator startAnimating];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView;
-{
-    [self.activityIndicator stopAnimating];
-}
-
 
 @end

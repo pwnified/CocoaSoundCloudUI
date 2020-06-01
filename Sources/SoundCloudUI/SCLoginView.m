@@ -37,12 +37,12 @@
 #import "SCAlertView.h"
 #import "SCDrawing.h"
 
-@interface SCLoginView () <UITextViewDelegate, UIWebViewDelegate>
+@interface SCLoginView () <UITextViewDelegate, UIWebViewDelegate, WKNavigationDelegate>
 @property (nonatomic, readwrite, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) SCGradientButton *fbButton;
 @property (nonatomic, strong) SCGradientButton *loginButton;
-@property (nonatomic, readwrite, strong) UIWebView *webView;
+@property (nonatomic, readwrite, strong) WKWebView *webView;
 @property (nonatomic, strong) UITextView *tosLabel;
 - (void)commonAwake;
 @end
@@ -64,7 +64,7 @@
 
     // Separator Line
     CGFloat lineWidth = 1.3;
-    CGFloat topLineY = 133.0;
+    CGFloat topLineY = 133.0 + 45;
     CGFloat bottomLineY = topLineY + lineWidth;
 
     // Top part
@@ -95,8 +95,8 @@
 	self.activityIndicator.hidesWhenStopped = YES;
 	[self addSubview:self.activityIndicator];
     
-    self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
-    self.webView.delegate = self;
+    self.webView = [[WKWebView alloc] initWithFrame:self.bounds];
+    self.webView.navigationDelegate = self;
     self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.webView.backgroundColor = [UIColor whiteColor];
     self.webView.alpha = 0.0;
@@ -384,9 +384,14 @@
     return NO;
 }
 
-#pragma mark WebView Delegate
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [[self firstResponderFromSubviews] resignFirstResponder];
+    [super touchesBegan:touches withEvent:event];
+}
 
-- (void)webViewDidStartLoad:(UIWebView *)webView;
+#pragma mark WebView Delegate
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
 {
     [self.activityIndicator startAnimating];
     [UIView animateWithDuration:0.5
@@ -402,18 +407,34 @@
                      }];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView;
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
 {
     [self.activityIndicator stopAnimating];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
 {
-    [SCSoundCloud handleRedirectURL:request.URL];
-    return YES;
+    if ([[error domain] isEqualToString:NSURLErrorDomain]) {
+        
+        if ([error code] == NSURLErrorCancelled)
+            return;
+        
+    } else if ([[error domain] isEqualToString:@"WebKitErrorDomain"]) {
+        
+        if ([error code] == 101)
+            return;
+        
+        if ([error code] == 102)
+            return;
+    }
+    
+    if ([self.loginDelegate respondsToSelector:@selector(loginView:didFailWithError:)]) {
+        [self.loginDelegate loginView:self
+                     didFailWithError:error];
+    }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error;
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
 {
     if ([[error domain] isEqualToString:NSURLErrorDomain]) {
 
@@ -435,10 +456,11 @@
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    [[self firstResponderFromSubviews] resignFirstResponder];
-    [super touchesBegan:touches withEvent:event];
+    [SCSoundCloud handleRedirectURL:navigationAction.request.URL];
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
+
 
 @end

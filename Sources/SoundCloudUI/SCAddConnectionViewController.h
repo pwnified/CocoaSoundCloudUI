@@ -19,6 +19,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 #import "SCAddConnectionViewControllerDelegate.h"
 
@@ -30,7 +31,7 @@
 @property (nonatomic, strong) SCAccount *account;
 @property (nonatomic, copy) NSString *service;
 @property (nonatomic, strong) NSURL *authorizeURL;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 @property (nonatomic, assign) BOOL loading;
 
