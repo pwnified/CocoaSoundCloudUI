@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SCSharingMailPickerController.h"
+//#import "SCSharingMailPickerController.h"
 #import "SCFoursquarePlacePickerControllerDelegate.h"
 #import "SCAddConnectionViewControllerDelegate.h"
 
@@ -34,9 +34,7 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trac
                                                              UINavigationControllerDelegate,
                                                              UIImagePickerControllerDelegate,
                                                              UIActionSheetDelegate,
-#if !TARGET_OS_MACCATALYST
-                                                             SCSharingMailPickerControllerDelegate,
-#endif
+                                                             //SCSharingMailPickerControllerDelegate,
                                                              SCFoursquarePlacePickerControllerDelegate,
                                                              SCAddConnectionViewControllerDelegate> {
     
@@ -60,8 +58,8 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trac
 - (void)setCompletionHandler:(SCRecordingSaveViewControllerCompletionHandler)aCompletionHandler;
 - (void)setCustomParameters:(NSDictionary*)dictionary;
 
-#pragma mark Foursquare
-
-- (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
+//#pragma mark Foursquare
+//
+//- (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 
 @end

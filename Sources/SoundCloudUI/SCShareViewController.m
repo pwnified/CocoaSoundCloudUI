@@ -122,14 +122,14 @@
 }
 
 
-#pragma mark Foursquare
-
-- (void)setFoursquareClientID:(NSString *)aClientID
-                 clientSecret:(NSString *)aClientSecret;
-{
-    [self.recordSaveController setFoursquareClientID:aClientID
-                                        clientSecret:aClientSecret];
-}
+//#pragma mark Foursquare
+//
+//- (void)setFoursquareClientID:(NSString *)aClientID
+//                 clientSecret:(NSString *)aClientSecret;
+//{
+//    [self.recordSaveController setFoursquareClientID:aClientID
+//                                        clientSecret:aClientSecret];
+//}
 
 #pragma View Controller
 

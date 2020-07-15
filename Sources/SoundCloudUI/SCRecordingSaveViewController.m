@@ -41,8 +41,8 @@
 #import "SCLoginView.h"
 #import "SCTableCellBackgroundView.h"
 
-#import "SCSharingMailPickerController.h"
-#import "SCFoursquarePlacePickerController.h"
+//#import "SCSharingMailPickerController.h"
+//#import "SCFoursquarePlacePickerController.h"
 #import "SCAddConnectionViewController.h"
 
 #import "SCRecordingSaveViewController.h"
@@ -78,7 +78,7 @@
 
 @property (nonatomic, readwrite, strong) SCAccount *account;
 
-@property (nonatomic, strong) SCFoursquarePlacePickerController *foursquareController;
+//@property (nonatomic, strong) SCFoursquarePlacePickerController *foursquareController;
 @property (nonatomic, strong) UIPopoverController *imagePickerPopoverController;
 
 @property (nonatomic, strong) SCRecordingSaveViewControllerHeaderView *headerView;
@@ -198,7 +198,7 @@ const NSArray *allServices = nil;
 
 @synthesize account;
 
-@synthesize foursquareController;
+//@synthesize foursquareController;
 @synthesize imagePickerPopoverController;
 
 @synthesize headerView;
@@ -423,7 +423,7 @@ const NSArray *allServices = nil;
 
 
 #pragma mark Foursquare
-
+/*
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 {
     self.foursquareController = [[SCFoursquarePlacePickerController alloc] initWithDelegate:self
@@ -442,7 +442,7 @@ const NSArray *allServices = nil;
                                       forControlEvents:UIControlEventTouchUpInside];
     }
 }
-
+*/
 
 #pragma mark ViewController
 
@@ -517,20 +517,21 @@ const NSArray *allServices = nil;
     [self.headerView.privateSwitch addTarget:self
                                       action:@selector(privacyChanged:)
                             forControlEvents:UIControlEventValueChanged];
-    
-    if (self.foursquareController) {
-        self.headerView.disclosureButton.hidden = NO;
-        [self.headerView.disclosureButton addTarget:self
-                                             action:@selector(openPlacePicker)
-                                   forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        self.headerView.disclosureButton.hidden = YES;
-        [self.headerView.disclosureButton removeTarget:self
-                                                action:@selector(openPlacePicker)
-                                      forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    [self.headerView.logoutButton addTarget:self
+//    if (self.foursquareController) {
+//        self.headerView.disclosureButton.hidden = NO;
+//        [self.headerView.disclosureButton addTarget:self
+//                                             action:@selector(openPlacePicker)
+//                                   forControlEvents:UIControlEventTouchUpInside];
+//    } else {
+//        self.headerView.disclosureButton.hidden = YES;
+//        [self.headerView.disclosureButton removeTarget:self
+//                                                action:@selector(openPlacePicker)
+//                                      forControlEvents:UIControlEventTouchUpInside];
+//    }
+	self.headerView.disclosureButton.hidden = YES;
+
+
+	[self.headerView.logoutButton addTarget:self
                                      action:@selector(relogin)
                            forControlEvents:UIControlEventTouchUpInside];
     
@@ -854,7 +855,7 @@ const NSArray *allServices = nil;
 {
     if (isPrivate) {
         if (indexPath.section == 0 && indexPath.row == 0) {
-#if !TARGET_OS_MACCATALYST
+#if 0
             SCSharingMailPickerController  *controller = [[SCSharingMailPickerController alloc] initWithDelegate:self];
 			UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
 			navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
@@ -883,7 +884,7 @@ const NSArray *allServices = nil;
 
 
 #pragma mark SCSharingMailPickerControllerDelegate
-#if !TARGET_OS_MACCATALYST
+#if 0
 - (void)sharingMailPickerController:(SCSharingMailPickerController *)controller didFinishWithResult:(NSArray *)emailAdresses;
 {
     self.sharingMailAddresses = emailAdresses;
@@ -924,11 +925,11 @@ const NSArray *allServices = nil;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {
-    if (self.foursquareController && textField == self.headerView.whereTextField) {
-        [self.headerView.whatTextField resignFirstResponder]; //So we don't get the keyboard when coming back
-        [self openPlacePicker];
-        return NO;
-    }
+//    if (self.foursquareController && textField == self.headerView.whereTextField) {
+//        [self.headerView.whatTextField resignFirstResponder]; //So we don't get the keyboard when coming back
+//        [self openPlacePicker];
+//        return NO;
+//    }
     return YES;
 }
 
@@ -1167,9 +1168,9 @@ const NSArray *allServices = nil;
 
 - (IBAction)openPlacePicker;
 {
-    if (self.foursquareController) {
-        [self.navigationController pushViewController:self.foursquareController animated:YES];
-    }
+//    if (self.foursquareController) {
+//        [self.navigationController pushViewController:self.foursquareController animated:YES];
+//    }
 }
 
 - (IBAction)closePlacePicker;

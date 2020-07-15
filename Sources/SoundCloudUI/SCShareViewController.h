@@ -43,9 +43,9 @@ typedef void(^SCSharingViewControllerCompletionHandler)(NSDictionary *trackInfo,
 - (void)setSharingNote:(NSString *)aSharingNote;
 - (void)setCustomParameters:(NSDictionary*)dictionary;
 
-#pragma mark Foursquare
-
-- (void)setFoursquareClientID:(NSString *)aClientID
-                 clientSecret:(NSString *)aClientSecret;
+//#pragma mark Foursquare
+//
+//- (void)setFoursquareClientID:(NSString *)aClientID
+//                 clientSecret:(NSString *)aClientSecret;
 
 @end

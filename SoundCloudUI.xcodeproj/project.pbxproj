@@ -16,7 +16,6 @@
 		20C8632D16837491003523CF /* SCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8632B16837490003523CF /* SCAlertView.m */; };
 		20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 20FEEDF2168087B000EB1C02 /* SCGradientButton.h */; };
 		20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FEEDF3168087B000EB1C02 /* SCGradientButton.m */; };
-		A4631F8E225742C1001B08C2 /* SCFoursquarePlacePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CA013F92CF900B20B40 /* SCFoursquarePlacePickerController.m */; };
 		F6115A4F13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6115A4D13FC02A9006489E9 /* SCConnectToSoundCloudTitleView.h */; };
 		F6115A5013FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6115A4E13FC02AA006489E9 /* SCConnectToSoundCloudTitleView.m */; };
 		F62E0D53148FBD5700BE8F14 /* NSData+SoundCloudUI.h in Headers */ = {isa = PBXBuildFile; fileRef = F62E0D43148FBD5700BE8F14 /* NSData+SoundCloudUI.h */; };
@@ -66,7 +65,6 @@
 		F6EF8CEC13F92CF900B20B40 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CB313F92CF900B20B40 /* SCShareViewController.h */; };
 		F6EF8CED13F92CF900B20B40 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CB413F92CF900B20B40 /* SCShareViewController.m */; };
 		F6EF8CEE13F92CF900B20B40 /* SCSharingMailPickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CB513F92CF900B20B40 /* SCSharingMailPickerController.h */; };
-		F6EF8CEF13F92CF900B20B40 /* SCSharingMailPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CB613F92CF900B20B40 /* SCSharingMailPickerController.m */; };
 		F6EF8CF013F92CF900B20B40 /* SCSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CB713F92CF900B20B40 /* SCSwitch.h */; };
 		F6EF8CF113F92CF900B20B40 /* SCSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EF8CB813F92CF900B20B40 /* SCSwitch.m */; };
 		F6EF8CF213F92CF900B20B40 /* SCSwitchLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = F6EF8CB913F92CF900B20B40 /* SCSwitchLabel.h */; };
@@ -479,7 +477,7 @@
 		F6EF8C5813F929D700B20B40 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = nxtbgthng;
 			};
 			buildConfigurationList = F6EF8C5B13F929D700B20B40 /* Build configuration list for PBXProject "SoundCloudUI" */;
@@ -516,11 +514,9 @@
 				F6EF8CE913F92CF900B20B40 /* SCRecordingUploadProgressView.m in Sources */,
 				F6EF8CEB13F92CF900B20B40 /* SCShareToSoundCloudTitleView.m in Sources */,
 				F6EF8CED13F92CF900B20B40 /* SCShareViewController.m in Sources */,
-				F6EF8CEF13F92CF900B20B40 /* SCSharingMailPickerController.m in Sources */,
 				F6EF8CF113F92CF900B20B40 /* SCSwitch.m in Sources */,
 				F6EF8CF313F92CF900B20B40 /* SCSwitchLabel.m in Sources */,
 				F6EF8CF513F92CF900B20B40 /* SCTableCellBackgroundView.m in Sources */,
-				A4631F8E225742C1001B08C2 /* SCFoursquarePlacePickerController.m in Sources */,
 				F6EF8CF713F92CF900B20B40 /* SCTextField.m in Sources */,
 				F6EF8CFA13F92CF900B20B40 /* SCUnderlinedButton.m in Sources */,
 				F697FF1813FBB68200B9369F /* SCUIErrors.m in Sources */,
@@ -561,6 +557,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -585,7 +582,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -608,6 +605,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -624,7 +622,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
