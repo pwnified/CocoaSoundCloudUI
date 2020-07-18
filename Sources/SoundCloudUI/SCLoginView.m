@@ -34,7 +34,7 @@
 #import "SCBundle.h"
 #import "SCLoginView.h"
 #import "SCGradientButton.h"
-#import "SCAlertView.h"
+//#import "SCAlertView.h"
 #import "SCDrawing.h"
 
 @interface SCLoginView () <UITextViewDelegate, UIWebViewDelegate, WKNavigationDelegate>
@@ -349,13 +349,16 @@
         [[SCSoundCloud shared] requestAccessWithUsername:self.credentialsView.username
                                                 password:self.credentialsView.password];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"credentials_error", @"Credentials Error")
-                                                        message:SCLocalizedString(@"credentials_error_message", @"Credentials Message Error")
-                                                       delegate:nil
-                                              cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
+
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"credentials_error", @"Credentials Error") message:SCLocalizedString(@"credentials_error_message", @"Credentials Message Error") preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *okButton = [UIAlertAction actionWithTitle:SCLocalizedString(@"alert_ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			[alert dismissViewControllerAnimated:YES completion:nil];
+		}];
+		[alert addAction:okButton];
+		// Hmm... won't work on navigation controllers... dumb
+		[[UIApplication sharedApplication].keyWindow.rootViewController.presentedViewController presentViewController:alert animated:YES completion:nil];
+
+	}
 }
 
 - (void)signInWithFacebook:(id)sender

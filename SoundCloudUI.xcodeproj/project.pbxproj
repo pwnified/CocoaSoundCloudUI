@@ -12,8 +12,6 @@
 		20C862BC16833789003523CF /* SCDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C862BA16833789003523CF /* SCDrawing.m */; };
 		20C862E2168353CC003523CF /* SCCredentialsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20C862E0168353CC003523CF /* SCCredentialsView.h */; };
 		20C862E3168353CC003523CF /* SCCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C862E1168353CC003523CF /* SCCredentialsView.m */; };
-		20C8632C16837491003523CF /* SCAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20C8632A16837490003523CF /* SCAlertView.h */; };
-		20C8632D16837491003523CF /* SCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8632B16837490003523CF /* SCAlertView.m */; };
 		20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 20FEEDF2168087B000EB1C02 /* SCGradientButton.h */; };
 		20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FEEDF3168087B000EB1C02 /* SCGradientButton.m */; };
 		331E726224C28AC4006A79E3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331E726124C28AC4006A79E3 /* WebKit.framework */; };
@@ -451,7 +449,6 @@
 				20FEEDF4168087B000EB1C02 /* SCGradientButton.h in Headers */,
 				20C862BB16833789003523CF /* SCDrawing.h in Headers */,
 				20C862E2168353CC003523CF /* SCCredentialsView.h in Headers */,
-				20C8632C16837491003523CF /* SCAlertView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +533,6 @@
 				20FEEDF5168087B000EB1C02 /* SCGradientButton.m in Sources */,
 				20C862BC16833789003523CF /* SCDrawing.m in Sources */,
 				20C862E3168353CC003523CF /* SCCredentialsView.m in Sources */,
-				20C8632D16837491003523CF /* SCAlertView.m in Sources */,
 				20835E1A169502C4002D02A1 /* SCLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

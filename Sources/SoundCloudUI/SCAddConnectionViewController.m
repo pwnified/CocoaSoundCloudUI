@@ -30,7 +30,7 @@
 
 #import "SCAddConnectionViewController.h"
 
-@interface SCAddConnectionViewController ()
+@interface SCAddConnectionViewController () <WKNavigationDelegate>
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
@@ -86,12 +86,12 @@
                          
                      } else {
                          
-                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"connection_faild", @"Connection failed")
-                                                                         message:[error localizedDescription]
-                                                                        delegate:nil
-                                                               cancelButtonTitle:SCLocalizedString(@"connection_error_ok", @"OK")
-                                                               otherButtonTitles:nil];
-                         [alert show];
+						 UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"connection_faild", @"Connection failed") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+						 UIAlertAction *okButton = [UIAlertAction actionWithTitle:SCLocalizedString(@"connection_error_ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+							 [alert dismissViewControllerAnimated:YES completion:nil];
+						 }];
+						 [alert addAction:okButton];
+						 [self presentViewController:alert animated:YES completion:nil];
 
                      }
                  }];

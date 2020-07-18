@@ -201,13 +201,13 @@
         NSError *error = [[aNotification userInfo] objectForKey:NXOAuth2AccountStoreErrorKey];
         self.completionHandler(error);
     }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"auth_error", @"Auth Error")
-                                                    message:SCLocalizedString(@"auth_error_message", @"Auth Message Error")
-                                                   delegate:nil
-                                          cancelButtonTitle:SCLocalizedString(@"alert_ok", @"OK")
-                                          otherButtonTitles:nil];
-    [alert show];
+
+	UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"auth_error", @"Auth Error") message:SCLocalizedString(@"auth_error_message", @"Auth Message Error") preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *okButton = [UIAlertAction actionWithTitle:SCLocalizedString(@"alert_ok", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+		[alert dismissViewControllerAnimated:YES completion:nil];
+	}];
+	[alert addAction:okButton];
+	[self presentViewController:alert animated:YES completion:nil];
 
     //[[self modalPresentingViewController] dismissModalViewControllerAnimated:YES];
 }

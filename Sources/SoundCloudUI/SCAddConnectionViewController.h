@@ -25,7 +25,7 @@
 
 @class SCAccount;
 
-@interface SCAddConnectionViewController : UIViewController <UIWebViewDelegate>
+@interface SCAddConnectionViewController : UIViewController
 
 @property (nonatomic, weak) id <SCAddConnectionViewControllerDelegate> delegate;
 @property (nonatomic, strong) SCAccount *account;

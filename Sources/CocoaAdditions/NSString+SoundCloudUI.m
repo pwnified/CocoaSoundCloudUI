@@ -165,20 +165,24 @@
 
 - (NSString *)stringByAddingURLEncoding;
 {
-	CFStringRef returnValue = CFURLCreateStringByAddingPercentEscapes (kCFAllocatorDefault, //Allocator
-																	   (CFStringRef)self, //Original String
-																	   NULL, //Characters to leave unescaped
-																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]", //Legal Characters to be escaped
-																	   kCFStringEncodingUTF8); //Encoding
-    return CFBridgingRelease(returnValue);
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"!*'();:@&=+$,/?%#[]"].invertedSet];
+
+//	CFStringRef returnValue = CFURLCreateStringByAddingPercentEscapes (kCFAllocatorDefault, //Allocator
+//																	   (CFStringRef)self, //Original String
+//																	   NULL, //Characters to leave unescaped
+//																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]", //Legal Characters to be escaped
+//																	   kCFStringEncodingUTF8); //Encoding
+//    return CFBridgingRelease(returnValue);
 }
 
 - (NSString *)stringByRemovingURLEncoding;
 {
-	CFStringRef returnValue = CFURLCreateStringByReplacingPercentEscapes(kCFAllocatorDefault, //Allocator
-																		 (CFStringRef)self,
-																		 nil);
-	return CFBridgingRelease(returnValue);
+	return [self stringByRemovingPercentEncoding];
+
+//	CFStringRef returnValue = CFURLCreateStringByReplacingPercentEscapes(kCFAllocatorDefault, //Allocator
+//																		 (CFStringRef)self,
+//																		 nil);
+//	return CFBridgingRelease(returnValue);
 }
 
 

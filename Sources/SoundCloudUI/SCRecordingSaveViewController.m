@@ -19,7 +19,7 @@
  */
 
 #import "UIViewController+SoundCloudUI.h"
-#import "SCAlertView.h"
+//#import "SCAlertView.h"
 
 #import "SCAPI.h"
 #import "SCAccount.h"
