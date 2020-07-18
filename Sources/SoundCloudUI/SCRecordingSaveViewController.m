@@ -1317,12 +1317,19 @@ const NSArray *allServices = nil;
                                                  self.uploadProgressView.state = SCRecordingUploadProgressViewStateFailed;
                                                  [self.uploadProgressView setNeedsLayout];
 
-                                               [SCAlertView showAlertViewWithTitle:SCLocalizedString(@"upload_error", nil)
-                                                                         message:error.localizedDescription
-                                                               cancelButtonTitle:@"OK"
-                                                               otherButtonTitles:nil
-                                                                           block:^(NSInteger buttonIndex, BOOL didCancel) {
-                                                            }];
+//                                               [SCAlertView showAlertViewWithTitle:SCLocalizedString(@"upload_error", nil)
+//                                                                         message:error.localizedDescription
+//                                                               cancelButtonTitle:@"OK"
+//                                                               otherButtonTitles:nil
+//                                                                           block:^(NSInteger buttonIndex, BOOL didCancel) {
+//                                                            }];
+
+												 UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"upload_error", nil) message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+												 UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+													 [alert dismissViewControllerAnimated:YES completion:nil];
+												 }];
+												 [alert addAction:okButton];
+												 [self presentViewController:alert animated:YES completion:nil];
 
                                                  
                                                  // update tool bar

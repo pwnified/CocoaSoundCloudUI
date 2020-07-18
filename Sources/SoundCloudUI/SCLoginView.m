@@ -293,15 +293,32 @@
 
 - (void)askForOpeningURL:(NSURL*)URL
 {
-    [SCAlertView showAlertViewWithTitle:SCLocalizedString(@"open_in_safari_title", nil)
-                                message:SCLocalizedString(@"open_in_safari_message", nil)
-                      cancelButtonTitle:SCLocalizedString(@"alert_cancel", nil)
-                      otherButtonTitles:[NSArray arrayWithObject:SCLocalizedString(@"alert_ok", nil)]
-                                  block:^(NSInteger buttonIndex, BOOL didCancel) {
-                                      if (!didCancel) {
-                                          [[UIApplication sharedApplication] openURL:URL];
-                                      }
-                                  }];
+//    [SCAlertView showAlertViewWithTitle:SCLocalizedString(@"open_in_safari_title", nil)
+//                                message:SCLocalizedString(@"open_in_safari_message", nil)
+//                      cancelButtonTitle:SCLocalizedString(@"alert_cancel", nil)
+//                      otherButtonTitles:[NSArray arrayWithObject:SCLocalizedString(@"alert_ok", nil)]
+//                                  block:^(NSInteger buttonIndex, BOOL didCancel) {
+//                                      if (!didCancel) {
+//                                          [[UIApplication sharedApplication] openURL:URL];
+//                                      }
+//                                  }];
+
+	UIAlertController *alert = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"open_in_safari_title", nil) message:SCLocalizedString(@"open_in_safari_message", nil) preferredStyle:UIAlertControllerStyleAlert];
+
+	UIAlertAction *okButton = [UIAlertAction actionWithTitle:SCLocalizedString(@"alert_ok", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+		[alert dismissViewControllerAnimated:YES completion:nil];
+		[[UIApplication sharedApplication] openURL:URL];
+	}];
+	[alert addAction:okButton];
+
+	UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:SCLocalizedString(@"alert_cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+		[alert dismissViewControllerAnimated:YES completion:nil];
+	}];
+	[alert addAction:cancelButton];
+
+	// Hmm... won't work on navigation controllers... dumb
+	[[UIApplication sharedApplication].keyWindow.rootViewController.presentedViewController presentViewController:alert animated:YES completion:nil];
+
 }
 
 #pragma mark Accessors
