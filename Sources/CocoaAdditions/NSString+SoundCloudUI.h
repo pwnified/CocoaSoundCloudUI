@@ -39,7 +39,7 @@
 
 - (NSDictionary *)dictionaryFromQuery;
 
-- (NSString *)md5Value;
+- (NSString *)sha1Value;
 
 - (NSArray *)componentsSeparatedByWhitespacePreservingQuotations;
 

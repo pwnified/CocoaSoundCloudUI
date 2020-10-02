@@ -186,18 +186,18 @@
 }
 
 
-#pragma mark MD5
+// HF: Converted to sha1 from md5 because of deprication warnings, it doesn't seem to be used anyway lol
+#pragma mark SHA1
 
-- (NSString *)md5Value
+- (NSString *)sha1Value
 {
 	//from http://www.tomdalling.com/cocoa/md5-hashes-in-cocoa
 	NSData* inputData = [self dataUsingEncoding:NSUTF8StringEncoding];
-	unsigned char outputData[CC_MD5_DIGEST_LENGTH];
-	CC_MD5([inputData bytes], (CC_LONG)[inputData length], outputData);
-	
+	unsigned char outputData[CC_SHA1_DIGEST_LENGTH];
+	CC_SHA1(inputData.bytes, (CC_LONG)inputData.length, outputData);
 	NSMutableString* hashStr = [NSMutableString string];
 	int i = 0;
-	for (i = 0; i < CC_MD5_DIGEST_LENGTH; ++i)
+	for (i = 0; i < CC_SHA1_DIGEST_LENGTH; ++i)
 		[hashStr appendFormat:@"%02x", outputData[i]];
 	
 	return hashStr;
