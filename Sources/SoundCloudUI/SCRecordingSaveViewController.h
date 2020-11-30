@@ -21,7 +21,7 @@
 #import <UIKit/UIKit.h>
 
 //#import "SCSharingMailPickerController.h"
-#import "SCFoursquarePlacePickerControllerDelegate.h"
+//#import "SCFoursquarePlacePickerControllerDelegate.h"
 #import "SCAddConnectionViewControllerDelegate.h"
 
 typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trackInfo, NSError *error);
@@ -35,7 +35,7 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(NSDictionary *trac
                                                              UIImagePickerControllerDelegate,
                                                              UIActionSheetDelegate,
                                                              //SCSharingMailPickerControllerDelegate,
-                                                             SCFoursquarePlacePickerControllerDelegate,
+                                                             //SCFoursquarePlacePickerControllerDelegate,
                                                              SCAddConnectionViewControllerDelegate> {
     
     NSBundle *resourceBundle;

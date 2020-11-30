@@ -173,12 +173,12 @@
     }
 }
 
-- (void)viewDidUnload;
-{
-    webView.navigationDelegate = nil;
-    webView = nil;
-    [super viewDidUnload];
-}
+//- (void)viewDidUnload;
+//{
+//    webView.navigationDelegate = nil;
+//    webView = nil;
+//    [super viewDidUnload];
+//}
 
 - (void)viewWillAppear:(BOOL)animated;
 {

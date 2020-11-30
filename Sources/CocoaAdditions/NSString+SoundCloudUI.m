@@ -92,7 +92,7 @@
 - (NSArray *)componentsSeparatedByWhitespacePreservingQuotations;
 {
     NSScanner *scanner = [NSScanner scannerWithString:self];
-    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *result = @[].mutableCopy;
     while (![scanner isAtEnd]) {
         NSString *tag = nil;
         NSString *beginning = [self substringWithRange:NSMakeRange([scanner scanLocation], 1)];

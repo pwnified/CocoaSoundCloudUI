@@ -43,6 +43,7 @@
 
 //#import "SCSharingMailPickerController.h"
 //#import "SCFoursquarePlacePickerController.h"
+
 #import "SCAddConnectionViewController.h"
 
 #import "SCRecordingSaveViewController.h"
@@ -50,8 +51,7 @@
 
 #define COVER_WIDTH 600.0
 
-
-@interface SCRecordingSaveViewController () <UIScrollViewDelegate, UIPopoverControllerDelegate>
+@interface SCRecordingSaveViewController () <UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>// UIPopoverControllerDelegate>
 
 #pragma mark Accessors
 @property (nonatomic, strong) NSArray *availableConnections;
@@ -72,14 +72,14 @@
 @property (nonatomic, strong) NSString *customSharingNote;
 @property (nonatomic, strong) NSDictionary *customParameters;
 
-@property (nonatomic, strong) CLLocation *location;
+//@property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, copy) NSString *locationTitle;
-@property (nonatomic, copy) NSString *foursquareID;
+//@property (nonatomic, copy) NSString *foursquareID;
 
 @property (nonatomic, readwrite, strong) SCAccount *account;
 
 //@property (nonatomic, strong) SCFoursquarePlacePickerController *foursquareController;
-@property (nonatomic, strong) UIPopoverController *imagePickerPopoverController;
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
 
 @property (nonatomic, strong) SCRecordingSaveViewControllerHeaderView *headerView;
 @property (nonatomic, strong) SCRecordingUploadProgressView *uploadProgressView;
@@ -100,8 +100,6 @@
 - (IBAction)shareConnectionSwitchToggled:(id)sender;
 - (IBAction)openCameraPicker;
 - (IBAction)openImageLibraryPicker;
-- (IBAction)openPlacePicker;
-- (IBAction)closePlacePicker;
 - (IBAction)privacyChanged:(id)sender;
 - (IBAction)selectImage;
 - (IBAction)resetImage;
@@ -192,14 +190,12 @@ const NSArray *allServices = nil;
 @synthesize customSharingNote;
 @synthesize customParameters;
 
-@synthesize location;
-@synthesize locationTitle;
-@synthesize foursquareID;
+//@synthesize location;
+//@synthesize foursquareID;
 
 @synthesize account;
 
 //@synthesize foursquareController;
-@synthesize imagePickerPopoverController;
 
 @synthesize headerView;
 @synthesize uploadProgressView;
@@ -225,9 +221,10 @@ const NSArray *allServices = nil;
         
         isPrivate = [[NSUserDefaults standardUserDefaults] boolForKey:SCDefaultsKeyRecordingIsPrivate];
         isDownloadable = YES;
-        location = nil;
-        locationTitle = nil;
-        foursquareID = nil;
+		_locationTitle = nil;
+
+//        location = nil;
+//        foursquareID = nil;
         
         coverImage = nil;
         title = nil;
@@ -600,14 +597,14 @@ const NSArray *allServices = nil;
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-	[coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		[self.imagePickerPopoverController dismissPopoverAnimated:NO];
-		
-	} completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-		[self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
-														   inView:self.headerView.coverImageButton
-										 permittedArrowDirections:UIPopoverArrowDirectionAny
-														 animated:YES];
+	[self.imagePicker dismissViewControllerAnimated:NO completion:nil];
+
+	[coordinator animateAlongsideTransition:^(id context) {
+	} completion:^(id context) {
+		if (self.imagePicker) {
+			[self setupPresentationController:self.imagePicker]; // got to do this because lamness
+			[self presentViewController:self.imagePicker animated:YES completion:nil];
+		}
 	}];
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
@@ -715,9 +712,9 @@ const NSArray *allServices = nil;
             accessorySwitch.on = NO;
             [self.sharingConnections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
                 if ([[obj objectForKey:@"id"] isEqual:[connection objectForKey:@"id"]]) {
-                    if (self.foursquareID || ![[connection objectForKey:@"service"] isEqualToString:@"foursquare"]) {
-                        accessorySwitch.on = YES;
-                    }
+//                    if (self.foursquareID || ![[connection objectForKey:@"service"] isEqualToString:@"foursquare"]) {
+//                        accessorySwitch.on = YES;
+//                    }
                     *stop = YES;
                 }
             }];
@@ -940,61 +937,18 @@ const NSArray *allServices = nil;
 }
 
 
-#pragma mark UIPopoverControllerDelegate
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)aPopoverController;
-{
-    if (aPopoverController == self.imagePickerPopoverController) {
-        self.imagePickerPopoverController = nil;
-    }
+#pragma mark UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey, id> *)info {
+	self.coverImage = [self cropImage:info];
+	[_imagePicker dismissViewControllerAnimated:YES completion:nil];
+	_imagePicker = nil;
 }
 
-#pragma mark ActionSheet Delegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex;
-{
-    if (buttonIndex == actionSheet.firstOtherButtonIndex) {
-        [self openImageLibraryPicker];  
-    } else if (buttonIndex == actionSheet.firstOtherButtonIndex + 1
-               && [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) {
-        [self openCameraPicker];
-    } else if (buttonIndex == actionSheet.destructiveButtonIndex) {
-        [self resetImage];
-    }
-    
-    [self updateInterface];
-}
-
-
-#pragma mark Image Picker Delegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
-{     
-    self.coverImage = [self cropImage:info];
-    
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
-        self.imagePickerPopoverController = nil;
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-
-#pragma mark Place Picker Delegate
-
-- (void)foursquarePlacePicker:(SCFoursquarePlacePickerController *)aPicker
-           didFinishWithTitle:(NSString *)aTitle
-                 foursquareID:(NSString *)aFoursquareID
-                     location:(CLLocation *)aLocation;
-{
-    self.headerView.whereTextField.text = aTitle;
-    self.locationTitle = aTitle;
-    self.location = aLocation;
-    self.foursquareID = aFoursquareID;
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+	[_imagePicker dismissViewControllerAnimated:YES completion:nil];
+	_imagePicker = nil;
 }
 
 
@@ -1057,9 +1011,9 @@ const NSArray *allServices = nil;
     NSDictionary *connection = [availableConnections objectAtIndex:indexPath.row];
     
     //If this is a foursquare switch, we don't have a venue and want to switch it on, display place picker
-    if ([[connection objectForKey:@"service"] isEqualToString:@"foursquare"] && !self.foursquareID && [sender isOn]) {
-        [self openPlacePicker];
-    }
+//    if ([[connection objectForKey:@"service"] isEqualToString:@"foursquare"] && !self.foursquareID && [sender isOn]) {
+//        [self openPlacePicker];
+//    }
     
     NSMutableArray *newSharingConnections = [self.sharingConnections mutableCopy];
     if ([sender isOn]) {
@@ -1088,47 +1042,83 @@ const NSArray *allServices = nil;
     }
 }
 
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+	if ([UIDevice isIPad] && _imagePicker == navigationController) {
+		// This is bad design because the right button bar item is immediately overwritten with 'Cancel' or 'Use' when an image is selected.
+		// And we need the left button bar item for 'Back' navigation. So, use the iPhone method UIAlertController with UIAlertControllerStyleActionSheet even for iPad and forget this button bar fudging!
+/*
+		if (coverImage) {
+			UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"artwork_reset", @"Reset")
+																			style:UIBarButtonItemStylePlain
+																		   target:self
+																		   action:@selector(resetImage)];
+			viewController.navigationItem.leftBarButtonItem = resetButton;
+		}
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+			UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(openCameraPicker)];
+			viewController.navigationItem.rightBarButtonItem = cameraButton;
+		}
+*/
+	}
+}
+
+// These exceptions were being thrown, when rotating the device with a camera in use. So we set the damn sourceView everytime now.
+// Not sure why sourceView is going away, it's a strong reference and it's not being changed. Maybe dismissViewControllerAnimated is killing it?
+// *** Terminating app due to uncaught exception 'NSGenericException', reason: 'UIPopoverPresentationController (<UIPopoverPresentationController: >) should have a non-nil sourceView or barButtonItem set before the presentation occurs.'
+
+- (void)setupPresentationController:(UIImagePickerController *)imagePicker {
+	UIPopoverPresentationController *presenter = imagePicker.popoverPresentationController;
+	presenter.sourceView = headerView.coverImageButton;
+	presenter.sourceRect = headerView.coverImageButton.bounds;
+	presenter.permittedArrowDirections = UIPopoverArrowDirectionAny;
+}
+
+- (UIImagePickerController *)pickerForType:(UIImagePickerControllerSourceType)type {
+	UIImagePickerController *imagePicker = [UIImagePickerController.alloc init];
+	imagePicker.allowsEditing = YES;
+	imagePicker.sourceType = type;
+	imagePicker.modalPresentationStyle = UIModalPresentationPopover;
+	imagePicker.delegate = self;
+	[self setupPresentationController:imagePicker];
+	return imagePicker;
+}
+
 - (IBAction)selectImage;
 {
-    if ([UIDevice isIPad] && [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) {
-        
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        self.imagePickerPopoverController = [[UIPopoverController alloc] initWithContentViewController:picker];
-        self.imagePickerPopoverController.delegate = self;
-        
-        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
-                                                inView:self.headerView.coverImageButton
-                              permittedArrowDirections:UIPopoverArrowDirectionAny
-                                              animated:YES];
-        
-        if (self.coverImage) {
-            UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"artwork_reset", @"Reset")
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(resetImage)];
-            picker.navigationBar.topItem.leftBarButtonItem = resetButton;
-        }
-        
-        if ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) {
-            UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(openCameraPicker)];
-            picker.navigationBar.topItem.rightBarButtonItem = cameraButton;
-        }
-        
-        
+	if (/* DISABLES CODE */ (0) && [UIDevice isIPad] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+
+		_imagePicker = [self pickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
+		[self presentViewController:_imagePicker animated:YES completion:nil];
+
     } else {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:SCLocalizedString(@"recording_image", @"Cover Image")
-                                                           delegate:self
-                                                  cancelButtonTitle:SCLocalizedString(@"cancel", @"Cancel")
-                                             destructiveButtonTitle:self.coverImage ? SCLocalizedString(@"artwork_reset", @"Reset") : nil
-                                                  otherButtonTitles:
-                                ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) ? SCLocalizedString(@"use_existing_image", @"Photo Library") : nil,
-                                ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? SCLocalizedString(@"take_new_picture", @"Camera") : nil,
-                                nil];
-        [sheet showInView:self.view];
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"recording_image", @"Cover Image") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+		[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+			[alertController dismissViewControllerAnimated:YES completion:nil];
+		}]];
+		if (coverImage) {
+			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"artwork_reset", @"Reset") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+				[alertController dismissViewControllerAnimated:YES completion:nil];
+				[self resetImage];
+				[self updateInterface];
+			}]];
+		}
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"use_existing_image", @"Photo Library") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+				[alertController dismissViewControllerAnimated:YES completion:nil];
+				[self openImageLibraryPicker];
+				[self updateInterface];
+			}]];
+		}
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"take_new_picture", @"Camera") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+				[alertController dismissViewControllerAnimated:YES completion:nil];
+				[self openCameraPicker];
+				[self updateInterface];
+			}]];
+		}
+		[self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -1143,49 +1133,23 @@ const NSArray *allServices = nil;
     able to use UIImagePickerController. :)
  */
 
-- (IBAction)openCameraPicker;
-{
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
-        self.imagePickerPopoverController = nil;
-    }
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    picker.allowsEditing = YES;
-    [self presentViewController:picker animated:YES completion:nil];
+- (IBAction)openCameraPicker {
+	[_imagePicker dismissViewControllerAnimated:YES completion:nil];
+	_imagePicker = [self pickerForType:UIImagePickerControllerSourceTypeCamera];
+	[self presentViewController:_imagePicker animated:YES completion:nil];
 }
 
-- (IBAction)openImageLibraryPicker;
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:picker animated:YES completion:nil];
+- (IBAction)openImageLibraryPicker {
+	[_imagePicker dismissViewControllerAnimated:YES completion:nil];
+	_imagePicker = [self pickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
+	[self presentViewController:_imagePicker animated:YES completion:nil];
 }
 
-- (IBAction)openPlacePicker;
-{
-//    if (self.foursquareController) {
-//        [self.navigationController pushViewController:self.foursquareController animated:YES];
-//    }
-}
 
-- (IBAction)closePlacePicker;
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
-- (IBAction)resetImage;
-{
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
-        self.imagePickerPopoverController = nil;
-    }
-    self.coverImage = nil;
+- (IBAction)resetImage {
+	[_imagePicker dismissViewControllerAnimated:YES completion:nil];
+	_imagePicker = nil;
+	self.coverImage = nil;
 }
 
 - (IBAction)upload;
@@ -1244,7 +1208,7 @@ const NSArray *allServices = nil;
         if (self.sharingConnections.count > 0) {
             NSMutableArray *idArray = [NSMutableArray arrayWithCapacity:self.sharingConnections.count];
             for (NSDictionary *sharingConnection in sharingConnections) {
-                if ([[sharingConnection objectForKey:@"service"] isEqualToString:@"foursquare"] && !self.foursquareID) {
+				if ([[sharingConnection objectForKey:@"service"] isEqualToString:@"foursquare"]) { // && !self.foursquareID) {
                     //Ignore Foursquare sharing when there is no venue ID set.
                 } else {
                     [idArray addObject:[NSString stringWithFormat:@"%@", [sharingConnection objectForKey:@"id"]]];
@@ -1266,15 +1230,15 @@ const NSArray *allServices = nil;
     NSString * appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
     
     // tags (location)
-    NSMutableArray *tags = [NSMutableArray array];
+    NSMutableArray *tags = @[].mutableCopy;
     [tags addObject:[NSString stringWithFormat:@"\"soundcloud:source=%@\"", appName]];
-    if (self.location) {
-        [tags addObject:[NSString stringWithFormat:@"geo:lat=%f", self.location.coordinate.latitude]];
-        [tags addObject:[NSString stringWithFormat:@"geo:lon=%f", self.location.coordinate.longitude]];
-    }
-    if (self.foursquareID) {
-        [tags addObject:[NSString stringWithFormat:@"foursquare:venue=%@", self.foursquareID]];
-    }
+//    if (self.location) {
+//        [tags addObject:[NSString stringWithFormat:@"geo:lat=%f", self.location.coordinate.latitude]];
+//        [tags addObject:[NSString stringWithFormat:@"geo:lon=%f", self.location.coordinate.longitude]];
+//    }
+//    if (self.foursquareID) {
+//        [tags addObject:[NSString stringWithFormat:@"foursquare:venue=%@", self.foursquareID]];
+//    }
     
     // tags (custom)
     for (NSString *tag in self.customTags) {
@@ -1406,21 +1370,15 @@ const NSArray *allServices = nil;
     [self cancel];
 }
 
-- (void)keyboardWillChangeVisibility:(NSNotification *)notification;
-{
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController dismissPopoverAnimated:NO];
-    }
+- (void)keyboardWillChangeVisibility:(NSNotification *)notification {
+	[_imagePicker dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)keyboardDidChangeVisibility:(NSNotification *)notification;
-{
-    if (self.imagePickerPopoverController) {
-        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
-                                                           inView:self.headerView.coverImageButton
-                                         permittedArrowDirections:UIPopoverArrowDirectionAny
-                                                         animated:YES];
-    }
+- (void)keyboardDidChangeVisibility:(NSNotification *)notification {
+	if (_imagePicker) {
+		[self setupPresentationController:_imagePicker];
+		[self presentViewController:_imagePicker animated:YES completion:nil];
+	}
 }
 
 

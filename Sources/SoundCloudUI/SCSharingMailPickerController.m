@@ -438,8 +438,8 @@
 
 - (NSArray *)arrayOfEmailsInString:(NSString *)string unparsebleStrings:(NSArray **)unparsableRet;
 {
-	NSMutableArray *emails = [NSMutableArray array];
-	NSMutableArray *unparsable = [NSMutableArray array];
+	NSMutableArray *emails = @[].mutableCopy;
+	NSMutableArray *unparsable = @[].mutableCopy;
 	
 	NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
 	NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx]; 
@@ -561,7 +561,7 @@ static NSInteger compareAutocompleteData(id dict1, id dict2, void *context)
 		return;
 	
 	NSString *partialMail = [_autocompleteString lowercaseString];
-	NSMutableArray *autocompleteData = [NSMutableArray array];
+	NSMutableArray *autocompleteData = @[].mutableCopy;
 	
 	if (partialMail) {
 		for (id searchString in _addressbookData.allKeys) {
