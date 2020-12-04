@@ -250,6 +250,7 @@
     if (!resultText) {
         resultText = [[UILabel alloc] initWithFrame:CGRectZero];
         resultText.backgroundColor = [UIColor clearColor];
+		resultText.textColor = UIColor.darkTextColor;
         resultText.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:resultText];
     }
