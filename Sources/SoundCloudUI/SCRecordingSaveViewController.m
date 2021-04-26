@@ -595,6 +595,8 @@ const NSArray *allServices = nil;
     [self.headerView setCoverImage:self.coverImage];
 }
 
+// This is crashing on iOS 12 and earlier. Don't need it anymore. iOS 13 and later rotates the picker by itself anyway.
+/*
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
 	[self.imagePicker dismissViewControllerAnimated:NO completion:nil];
@@ -608,7 +610,7 @@ const NSArray *allServices = nil;
 	}];
 	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-
+*/
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
