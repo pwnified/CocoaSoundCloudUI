@@ -1372,15 +1372,17 @@ const NSArray *allServices = nil;
     [self cancel];
 }
 
+// More crashes! Disable this code that tries to recreate the picker, it is crashing on iOS 14.
+// It happens when using the search bar in the image picker.
 - (void)keyboardWillChangeVisibility:(NSNotification *)notification {
-	[_imagePicker dismissViewControllerAnimated:NO completion:nil];
+	//[_imagePicker dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)keyboardDidChangeVisibility:(NSNotification *)notification {
-	if (_imagePicker) {
-		[self setupPresentationController:_imagePicker];
-		[self presentViewController:_imagePicker animated:YES completion:nil];
-	}
+//	if (_imagePicker) {
+//		[self setupPresentationController:_imagePicker];
+//		[self presentViewController:_imagePicker animated:YES completion:nil];
+//	}
 }
 
 
