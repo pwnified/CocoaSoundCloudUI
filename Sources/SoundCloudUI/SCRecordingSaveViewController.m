@@ -1088,40 +1088,43 @@ const NSArray *allServices = nil;
 
 - (IBAction)selectImage;
 {
-	if (/* DISABLES CODE */ (0) && [UIDevice isIPad] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"recording_image", @"Cover Image") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
-		_imagePicker = [self pickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
-		[self presentViewController:_imagePicker animated:YES completion:nil];
+	// iPad action sheet is presented as a popover, so it needs the source view
+	if ([UIDevice isIPad]) {
+		UIPopoverPresentationController *presenter = alertController.popoverPresentationController;
+		if (presenter) {
+			presenter.sourceView = headerView.coverImageButton;
+			presenter.sourceRect = headerView.coverImageButton.bounds;
+			presenter.permittedArrowDirections = UIPopoverArrowDirectionAny;
+		}
+	}
 
-    } else {
-		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:SCLocalizedString(@"recording_image", @"Cover Image") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-
-		[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+	[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+		[alertController dismissViewControllerAnimated:YES completion:nil];
+	}]];
+	if (coverImage) {
+		[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"artwork_reset", @"Reset") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
 			[alertController dismissViewControllerAnimated:YES completion:nil];
+			[self resetImage];
+			[self updateInterface];
 		}]];
-		if (coverImage) {
-			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"artwork_reset", @"Reset") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-				[alertController dismissViewControllerAnimated:YES completion:nil];
-				[self resetImage];
-				[self updateInterface];
-			}]];
-		}
-		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"use_existing_image", @"Photo Library") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-				[alertController dismissViewControllerAnimated:YES completion:nil];
-				[self openImageLibraryPicker];
-				[self updateInterface];
-			}]];
-		}
-		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-			[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"take_new_picture", @"Camera") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-				[alertController dismissViewControllerAnimated:YES completion:nil];
-				[self openCameraPicker];
-				[self updateInterface];
-			}]];
-		}
-		[self presentViewController:alertController animated:YES completion:nil];
-    }
+	}
+	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+		[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"use_existing_image", @"Photo Library") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			[alertController dismissViewControllerAnimated:YES completion:nil];
+			[self openImageLibraryPicker];
+			[self updateInterface];
+		}]];
+	}
+	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+		[alertController addAction:[UIAlertAction actionWithTitle:SCLocalizedString(@"take_new_picture", @"Camera") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			[alertController dismissViewControllerAnimated:YES completion:nil];
+			[self openCameraPicker];
+			[self updateInterface];
+		}]];
+	}
+	[self presentViewController:alertController animated:YES completion:nil];    
 }
 
 /*
