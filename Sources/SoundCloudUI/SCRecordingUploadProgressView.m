@@ -561,7 +561,7 @@
 	// hxxps://apps.apple.com/us/app/soundcloud-music-audio/id336353151
 //    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://apps.apple.com/app/id336353151"]];
 
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_OS_SIMULATOR
 #else
 	[self openSKStoreProductViewController:336353151];
 #endif
